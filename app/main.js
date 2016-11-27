@@ -10,11 +10,11 @@ var appConfig = {
 			novo: '${scpa.novoUsuario}',
 			esqueceu: '${scpa.trocarSenha}'
 		},
-		nome: "GFINP",
+		nome: "SMARTPHONE INSPECTOR",
 		titulo: "Minist\u00E9rio da Sa\u00FAde",
 		subtitulo: "Gest\u00e3o financeira da publicidade",
 		appBaseUrl: 'app',
-		appContextRoot: 'gfinp',
+		appContextRoot: 'smartlog',
 		defaultRoute: 'login',
 		login: {
 			url: "api/v1/login",
