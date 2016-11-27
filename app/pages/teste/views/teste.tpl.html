@@ -1,0 +1,50 @@
+<div class='container' ui-view>
+	<div class='row'>
+		<div class="span12">
+			<strong class="title">{{'teste' | translate}}</strong>
+		</div>
+	</div>
+	
+	<div class='row'>
+		<div class="span12">
+			<div class="box conteudo-box">
+				<form novalidate ng-submit="consultar()">
+					<div class="span12">
+						<div class="filder panel panel-default">
+							<div class="panel-heading">
+								<b class="panel-title">Testando coisas</b>
+							</div>
+							
+							<div class="panel-body">
+								<div class="row">	
+									<ex-multi-select    
+									    input-model="meios" 
+									    output-model="meiosSelecionados" 
+									    helper-elements="all none filter reset" 
+									    button-label="descricao"
+									    item-label="descricao maker"
+									    default-label="Selecione os meios desejados"
+									    all-label="Todos"
+									    none-label="Nenhum"
+									    reset-label="Resetar"
+									    filter-label="Filtrar..."
+									    tick-property="selected">
+									</ex-multi-select>
+								</div>	
+								
+								
+								{{meios}}		
+								<br/>					
+								<br/>					
+								<br/>					
+								{{meiosSelecionados}}							
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+

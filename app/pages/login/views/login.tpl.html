@@ -1,0 +1,130 @@
+<div class="container" ui-view>
+  <div class="row">
+
+    <div class="span4">
+      <div id="BoxAreaLogin">
+        <div class="BoxAreaLogin_titulo">
+          <h2>Digite seu e-mail e sua senha para acessar a área restrita</h2>
+        </div>
+        <div class="BoxAreaLogin_content logar">
+          <form name="loginForm" ng-submit="login()" ng-controller="loginController" novalidate  ex-autofill-form-fix>
+            <ul>
+            
+              <li>
+                <label class="BoxAreaLogin_email_senha" for="email">E-mail <span>*</span></label>
+                <div class="input-group">
+                	<label class="input-group-addon icone icone-user" for="email"></label>
+                	<input class="form-control input-xlarge" 
+                		id="email" 
+                		type="text" 
+                		ng-required="true" 
+                		required="true" 
+                		ng-model="formLogin.email"
+                		maxlength="100">
+             	 </div>
+              </li>
+              
+              <li>
+                <label class="BoxAreaLogin_email_senha" for="password">Senha <span>*</span></label>
+                <div class="input-group">
+                	<label class="input-group-addon icone icone-lock" for="password"></label>
+                	<input class="form-control input-xlarge" 
+                		id="password" 
+                		type="password" 
+                		ng-required="true" 
+                		required="true" 
+                		ng-model="formLogin.password"
+                		maxlength="100">
+             	 </div>
+              </li>
+              
+              <li>
+                <div id="BoxAreaLogin_EsqueceuEmail_e_Botao">
+                  <div id="BoxAreaLogin_EsqueceuEmail">
+                    <a href="{{app.scpa.novo}}" role="button" data-toggle="modal" target="_blank">Ainda não está cadastrado?</a>
+                    <a href="{{app.scpa.esqueceu}}" role="button" data-toggle="modal" target="_blank">Esqueceu sua senha? </a>
+                  </div>
+                    <button type="submit" class="btn btn-primary pull-right">
+                    <i class="font15px fa fa-sign-in"></i> Entrar</button>
+                </div>
+              </li>
+            </ul>
+          </form>                        
+        </div>
+      </div>
+    </div>
+
+    <div class="span8">
+        <div class="conteudo-box">
+          <div class="span12">
+              <h4 class="BoxAreaLogin_Info_titulo">Acesso ao Sistema</h4><p/>
+              <p class="loginInformacoes">É necessário que o usuário informe seu e-mail e senha.<br />
+              Esqueceu a senha: Clique em &quot;Esqueceu sua senha&quot; e informe seu e-mail para receber uma nova senha de acesso ao sistema.</p>
+              <hr class="BoxAreaLogin_Info_barra"/>
+              <h4 class="BoxAreaLogin_Info_titulo">Usuário que não possui acesso</h4><p/>
+              <p class="loginInformacoes">Realize o cadastro clicando em &quot;Ainda não está cadastrado?&quot;<br />
+              Após o login, clique em &quot;solicitar acesso aos sistemas&quot;.<br />
+              Aguarde o e-mail com a aprovação ou não da solicitação de acesso.</p>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/ng-template" id="modalPerfil">
+	<div>
+		<div class="modal-header">
+			<h3 class="modal-title">Selecionar perfil de acesso</h3>
+		</div>
+		
+		<div class="modal-body">
+			<table ng-table="tabelaPerfil"
+				class="table table-striped table-bordered">
+				<tbody>
+					<tr ng-repeat="pa in $data" ng-init="pa.temMuitasEsferas = pa.listaEsferas && pa.listaEsferas.length > 1 ? true : false">
+						<td class="centeredColumnXY" data-title="'Nome do perfil'">{{pa.perfil.nome}}</td>
+						<td class="centeredColumnXY" data-title="'Sigla do perfil'">{{pa.perfil.sigla}}</td>
+						<td class="centeredColumnXY" data-title="'Usar perfil'" style="width: 20%;">
+							<a ng-click="selecionarPerfil(pa)" 
+							class="btn btn-success btn-xs" 
+							title="{{pa.temMuitasEsferas ? 'Muitas esferas para ' : 'Usar '}} o perfil {{pa.perfil.nome}} ({{pa.perfil.sigla}})"><i class="font17px {{pa.temMuitasEsferas ? 'fa fa-users' : 'fa fa-user'}}"></i></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+		<div class="modal-footer">
+		</div>
+	</div>
+</script> 
+
+
+
+<script type="text/ng-template" id="modalEsfera">
+	<div>
+		<div class="modal-header">
+			<h3 class="modal-title">{{perfilAcesso.perfil.nome}}: Selecionar esfera de acesso</h3>
+		</div>
+		
+		<div class="modal-body">
+			<table ng-table="tabelaEsfera"
+				class="table table-striped table-bordered">
+				<tbody>
+					<tr ng-repeat="e in $data">
+						<td class="centeredColumnXY" data-title="'Nome da esfera'">{{e.valorEsferaAtuacao}}</td>
+						<td class="centeredColumnXY" data-title="'Usar esfera'" style="width: 20%;">
+							<a ng-click="selecionarEsfera(e)" 
+							class="btn btn-success btn-xs" 
+							title="Usar o perfil {{perfilAcesso.perfil.nome}} com a esfera {{e.valorEsferaAtuacao}}"><i class="font17px fa fa-user"></i></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+		<div class="modal-footer">
+		</div>
+	</div>
+</script> 

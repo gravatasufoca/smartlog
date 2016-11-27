@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioProtocolo" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="473" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="dede9244-e363-4e02-8696-725b845b3126">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="2.1435888100000056"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="518"/>
+	<property name="net.sf.jasperreports.export.docx.flexible.row.height" value="true"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="imgCaminho" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["src/main/webapp/assets/images"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PROTOCOLO" class="br.gov.saude.gfinp.model.Protocolo"/>
+	<parameter name="AGENCIA" class="br.gov.saude.gfinp.model.Agencia"/>
+	<parameter name="CAMPANHAS" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="numeroFatura" class="java.lang.String"/>
+	<field name="numeroPi" class="java.lang.Long"/>
+	<field name="numeroAp" class="java.lang.Long"/>
+	<field name="nomeTipoPublicidade" class="java.lang.String"/>
+	<field name="nomeFornecedor" class="java.lang.String"/>
+	<field name="valorFatura" class="java.math.BigDecimal"/>
+	<field name="dataEmissao" class="java.util.Date"/>
+	<field name="dataCadastro" class="java.util.Date"/>
+	<field name="dataDevolucao" class="java.util.Date"/>
+	<field name="quantidadeDevolucao" class="java.lang.Long"/>
+	<field name="motivoDevolucao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="381">
+			<image scaleImage="RetainShape">
+				<reportElement key="image-1" x="235" y="21" width="70" height="70" uuid="714866e7-768e-4b5e-afd3-e8f237825a34">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean($P{imgCaminho} !=null)]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{imgCaminho}+"/brasaopreto.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="1" y="214" width="90" height="14" uuid="91d5188a-bfff-409d-b350-556161a12a16">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Protocolo Interno n°:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="99" width="209" height="40" uuid="60770c96-bde7-45ff-af9e-4c3ca5156264"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ministério da Saúde
+Assessoria de Comunicação Social
+Financeiro/Publicidade/ASCOM/GM]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="91" y="214" width="157" height="14" uuid="a9a01468-b496-4236-9a62-9e5027f8a341">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PROTOCOLO}.getNumeroProtocolo()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="239" width="400" height="20" uuid="e3a53b43-1dbc-415c-92bd-b66f4d56e743">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Protocolo de encaminhamento de faturas para análise e parecer técnico:"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1" y="320" width="132" height="20" uuid="98abeb8e-f61f-4d4f-9c21-62aa43a38c00">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Encaminhamento:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="133" y="320" width="383" height="20" uuid="ff90ab5b-caf0-450a-9d38-0585632ec9af">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PROTOCOLO}.getDataProtocolo()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1" y="280" width="41" height="20" uuid="9b14ecee-82ed-4e63-acc0-4a31a4c07f1f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agência:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="42" y="280" width="461" height="20" uuid="bcaaa47e-1437-4d71-bdca-7c45b4b62c3c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AGENCIA}.getNome()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="52" y="299" width="451" height="20" uuid="da5e8c8e-0ea2-43a2-8568-a82f0b371802">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CAMPANHAS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1" y="299" width="51" height="20" uuid="3f6e3524-afeb-43b4-9f51-8990cfb2bd1c">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Campanha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="300" width="133" height="20" uuid="46e307b5-9b02-42bb-978a-423d57200318">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Encaminhamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="167" width="535" height="13" uuid="4a213274-a7f3-4959-bc97-e6f7397146c1">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Protocolo de Tramitação Interna]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="167" width="535" height="13" uuid="7d6ac3fc-f9ce-49ff-8810-6d437e3daccf">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Protocolo de Tramitação Externa]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="133" y="300" width="364" height="20" uuid="31a368ea-1dd2-455f-bddd-c18e18379f69">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PROTOCOLO}.getDataProtocolo()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="239" width="400" height="20" uuid="3781682b-c6d4-4317-a2bd-bed95b372ca5">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Protocolo de devolução de faturas para análise."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="214" width="91" height="14" uuid="13c74aa5-da72-4984-b992-9b7fdf577069">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Protocolo Externo nº:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="56" y="0" width="63" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="55785dc7-74f3-4381-9253-82528ca9f315"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PI/AP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="119" y="0" width="118" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="7b7a5b34-91b1-4ab8-b25a-292e78029066">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Meio de Veiculação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="237" y="0" width="88" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="3049eb32-51cb-46e6-a07e-621e3194faa7">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fornecedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="119" y="0" width="83" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="db7de206-6812-4a24-bb43-66a868a9bce0">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Fatura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="202" y="0" width="57" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="369d7eaa-44d6-4a2a-a99f-222dd226d636">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Devolução]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="259" y="0" width="88" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="4f1073cd-4dfe-4fb4-8912-bd08b02340a5">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade de Devolução]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="56" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="7f590bd4-ea14-4983-96f6-77107f3dc944"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Fatura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="347" y="0" width="188" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="cb772c57-960c-4f92-a5b4-000fe470362e">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Último Motivo de Devolução]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="325" y="0" width="86" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="1778388a-2827-4fee-a782-205b3538b27b">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor da fatura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="411" y="0" width="63" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="768c6c84-83cf-4622-a4ff-4da88a45722f">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="474" y="0" width="61" height="22" forecolor="#010101" backcolor="#A4A4A4" uuid="32666cf8-d803-4bf1-8a6a-2cda3268af13">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de cadastro]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="56" height="20" uuid="8750c358-c74f-4dd8-8fce-a0e395f1c283"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroFatura}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="119" y="0" width="118" height="20" uuid="93d3f7d4-03b7-443c-8763-5fe0bb59c05f">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeTipoPublicidade}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="237" y="0" width="88" height="20" uuid="3cbd378d-819b-449d-bd93-5d41c2b89be7">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeFornecedor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="325" y="0" width="86" height="20" uuid="d73ded65-eec4-4e8a-9c5b-451c241b7384">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorFatura}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="411" y="0" width="63" height="20" uuid="f43de484-7646-49e2-9507-3c1f11066b49">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataEmissao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="474" y="0" width="61" height="20" uuid="193c76d5-25fa-45eb-9c7b-39cc1b4be34c">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataCadastro}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="56" y="0" width="63" height="20" uuid="cdb90ea8-6198-4624-b8c4-f810b12e0752"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroPi} != null ? $F{numeroPi}
+: $F{numeroAp}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="119" y="0" width="83" height="20" uuid="293d2aee-e4b7-4ad2-a504-942cdc4c749c">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorFatura}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="347" y="0" width="188" height="20" uuid="407d24cf-c7b4-4f67-8548-2e837ed8276f">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivoDevolucao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="202" y="0" width="57" height="20" uuid="7e383027-b10a-4745-89e8-eda9f9f0f1dc">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataDevolucao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="259" y="0" width="88" height="20" uuid="1bb3f642-7002-4808-82b9-3bc11f79cb35">
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidadeDevolucao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="148">
+			<staticText>
+				<reportElement x="171" y="83" width="200" height="40" uuid="50f0de20-3de8-4a63-908d-f5b49b2a3a30">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Coordenador de Promoção e Eventos
+Assessoria de Comunicação Social
+Gabinete do Ministro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="68" width="138" height="14" uuid="75ee962f-dc62-49a2-8796-3e6baddc39e9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Eduardo Silva da Costa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="40" width="90" height="14" uuid="b537d718-9eef-49c1-a075-02ea507fb6b8">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Atenciosamente,]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement stretchType="RelativeToTallestObject" x="439" y="128" width="96" height="20" uuid="d2144359-ae44-4ccb-a397-164887e3af01"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="41" width="225" height="13" uuid="7fc01c93-002f-443a-aa4f-dde09b133945">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Encaminhado por: ____________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="69" width="225" height="14" uuid="d23cbf7e-a5e0-473d-b630-dbeecf62d23d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recebido por:________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="97" width="236" height="14" uuid="4fec09db-d254-4348-823a-488ff3896acc">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{PROTOCOLO}.getTipo().getId() == 2]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Recebimento:____/_______/_____________]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,60 @@
+
+<form name="informacoesUsuarioForm" novalidate>
+    <div class="span6">
+    	<label>Nome:<span class="text-danger"></span></label>
+    	{{ usuarioAutenticado.nome }}
+    </div>
+    <div class="span6">
+    	<label>Cpf:<span class="text-danger"></span></label>
+    	{{ usuarioAutenticado.cpf }}
+    </div>  
+    <div class="span6">
+    	<label>Perfil Selecionado:<span class="text-danger"></span></label>
+    	{{ usuarioAutenticado.perfil.nome }}
+    </div>  
+    <div class="span6">
+    	<label>Sigla perfil:<span class="text-danger"></span></label>
+    	{{ usuarioAutenticado.perfil.sigla }}
+    </div>  
+     <div class="span6">
+    	<label>E-mail:<span class="text-danger"></span></label>
+    	{{ usuarioAutenticado.email }}
+    </div>  
+    
+	<div class="span12">
+         <table ng-table="tabelaPerfil" class="table ms-grid">
+         		<thead>
+				 <tr>
+					 <th class="text-center sortable" ng-class="{'sort-asc': tabelaPerfil.isSortBy('nome', 'asc'),
+						 'sort-desc': tabelaPerfil.isSortBy('nome', 'desc')}"
+						 ng-click="tabelaPerfil.sorting('nome', tabelaPerfil.isSortBy('nome', 'asc') ? 'desc' : 'asc')">
+						 <div>Nome Perfil</div>
+					 </th>
+					 <th class="text-center sortable" ng-class="{'sort-asc': tabelaPerfil.isSortBy('sigla', 'asc'),
+						 'sort-desc': tabelaPerfil.isSortBy('sigla', 'desc')}"
+						 ng-click="tabelaPerfil.sorting('sigla', tabelaPerfil.isSortBy('sigla', 'asc') ? 'desc' : 'asc')">
+						 <div>Sigla Perfil</div>
+					 </th>
+					 <th class="text-center">
+						 <div>Ação</div>
+					 </th>
+				 </tr>
+			 </thead>
+         		<tbody>
+	            <tr ng-repeat="perfil in $data"
+	                ng-click="selecionarPerfil(perfil)">
+	                <td>
+	                    {{perfil.nome}}
+	                </td>
+	                <td>
+	                    {{perfil.sigla}}
+	                </td>
+	                <td>
+	                   	<a class='btn btn-sm'><span class='icon-checkmark'></span></a>
+	                </td>
+	            </tr>
+         		</tbody>
+        </table>
+       </div>
+</form>
+          

@@ -1,0 +1,807 @@
+/*CSS da apliação, correçoes, hacks (milhares deles) etc*/
+a {
+	cursor: pointer;
+}
+
+select {
+	border-radius: 3px;
+}
+
+form {
+	margin: 0 0 0 0;
+}
+
+@media (max-width: 500px){
+	table {
+		table-layout: fixed;
+	}
+}
+
+@media (max-width: 768px) {
+	.span2-maior {
+		width : 100% !important;
+	}
+}
+
+table thead {
+	background-color: #EBEBEB;
+}
+
+table th.header {
+	float: none;
+	margin-bottom: 0px;
+	width: 0%;
+}
+
+table tbody {
+	font-size: 12px;
+}
+
+table tbody tr td, table thead tr th {
+	word-wrap: break-word;
+}
+
+select,
+.input-group-addon,
+button[type="button"],
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+	height: 34px;
+}
+
+select {
+	background-color: white;
+}
+
+
+@-moz-document url-prefix() {
+    select {
+	    -moz-appearance: none;
+	    background: transparent url("../images/arrow-down-combo.png") no-repeat scroll right center;
+	}
+}
+
+button.close {
+	height: 18px;
+}
+
+.table {
+	margin-bottom: 0px;
+}
+
+.clear {
+	clear: both;
+}
+
+.filder {
+	padding: 0px;
+}
+
+.filder-modal {
+    float: left;
+    width: 100%;
+}
+
+.filder-modal .row {
+  margin: 0 !important;
+}
+
+.panel-default .panel-heading {
+	padding: 10px 15px;
+}
+
+.panel-body {
+	padding: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.table-panel {
+	padding: 5px !important;
+}
+
+.form-table-panel {
+	padding-bottom: 5px !important;
+}
+
+.form-req {
+	color: #d10000;
+}
+
+.pull-down10 {
+	padding-top: 10px;
+}
+
+.pull-down20 {
+	padding-top: 20px;
+}
+
+.pull-down22 {
+	padding-top: 22px;
+}
+
+.pull-down30 {
+	padding-top: 30px;
+}
+
+.pull-down40 {
+	padding-top: 40px;
+}
+
+.table-border-bottom-2 {
+  border-bottom: 2px solid #ddd;
+}
+
+.font15px {
+	font-size: 15px !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+}
+
+.font17px {
+	font-size: 17px !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+}
+
+.font19px {
+	font-size: 19px !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+}
+
+.centeredColumnXY {
+	text-align: center !important;
+	vertical-align: middle !important;
+}
+
+.centeredColumnY {
+	vertical-align: middle !important;
+}
+
+.rightColumnX {
+	text-align: right !important;
+	vertical-align: middle !important;
+}
+
+.leftColumnX {
+	text-align: left !important;
+	vertical-align: middle !important;
+}
+
+
+/*ui-select*/
+.select2 > .select2-choice.ui-select-match {
+  /* Because of the inclusion of Bootstrap */
+  height: 29px;
+}
+
+.selectize-control > .selectize-dropdown {
+  top: 36px;
+}
+
+
+/*Correçoes*/
+.breadcrumb li, .breadcrumb li a {
+	font-size: 12px !important;
+}
+
+.section h4 {
+	margin: 0;
+}
+
+/*http://stackoverflow.com/questions/10190811/how-to-horizontally-center-a-modal-div-even-after-the-browser-is-resized*/
+.modalWidth950 {
+	width: 950px;
+	/*height: 669px;*/
+	margin-left: -475px; /* 950/2 */
+	/*margin-top: -335px; /* 669/2 */
+	padding: 0;
+	border: 0;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 2500;
+}
+
+.modalWidth900 {
+	width: 900px;
+	/*height: 669px;*/
+	margin-left: -450px; /* 900/2 */
+	/*margin-top: -335px; /* 669/2 */
+	padding: 0;
+	border: 0;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 2500;
+}
+
+.modalWidth800 {
+	width: 800px;
+	/*height: 669px;*/
+	margin-left: -400px; /* 800/2 */
+	/*margin-top: -335px; /* 669/2 */
+	padding: 0;
+	border: 0;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 2500;
+}
+
+.modalWidth700 {
+	width: 700px;
+	/*height: 669px;*/
+	margin-left: -350px; /* 70/2 */
+	/*margin-top: -335px; /* 669/2 */
+	padding: 0;
+	border: 0;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 2500;
+}
+
+.usuario {
+	line-height: normal !important;
+	margin-top: 0px !important;
+}
+
+.usarioLogadoInfo {
+	clear: both;
+	margin: 0;
+	padding: 0;
+	/*height: 20px;*/
+}
+
+.loading-container {
+	position: relative;
+}
+
+.loading-container .loading:before, .loading-container .loading:after {
+	content: " ";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	min-height: 50px;
+	min-width: 50px;
+}
+
+.loading-container .loading:before {
+	background-color: white;
+	opacity: 0.5;
+}
+
+.right {
+	text-align: right;
+}
+
+.pagination {
+	height: 0;
+}
+
+.hide {
+	display: none;
+}
+
+.dropdownButton {
+	font-size: 12px;
+}
+
+.autocomplete ul.dropdown-menu {
+	font-size: 12px;
+}
+
+.autocomplete ul.dropdown-menu li.active .ng-scope {
+	color: white !important;
+}
+
+.usuario {
+	line-height: normal !important;
+	margin-top: 20px;
+}
+
+/**
+* Correçao do rodape
+*/
+html, body {
+	height: 100% !important;
+}
+
+.wrapper {
+	min-height: 97% !important;
+	height: 97% !important;
+	margin: 0 auto -4em !important;
+}
+
+.footer, .push {
+	height: 4em !important;
+}
+
+.span6 p strong {
+	text-align: right;
+}
+
+.statusprojeto {
+	opacity: 0.5;
+}
+
+.spanView15 {
+	font-size: 13px;
+	margin: 0 0 10px 0;
+	word-break: break-all;
+}
+
+.labelView {
+	margin: 10px 0 0 0;
+	font-weight: bold;
+}
+
+.tableHead12 thead tr th, .tableHead12 thead tr div {
+	font-size: 12px !important;
+	vertical-align: middle;
+}
+
+.modal-body-form-input {
+	overflow-y: auto;
+}
+
+.modal.fade.in.fadeIn40 {
+	top: 40%;
+}
+
+.clear {
+	clear: both;
+}
+
+
+.acoes a {
+	margin-bottom: 1px;
+	margin-top: 1px;
+}
+
+.registroInativo {
+	color: red;
+}
+
+.img-upload {
+	border: solid 1px #ccc;
+	border-radius: 4px;
+}
+
+.span2-maior {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: 0;
+	margin-left: 0;
+	width: 17.322222222222223%;
+}
+
+
+.datepickerView label {
+	font-weight: bolder;
+	margin: 10px 0 0 0;
+}
+
+/****************** TEMPORARIO - CORRECOES BARRA BRASIL   VVVVVVVVVVVVVVVVVVVVVVVVVVVVV  *************************************/
+#barra-brasil div, #barra-brasil a, #barra-brasil ul, #barra-brasil li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline
+}
+
+#barra-brasil ul {
+	list-style: none
+}
+
+@font-face {
+	font-family: "Open Sans";
+	font-style: normal;
+	font-weight: 700;
+	src: local("Open Sans Bold"), local("OpenSans-Bold")
+}
+
+#barra-brasil {
+	height: 32px;
+	background: #f1f1f1;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 32px;
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+	border-bottom: 1px solid #dfdfdf
+}
+
+#barra-brasil a {
+	text-decoration: none
+}
+
+div#wrapper-barra-brasil {
+	position: relative;
+	overflow: hidden;
+	margin: 0 auto;
+	width: 100%;
+	max-width: 960px;
+	height: 100%
+}
+
+#barra-brasil .brasil-flag {
+	float: left;
+	padding: 7px 0 6px;
+	width: 115px;
+	height: 19px;
+	border-right: 2px solid #dfdfdf
+}
+
+#barra-brasil .brasil-flag .link-barra {
+	display: block;
+	padding-left: 42px;
+	width: 43px;
+	background:
+		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAATCAIAAAABJ4pRAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABINJREFUeNqUVFtsFFUYPrfdmdnLbLe021baQqWUtdJKL5QiASPiNVqC0TYqUWLShJQmRH3RqPHFRKJvQqIPQNSAAcMDptGEiKjYpLZIkSqGXqjdFlppd3vb7c7Ozpxz/M+2wZD44snszOzJnP//vv///g9XnNiXtNISI1gYq4eUEu4CC7SyiLpJgtSOIJKg/1ySB3x+NmsvJLNpgVUwlAu08iIkzi2pUhHIAa/q1L9p7l6YWmmHEOSBWJD6LixwJ7DDAKR06c6imQOVYxoRyEV4BR3JBYfvqNqBtILrSGNEKgoCsVxWDMmxgAOADeDjQsP+oHbo1egk7B+Mju/vq7kwVYhohsAxoiogiIM5hBaSUIBFfS21WRcOSwUHOwgTqoJR+O0pv31u56XmUKrvt4o/RyNrjVRHw40iLdU9Hck4DPBQxOQKK/XQqQa7nGNb8UICSUoE4y4rCyweqh164b7Jk12N737x2NjtfMAeCDit268e7jj7yOqfX++p+ebvQk5coAB8BQIMroqaf7xt3p4TUATgxj0Y0wOVN96uHomE3I+Ob37zSJvUHURshjySIZ4JPLhp+IcPj3h1eSZ2zxu/R8cXDeThuSLJkGZSY/fGjGOrenG9xlz8vPnK/g0xEwprl52PH9ryUGRLk1lfXWqGCcE0lUqOjxeHVy01141V+5Mvlk+lOLmcAOwC6OpMo8FnqlOCh2j2taqRE1sHKk2LuFJq6NveumNd9f0Dt2IjC1aGVKwzdz1cUryaxSasW9Oo/dFfoaEB6jxdOl2Xt3BtwYw7Xh/VmQNNcNHj5fH3N40CQgnNAAUQMjgh+y/dpIblN9j14fHuHqEFvPUP5L3Svp4mHNtGmgbaVF1oWZNIi8GXextALUpEhLqnJ0o3f9fcEw9iD3RFCaUiMmvmG/lhI50VBQX6ujX5ju3+dHHm1Mmb9dGsxyRKSwylHNLRt2HvL42O4C5IhsLsgEII74+Hd1zY+s5AdMklguMnmkaLwn9RGgr7dSfLk5ZreGhJUdD0+oz0ZxSOMNQ1VdB4fscnw5VCiOUBpb7d91vcklBJJpDwXpwOn50qKdXs2tLZpoqJU99XxVPBbMayXRnOK/Dp5p5tZzpbu0cT+sErG9/6o2rW9iLKQbOget2jQbgay3UIJrlhlJSK6Yz3dKx4dD74Ut3Ivu2X5xe8CSvopdm1kdh7e7/sfO7Ho4PlrT0NvTMhTISaaRhUoImITr244Njz8WwSVKOMhBI1hdIBMQuXlARShxuvPbt+3k0gx9GMsDVp0c7emq8nSiSFjzkVlCuKfHl+Q0aQai21Gb4E7SA59wDWGLLBg+Kk6/lqrKw/4dtWOLfKn/74+r2t3fVX5/IwcyExIBAKFFWOhskyWVx4tG3GmUfKCFRbOHYBNjiC6hBkBTrQRl+mSLeHZkOYOXeMRxIFCb6SME5gYJiGvH7MPn0q5wBCgqkgF4xBEVfdhksTyMmNpFT/chJQJQbkgitE8o73gRe4HsRYe/RJy86IFYtU1pVzSqxC/J8F5fMz/z8CDAAkCSSg0qSX5AAAAABJRU5ErkJggg==")
+		8px center no-repeat;
+	text-transform: uppercase;
+	line-height: 19px
+}
+
+#barra-brasil .acesso-info {
+	position: absolute;
+	left: 130px
+}
+
+#barra-brasil .list {
+	position: absolute;
+	top: 0;
+	right: 0
+}
+
+#barra-brasil .list .first {
+	border-left: 2px solid #dfdfdf
+}
+
+#barra-brasil .list-item {
+	display: inline-block;
+	padding: 0 15px 0 13px;
+	height: 32px;
+	border-right: 2px solid #dfdfdf
+}
+
+#barra-brasil .link-barra {
+	color: #606060
+}
+
+@media screen and (max-width: 668px) {
+	#barra-brasil .list {
+		top: -100px
+	}
+}
+
+@media screen and (min-width: 960px) {
+	#wrapper-barra-brasil {
+		width: 960px
+	}
+}
+
+#barra-brasil {
+	height: 33px !important;
+}
+
+#barra-brasil .brasil-flag {
+	width: 117px !important;
+	height: auto !important;
+}
+
+#barra-brasil .list-item {
+	padding: 7.2px 15px 0 14px !important;
+	height: 33px !important;
+}
+
+/****************** TEMPORARIO - BARRA BRASIL ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ *************************************/
+
+
+
+
+
+
+/*********************************MULTISELECT********************************************/
+.multiSelect .disableButton {
+  background-color: #eee !important;
+  cursor: not-allowed !important;
+  border-color: #ddd !important;
+}
+
+
+/*
+ * Don't modify things marked with ! - unless you know what you're doing
+ */
+.multiSelect .vertical {
+	float: none;
+}
+
+.multiSelect .horizontal:not (.multiSelectGroup ) {
+	float: left;
+}
+
+.multiSelect .line {
+	max-height: 34px;
+	overflow: hidden;
+}
+
+.multiSelect .acol {
+	display: inline-block;
+	min-width: 12px;
+	display: -moz-stack;
+}
+
+.multiSelect .inlineBlock {
+    display: inline-block;
+}
+
+.multiSelect .button {
+	display: flex;
+	position: relative;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #c6c6c6;
+	padding: 1px 8px 1px 8px;
+	font-size: 14px;
+	/*min-height: 34px !important;*/
+	border-radius: 4px;
+	color: #555;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	white-space: normal;
+	background-color: #fff;
+	/*     background-image: linear-gradient(#fff, #f7f7f7); */
+	width: 100%;
+	text-align: left;
+	margin-bottom: 9px;
+	height: auto !important;
+	word-break:break-all;
+}
+
+.multiSelect .button:hover {
+	/*     background-image: linear-gradient(#fff, #e9e9e9);     */
+
+}
+
+.multiSelect .buttonClicked {
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset, 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+}
+
+.multiSelect .buttonLabel {
+	display: inline-block;
+	padding: 5px 0px 5px 0px;
+	word-wrap: break-word;
+}
+
+.multiSelect .caret {
+	/*     display: inline-block; */
+	/*     width: 0; */
+	/*     height: 0; */
+	/*     margin: 0px 0px 1px 12px  !important;     */
+	/*     vertical-align: middle; */
+	/*     border-top: 4px solid #333; */
+	/*     border-right: 4px solid transparent; */
+	/*     border-left: 4px solid transparent; */
+	/*     border-bottom: 0 dotted;  */
+	/*     text-align: right; */
+	float: right;
+	margin-top: 12px;
+}
+
+.multiSelect .checkboxLayer {
+	background-color: #fff;
+	position: absolute;
+	z-index: 999;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+	min-width: 278px;
+	display: none !important;
+	margin-right: 30px;
+	max-width: 71%;
+}
+
+.multiSelect .helperContainer {
+	border-bottom: 1px solid #ddd;
+	padding: 8px 8px 0px 8px;
+}
+
+.multiSelect .helperButton {
+	display: inline;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	height: 26px;
+	font-size: 12px;
+	border-radius: 2px;
+	color: #666;
+	background-color: #f1f1f1;
+	line-height: 1.6;
+	margin: 0px 0px 8px 0px;
+	padding: 3px;
+}
+
+/* clear button */
+.multiSelect .clearButton {
+	position: absolute;
+	display: inline;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	height: 22px;
+	width: 22px;
+	font-size: 13px;
+	border-radius: 2px;
+	color: #666;
+	background-color: #f1f1f1;
+	line-height: 1.4;
+	right: 2px;
+	top: 2px;
+}
+
+/* filter */
+.multiSelect .inputFilter {
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    height: 26px;
+    font-size: 14px;
+    width:100%;
+    padding-left:7px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    color: #888;
+    margin: 0px 0px 8px 0px;
+}
+
+/* helper elements on hover & focus */
+.multiSelect .clearButton:hover,
+.multiSelect .helperButton:hover {
+    border: 1px solid #ccc;
+    color: #999;
+    background-color: #f4f4f4;
+}
+
+.multiSelect .clearButton:focus,
+.multiSelect .helperButton:focus,
+.multiSelect .inputFilter:focus {
+    border: 1px solid #66AFE9 !important;
+    box-shadow: inset 0 0px 1px rgba(0,0,0,.035), 0 0 5px rgba(82,168,236,.7) !important;
+}
+
+.multiSelect .checkBoxContainer {
+    display: inline-block;
+    padding: 8px;
+}
+
+.multiSelect .show {
+    display: block !important;
+}
+
+.multiSelect .multiSelectItem {
+    display: block;
+    padding: 3px;
+    color: #444;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    position: relative;
+    min-width:278px;
+    word-break: break-all;
+}
+
+.multiSelect .multiSelectItem:not(.multiSelectGroup).selected
+{
+    background-image: linear-gradient( #e9e9e9, #f1f1f1 );
+    color: #555;
+    cursor: pointer;
+    border-top: 1px solid #e4e4e4;
+    border-left: 1px solid #e4e4e4;
+    border-right: 1px solid #d9d9d9;
+}
+
+.multiSelect .multiSelectItem:hover,
+.multiSelect .multiSelectGroup:hover {
+    background-image: linear-gradient( #c1c1c1, #999 ) !important;
+    color: #fff !important;
+    cursor: pointer;
+    border: 1px solid #ccc !important;
+}
+
+.multiSelect .multiSelectFocus {
+    background-image: linear-gradient( #c1c1c1, #999 ) !important;
+    color: #fff !important;
+    cursor: pointer;
+    border: 1px solid #ccc !important;
+}
+
+.multiSelect .multiSelectItem span:hover,
+.multiSelect .multiSelectGroup span:hover {
+    cursor: pointer;
+}
+
+.multiSelect .multiSelectGroup {
+    display: block;
+    clear: both;
+}
+
+.multiSelect .tickMark {
+    display:inline-block;
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 10px;
+}
+
+.multiSelect .checkbox {
+    color: #ddd !important;
+    position: absolute;
+    left: -9999px;
+    cursor: pointer;
+}
+
+.multiSelect .disabled,
+.multiSelect .disabled:hover,
+.multiSelect .disabled label input:hover ~ span {
+    color: #c4c4c4 !important;
+    cursor: not-allowed !important;
+}
+
+.multiSelect img {
+    vertical-align: middle;
+    margin-bottom:0px;
+    height: 22px;
+    width:22px;
+}
+/*********************************MULTISELECT********************************************/
+
+
+/*********************************TABLE CUSTOMIZADA********************************************/
+
+.tr-capanha{
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	border-left: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	text-decoration: none;
+    font-family: inherit;
+    background-color: #f9f9f9;
+}
+.tr-color{
+	background-color: #E8E8E8 !important;
+}
+.td-campo{
+	height: 72px !important;
+	background-color: #fff !important;
+	vertical-align: middle !important;
+}

@@ -1,0 +1,322 @@
+@charset "utf-8";
+
+/* HEADER */
+.acessibilidade {
+	background-color: #000 !important;
+	border-color: #fff !important;
+	color: #fff !important;
+}
+
+.acessibilidade #BoxRodape_LogoDatasus {
+	background-image: url("../images/lgo/datasus-logo-alto.png");
+}
+
+.acessibilidade #logoDesenvolvimento {
+	background-image:
+		url("../images/ambiente-desenvolvimento-claro-alto.png") !important;
+}
+
+.acessibilidade #logoHomologacao {
+	background-image: url("../images/ambiente-homologacao-alto.png")
+		!important;
+}
+
+.acessibilidade .logo h1:after {
+	opacity: 1;
+}
+
+.acessibilidade .alert, .acessibilidade .alert h4 {
+	color: #fff !important;
+}
+
+.acessibilidade .logo h1 {
+	filter: none !important;
+}
+
+.acessibilidade .panel-default>.panel-heading {
+	color: #fff !important;
+	background-color: #000 !important;
+}
+
+.acessibilidade .conteudo-box label, .acessibilidade .form-req,
+	.acessibilidade .BoxAreaLogin_content form ul li span.icone {
+	color: #fff !important;
+}
+
+.acessibilidade .alert, .acessibilidade .alert-danger, .acessibilidade .alert-error,
+	.acessibilidade .alert-success {
+	background-color: #000 !important;
+	border: 1px solid #fff !important;
+	color: #fff !important;
+	text-shadow: none !important
+}
+
+.acessibilidade .btn-danger, .acessibilidade .btn-success,
+	.acessibilidade .btn-warning, .acessibilidade .btn-default,
+	.acessibilidade .btn-primary, .acessibilidade .ui-grid td {
+	background-color: #000 !important;
+	border: 1px solid #fff !important;
+	color: #fff !important;
+	text-shadow: none !important
+}
+
+.acessibilidade .btn:hover, .acessibilidade .btn:focus, .acessibilidade .btn:active,
+	.acessibilidade .btn.active, .acessibilidade .open .dropdown-toggle.btn
+	{
+	background-color: #fff !important;
+	border: 1px solid #000 !important;
+	color: #000 !important;
+}
+
+.acessibilidade .ui-state-default, .acessibilidade .ui-widget-header {
+	border: 1px solid #fff !important;
+	background: none repeat scroll 0 0 #000 !important;
+	color: #fff !important;
+}
+
+.acessibilidade #topo_geral {
+	filter: none !important;
+	background: none repeat scroll 0 0 #000;
+}
+
+.acessibilidade .box_botoes_acessibilidade {
+	background-color: #000000;
+}
+
+.acessibilidade .box_botoes_acessibilidade {
+	background-color: #000000;
+	box-shadow: none;
+}
+
+.acessibilidade .logo {
+	color: #FFFFFF;
+	text-shadow: 0 3px 3px #333030;
+}
+
+.acessibilidade .titulo_sistema {
+	text-shadow: 0 3px 3px #333030;
+	filter: none !important;
+}
+
+.acessibilidade #BoxMenuPrincipal {
+	background: none repeat scroll 0 0 #000;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	box-shadow: none;
+	filter: none !important;
+}
+
+/* CONTEUDO */
+.acessibilidade section p {
+	color: #000;
+}
+
+.acessibilidade #BoxAreaLogin {
+	min-height: 10px !important;
+	border: 1px solid #fff !important;
+	border-radius: 10px;
+}
+
+.acessibilidade #BoxAreaLogin .BoxAreaLogin_titulo {
+	border-bottom: 1px solid #fff !important;
+}
+
+.acessibilidade #BoxAreaLogin .BoxAreaLogin_content {
+	color: white !important;
+}
+
+.acessibilidade #BoxAreaLogin .BoxAreaLogin_titulo, .acessibilidade #BoxAreaLogin .BoxAreaLogin_content
+	{
+	background: none repeat scroll 0 0 #000;
+	float: left;
+	margin: 0;
+	width: 100%;
+	filter: none !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
+
+.acessibilidade #BoxAreaLogin_Informacoes_Contato {
+	background: none repeat scroll 0 0 #fff;
+	box-shadow: none;
+}
+
+.acessibilidade .BoxAreaLogin_content {
+	background-color: #fff;
+}
+
+.acessibilidade .panel-body, .acessibilidade .panel {
+	background-color: black !important;
+}
+
+.acessibilidade .logar label, .acessibilidade .logar label span,
+	.acessibilidade #BoxAreaLogin_EsqueceuEmail a, .acessibilidade .BoxAreaLogin_Info_titulo
+	{
+	color: white;
+}
+
+.acessibilidade .buttonAzul {
+	background: none repeat scroll 0 0 #000;
+	box-shadow: none;
+	color: #FFFFFF;
+}
+
+.acessibilidade .buttonAzul:hover {
+	background: none repeat scroll 0 0 #000;
+	color: #FFFFFF;
+}
+
+.acessibilidade .box strong.title {
+	border-bottom: 2px solid #fff;
+	color: #fff;
+}
+
+.acessibilidade a {
+	color: #fff;
+}
+
+.acessibilidade .box h4 {
+	color: #B6ADAD;
+}
+
+.acessibilidade .box .tab-content strong {
+	color: #fff !important;
+}
+
+.acessibilidade .sf-menu a {
+	border-left: 0 solid #333333;
+	border-right: 0 solid #255C92;
+}
+
+.acessibilidade .sf-menu li:hover, .acessibilidade .sf-menu li.sfHover,
+	.acessibilidade .sf-menu a:focus, .acessibilidade .sf-menu a:hover,
+	.acessibilidade .sf-menu a:active {
+	background-color: #333333;
+}
+
+.acessibilidade .sf-menu li li {
+	background: none repeat scroll 0 0 #333333;
+	border-bottom: 1px solid #333333;
+	border-right: 1px solid #333333;
+	border-left: 1px solid #333333;
+}
+
+.acessibilidade #BoxRodapePrincipal {
+	filter: none !important;
+	background: none repeat scroll 0 0 #000;
+	border-top: 1px solid #fff;
+}
+
+.acessibilidade .conteudo-box {
+	background: #000 !important;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: 1px solid #fff;
+}
+
+.acessibilidade strong.title {
+	color: #f1f1f1;
+	border-bottom: 2px solid #f1f1f1;
+}
+
+.acessibilidade strong.title small {
+	color: #f1f1f1;
+}
+
+.acessibilidade pre, .acessibilidade pre code {
+	background: #292929;
+	color: #fff;
+}
+
+.acessibilidade pre span, .acessibilidade pre code span {
+	color: #fff;
+}
+
+.acessibilidade .nav-tabs>.active>a, .acessibilidade .nav-tabs>.active>a:hover
+	{
+	background: #292929;
+	border: 1px solid #333;
+	color: #fff;
+}
+
+.acessibilidade .accordion-body {
+	background: rgba(241, 241, 241, 0);
+}
+
+.acessibilidade .well, .acessibilidade .section .container .dropdown-menu
+	{
+	background-color: #1D1D1D !important;
+}
+
+.acessibilidade input, .acessibilidade select, .acessibilidade textarea
+	{
+	background-color: #000 !important;
+	color: #fff !important
+}
+
+.acessibilidade .modal, .acessibilidade .modal-footer, .acessibilidade .pager a
+	{
+	background-color: #2E2D2D;
+}
+
+.acessibilidade .pagination a:hover, .acessibilidade .pagination li.active a,
+	.acessibilidade .pager a:hover {
+	background: rgba(2, 2, 2, 1);
+	color: rgba(255, 255, 255, 0.87);
+}
+
+.acessibilidade .nav>li>a:hover {
+	background: #292929;
+}
+
+.acessibilidade .nav-pills>.active>a, .acessibilidade .nav-pills>.active>a:hover
+	{
+	color: #fff;
+}
+
+.acessibilidade #modal-config-user h3, .acessibilidade #modal-config-user label
+	{
+	color: #B9C5CC;
+}
+
+.acessibilidade #BoxMenuPrincipal .dropdown-menu {
+	background: #0E191F;
+}
+
+.acessibilidade table, .acessibilidade .table .table-striped .table-bordered,
+	.acessibilidade thead, .acessibilidade tbody td {
+	color: white !important;
+	background-color: black !important;
+}
+
+.acessibilidade .modal, .acessibilidade .modal .modal-header,
+	.acessibilidade .modal .modal-body, .acessibilidade .modal .modal-footer
+	{
+	background: black !important;
+	border: white solid 1px !important;
+}
+
+.acessibilidade .statusprojeto {
+	opacity: 1 !important;
+	border: white solid 1px !important;
+	color: white !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
+
+.acessibilidade #BoxMenuPrincipal .navbar .nav>li a.dropdown-toggle:hover,
+	.acessibilidade #BoxMenuPrincipal .navbar .nav>li ms-sub-nav-menu.open a.dropdown-toggle,
+	.acessibilidade #BoxMenuPrincipal .dropdown-menu a, .acessibilidade #BoxMenuPrincipal .nav>li>a:hover,
+	.acessibilidade #BoxMenuPrincipal .dropdown.open {
+	background-color: white !important;
+	color: black !important;
+}
+
+.acessibilidade #BoxMenuPrincipal .dropdown-menu a:hover {
+	background-color: black !important;
+	color: white !important;
+}
+
+.acessibilidade .close {
+	color: white !important;
+}
