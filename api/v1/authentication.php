@@ -21,16 +21,26 @@ $app->post('/login', function () use ($app) {
         if($user['ds_senha']== $password){
             $response['status'] = "success";
             $response['message'] = 'Logged in successfully.';
-            $response['id'] = $user['id'];
-            $response['email'] = $user['ds_email'];
             $id=$user['id'];
-            $perfis= $db->getList("select * from tb_aparelho where id_usuario=$id");
-            $response['perfis']=$perfis;
+            $perfis= $db->getList("select no_aparelho as nome, id from tb_aparelho where id_usuario=$id");
+            $user['perfis']=$perfis;
+
+            $roles= array();
+            $roles[0]=("ROLE_LOGADO");
+            $user['roles']=$roles;
+
+            if(count($perfis)==1){
+                $user['perfil']=$perfis[0];
+            }
+
+            $response['usuario'] = $user;
             if (!isset($_SESSION)) {
                 session_start();
             }
+
             $_SESSION['id'] = $user['id'];
             $_SESSION['email'] = $email;
+            $response['access_token'] = session_id();
         } else {
             $response['status'] = "error";
             $response['message'] = 'Login failed. Incorrect credentials';
@@ -41,6 +51,12 @@ $app->post('/login', function () use ($app) {
     }
     echoResponse(200, $response);
 });
+
+$app->post('/login/usuario', function () use ($app) {
+    $r = json_decode($app->request->getBody());
+});
+
+
 $app->post('/signUp', function () use ($app) {
     $response = array();
     $r = json_decode($app->request->getBody());

@@ -62,6 +62,7 @@ define([
 				//TODO response.data.resultado.usuario.token
 				var token = response.data.access_token ;
 				msSegurancaService.setToken(token);
+				msSegurancaService.setUsuario(response.data.usuario)
 				deferred.resolve(msSegurancaService);
 			}, function(reason){
 				deferred.reject(reason);

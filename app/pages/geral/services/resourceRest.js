@@ -6,6 +6,8 @@ define(['msAppJs'], function(app) {
 					selfLink : 'meta.href'
 				});
 
+				var controllerPath=appConfig.appContextRoot+appConfig.controllersRoute;
+
 				//Quando o retorno se trata de um array de dentro do metadado, explicar isso para o restanga
 				Restangular.setResponseInterceptor(function(data, operation, what, url, response, deferred) {
 					var novoResponse = {};
@@ -21,13 +23,10 @@ define(['msAppJs'], function(app) {
 					return novoResponse;
 				});
 
-				//Pra fazers uns testezinhos
-				window.res = Restangular.all(appConfig.appContextRoot + "/api");
 
-				//TODO REFATORAR ESSE CARA, REMOVER ESSES RECURSOS E DEFINIR MANUALLMENTE EM CADA SERVICE. DEIXAR SO O API
 				return {
-					api : Restangular.all(appConfig.appContextRoot + "/api/v1/v1/"),
-					login : Restangular.all(appConfig.appContextRoot + "/api/v1/login")
+					api : Restangular.all(controllerPath),
+					usuario : Restangular.all(controllerPath+"/usuario")
 				};
 			} 
 			]);

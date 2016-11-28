@@ -59,14 +59,10 @@ define(['msAppJs'], function(app) {
 							$cookieStore.put('isUsuarioAutenticado', false);
 							$scope.exibirPerfis(usuario);
 						} else {
-							if(usuario.perfil !== null && usuario.perfil.listaEsferas && usuario.perfil.listaEsferas.length > 1) {
-								$cookieStore.put('isUsuarioAutenticado', false);
-								$scope.exibirEsferas(usuario.perfil);
-							} else {
-								setUsuarioScope(usuario);
-								redirecionarAcesso(true);
-							}
-						}
+                            setUsuarioScope(usuario);
+                            redirecionarAcesso(true);
+
+                        }
 					});
 				}, function(error) {
 					$msNotifyService.close();
@@ -142,7 +138,8 @@ define(['msAppJs'], function(app) {
 					 * Seleciona um perfil na tela e verifa se o mesmo tem esferas selecionaveis
 					 */
 					$scope.selecionarPerfil = function(perfilAcesso) {
-						if(perfilAcesso.listaEsferas && (perfilAcesso.listaEsferas.length === 0 || perfilAcesso.listaEsferas.length === 1)){
+                        $modalInstance.close(perfilAcesso);
+					/*	if(perfilAcesso.listaEsferas && (perfilAcesso.listaEsferas.length === 0 || perfilAcesso.listaEsferas.length === 1)){
 							$msNotifyService.loading();
 
 							if(perfilAcesso.listaEsferas.length === 1) {
@@ -156,7 +153,7 @@ define(['msAppJs'], function(app) {
 							});
 						} else {
 							$modalInstance.close(perfilAcesso);
-						}
+						}*/
 					};
 
 				}],
@@ -172,90 +169,7 @@ define(['msAppJs'], function(app) {
 			 * Apos selecionar o perfil, define os dados retornando da modal
 			 */
 			msModalService.modalInstance.result.then(function (resultado) {
-				if(resultado && resultado.listaEsferas) {
-					$scope.exibirEsferas(resultado); //mostra lista de esferas
-				} else {
-					setUsuarioScope(resultado);
-					redirecionarAcesso(true);
-				}
-			});
-		};
-
-
-		/**
-		 * Exibe uma modal com as esferas do perfil que o usuario escolheu
-		 */
-		$scope.exibirEsferas = function (perfilSelecionado) {
-			msModalService.setConfig({
-				backdrop: true,
-				keyboard: false,
-				modalFade: true,
-//				windowClass : 'modalWidth700',
-				template : null,
-				templateUrl : 'modalEsfera', //esta dentro de login.tpl.html
-				controller : ['$scope',
-				              'ngTableParams',
-				              '$modalInstance',
-				              'loginService',
-				              'perfilAcesso',
-				              '$msNotifyService',
-				              function(
-				            		  $scope,
-				            		  ngTableParams,
-				            		  $modalInstance,
-				            		  loginService,
-				            		  perfilAcesso,
-				            		  $msNotifyService){
-
-					$scope.perfilAcesso = perfilAcesso;
-
-					/**
-					 * Monta a tabela de perfis
-					 */
-					$scope.tabelaEsfera = new ngTableParams({
-						page: 1,
-						count: 5
-					}, {
-						counts: [], // hides page sizes
-						total: perfilAcesso.listaEsferas.length, // length of data
-						getData: function($defer, params) {
-							$defer.resolve(perfilAcesso.listaEsferas.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-						}
-					});
-
-
-					/**
-					 * Aciona o metodo que seleciona a efera clicada em tela
-					 * Faz a autenticaçao e retorna o resultado para o controller principal
-					 */
-					$scope.selecionarEsfera = function(esfera) {
-						$msNotifyService.loading();
-
-						var perfilAcessoRetorno = {
-								perfil: perfilAcesso.perfil,
-								esferaPerfil: esfera,
-								listaEsferas: null
-						};
-
-						loginService.selecionarPerfil(perfilAcessoRetorno)
-						.then(function(resposta) {
-							$msNotifyService.close();
-							$modalInstance.close(resposta.resultado.usuario);
-						});
-					};
-				}],
-				resolve: {
-					perfilAcesso : function () {
-						return perfilSelecionado;
-					}
-				}
-			}).open();
-
-
-			/**
-			 * Apos selecionar a esfera desejada, define os dados do usuario retornado da modal
-			 */
-			msModalService.modalInstance.result.then(function (usuario) {
+				usuario.perfil=resultado;
 				setUsuarioScope(usuario);
 				redirecionarAcesso(true);
 			});

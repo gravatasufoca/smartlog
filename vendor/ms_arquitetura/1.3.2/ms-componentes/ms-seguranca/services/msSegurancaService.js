@@ -19,7 +19,7 @@ define([
 		var _usuarioAutenticado;
 
 		var setUsuario = function(usuarioAutenticado) {
-			_usuarioAutenticado = usuarioAutenticado; 
+			_usuarioAutenticado = usuarioAutenticado;
 		};
 
 		var getUsuario = function() {

@@ -19,7 +19,14 @@ class DbHandler {
     }
     public function getList($query) {
         $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
-        return $result = $r->fetch_assoc();
+
+        $results = array();
+        while($row = $r->fetch_assoc())
+        {
+            $results[] = $row;
+        }
+
+        return $results;
     }
     /**
      * Creating new record

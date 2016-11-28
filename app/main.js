@@ -16,9 +16,10 @@ var appConfig = {
 		appBaseUrl: 'app',
 		appContextRoot: 'smartlog',
 		defaultRoute: 'login',
+		controllersRoute: 'api/v1/controller',
 		login: {
-			url: "api/v1/login",
-			url_usuario: 'api/login/usuario',
+			url: "api/v1/login/usuario",
+			url_usuario: 'api/v1/login/usuario',
 			module: 'login',
 			sucesso: 'inicio',
 			limite: 30

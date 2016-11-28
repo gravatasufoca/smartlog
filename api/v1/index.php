@@ -13,6 +13,12 @@ $user_id = NULL;
 
 require_once 'authentication.php';
 
+foreach (glob("classes/*/*.php") as $filename)
+{
+    require_once $filename;
+}
+
+
 /**
  * Verifying required params posted or not
  */
