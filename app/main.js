@@ -18,7 +18,7 @@ var appConfig = {
 		defaultRoute: 'login',
 		controllersRoute: 'api/v1/controller',
 		login: {
-			url: "api/v1/login/usuario",
+			url: "api/v1/classes/controller/usuario",
 			url_usuario: 'api/v1/login/usuario',
 			module: 'login',
 			sucesso: 'inicio',
