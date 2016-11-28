@@ -10,7 +10,8 @@ var appConfig = {
 			novo: '${scpa.novoUsuario}',
 			esqueceu: '${scpa.trocarSenha}'
 		},
-		nome: "SMARTPHONE INSPECTOR",
+		// nome: "SMARTPHONE INSPECTOR",
+		nome: 'GFINP',
 		titulo: "Minist\u00E9rio da Sa\u00FAde",
 		subtitulo: "Gest\u00e3o financeira da publicidade",
 		appBaseUrl: 'app',
@@ -18,14 +19,14 @@ var appConfig = {
 		defaultRoute: 'login',
 		controllersRoute: 'api/v1/controller',
 		login: {
-			url: "api/v1/classes/controller/usuario",
+			url: "api/v1/login",
 			url_usuario: 'api/v1/login/usuario',
 			module: 'login',
 			sucesso: 'inicio',
 			limite: 30
 		},
 		logout: {
-			url: 'api/login/logout'
+			url: 'api/v1/logout'
 		},
 		erros: {
 			"_401_" : "Acesso Negado",

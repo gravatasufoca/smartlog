@@ -53,7 +53,6 @@ define([
 					username : email,
 					password : senha
 			};
-
 			$http({
 				url : appConfig.login.url,
 				method : 'POST',

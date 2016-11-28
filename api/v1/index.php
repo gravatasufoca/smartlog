@@ -1,20 +1,12 @@
 <?php
 
-require_once 'dbHandler.php';
-require_once 'passwordHash.php';
-require '.././libs/Slim/Slim.php';
+require '../libs/Slim/Slim.php';
 
 \Slim\Slim::registerAutoloader();
 
 $app = new \Slim\Slim();
 
-// User id from db - Global Variable
-$user_id = NULL;
-
-require_once 'authentication.php';
-
-foreach (glob("classes/*/*.php") as $filename)
-{
+foreach (glob("classes/controller/*.php") as $filename) {
     require_once $filename;
 }
 
@@ -22,7 +14,8 @@ foreach (glob("classes/*/*.php") as $filename)
 /**
  * Verifying required params posted or not
  */
-function verifyRequiredParams($required_fields,$request_params) {
+function verifyRequiredParams($required_fields, $request_params)
+{
     $error = false;
     $error_fields = "";
     foreach ($required_fields as $field) {
@@ -45,7 +38,8 @@ function verifyRequiredParams($required_fields,$request_params) {
 }
 
 
-function echoResponse($status_code, $response) {
+function echoResponse($status_code, $response)
+{
     $app = \Slim\Slim::getInstance();
     // Http response code
     $app->status($status_code);
@@ -54,6 +48,32 @@ function echoResponse($status_code, $response) {
     $app->contentType('application/json');
 
     echo json_encode($response);
+}
+
+function getSession()
+{
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+   return $_SESSION;
+}
+
+function destroySession()
+{
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    if (isSet($_SESSION['usuario'])) {
+        unset($_SESSION['usuario']);
+        $info = 'info';
+        if (isSet($_COOKIE[$info])) {
+            setcookie($info, '', time() - $cookie_time);
+        }
+        $msg = "Logged Out Successfully...";
+    } else {
+        $msg = "Not logged in...";
+    }
+    return $msg;
 }
 
 $app->run();

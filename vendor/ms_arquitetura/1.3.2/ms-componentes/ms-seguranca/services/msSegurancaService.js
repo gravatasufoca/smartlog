@@ -98,6 +98,8 @@ define([
 			$cookieStore.remove('tempoLimite');
 			$cookieStore.remove('isUsuarioAutenticado');
 			$cookieStore.remove('msToken');
+			$cookieStore.remove('XDEBUG_SESSION');
+			$cookieStore.remove('PHPSESSID');
 			$http.defaults.headers.common['Authorization'] = "";
 			_usuarioAutenticado = undefined;
 		};

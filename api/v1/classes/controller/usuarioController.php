@@ -1,9 +1,10 @@
 <?php
 
-//$route="/usuario";
+$route="/usuario";
 
-$app->post('/usuario', function ($request, $response, $args) use ($app) {
-    $r = json_decode($app->request->getBody());
+$app->post($route.'/:id', function ($id) use ($app) {
+
+
 });
 
 
