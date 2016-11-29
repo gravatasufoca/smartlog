@@ -1,0 +1,56 @@
+<div class="{{tamanhoSpan}}"> 
+   <div class="filder panel panel-default"> 
+       <div class="panel-heading"> 
+           <b class="panel-title">{{titulo ? titulo : 'dados-fatura' | translate}}</b> 
+       </div> 
+       <div class="panel-body"> 
+           <div class="row"> 
+				<div class="span6"> 
+				    <label class="labelView"><strong>{{'situacao-fatura' | translate}}</strong></label> 
+				    <span class="spanView15">{{fatura.situacao.descricao}}</span> 
+				</div> 
+               
+				<div class="span6"> 
+				    <label class="labelView"><strong>{{'tipo-publicidade' | translate}}</strong></label> 
+				    <span class="spanView15">{{fatura.tipoPublicidade.descricao}}</span> 
+				</div>  
+           </div> 
+           
+           <div class="row"> 
+				<div class="span6"> 
+				    <label class="labelView"><strong>{{'data-cadastro' | translate}}</strong></label> 
+				    <span class="spanView15">{{fatura.dataCadastroFatura | date:'dd/MM/yyyy'}}</span> 
+				</div>   
+				<div class="span6"> 
+				    <label class="labelView"><strong>{{'data-emissao-fatura' | translate}}</strong></label> 
+				    <span class="spanView15">{{fatura.dataEmissao | date:'dd/MM/yyyy'}}</span> 
+				</div> 
+           </div> 
+           
+           <div class="row"> 
+				<div class="span6"> 
+				    <label class="labelView"><strong>{{'numero-fatura' | translate}}</strong></label> 
+				    <span class="spanView15">{{fatura.numeroFatura}}</span> 
+				</div> 
+				<div class="span6"> 
+				    <label class="labelView"><strong>{{'valor-fatura' | translate}}</strong></label> 
+				    <span class="spanView15">{{fatura.valor | real}}</span> 
+				</div> 
+           </div> 
+
+           <div class="row">    
+				<div class="span6"> 
+				    <label class="labelView"><strong>{{'ano' | translate}}</strong></label> 
+				    <span class="spanView15">{{fatura.anoExercicio}}</span> 
+				</div>   
+           </div> 
+           
+           <div class="row"> 
+				<div class="span6"> 
+				    <label class="labelView"><strong>{{'descricao-fatura' | translate}}</strong></label> 
+				    <span class="spanView15">{{fatura.descricaoFatura | dash}}</span> 
+				</div>   
+           </div> 
+       </div> 
+   </div> 
+</div> 

@@ -1,0 +1,104 @@
+<div class="span6"> 
+	<div class="filder panel panel-default">
+		<div class="panel-heading">
+			<b class="panel-title">{{'dados-fatura' | translate}}</b>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<ex-tipo-publicidade
+			    desativado="substituir || fatura.id"
+				rotulo="'tipo-publicidade'"
+				tamanho-span="'span6'"
+				msg-erro-quando="!fatura.tipoPublicidade&&fatura.mostrarMsgErro"
+				valor="fatura.tipoPublicidade"
+				on-tipo-publicidade-change-fn="onTipoPublicidadeChange"
+				obrigatorio="true">
+				</ex-tipo-publicidade>
+			</div>
+			
+			<div class="row">
+				<div ng-if="!substituir">
+					<ex-agencia
+						tamanho-span="isProducao() ? 'span12' : 'span6'"
+						desativado="!fatura.tipoPublicidade.id"
+						obrigatorio="true"
+						apenas-com-contrato-empenho="true"
+						msg-erro-quando="!agencia.agencia&&fatura.mostrarMsgErro"
+						on-change-fn="onAgenciaChange"
+						valor="agencia.agencia">
+					</ex-agencia>
+				</div>	
+		
+				<div class="span6" ng-if="!isProducao() && !substituir">
+					<label for="pi">{{ 'numero-fatura-pi'| translate}}  <em class="form-req">*</em></label>
+				
+					<input id="pi"
+					ng-disabled="!fatura.tipoPublicidade.id || !agencia.agencia.id || fatura.id"
+					ng-blur="consultarPiPorNumero()"
+					maxlength="20" 
+					type="text"  
+					ng-model="numeroPiConsulta.numero" 
+					ng-model-options="{ debounce: 1000 }"
+					class="ex-number right">
+					<ex-obrigatorio mostrar-quando="!numeroPiConsulta.numero && fatura.mostrarMsgErro"></ex-obrigatorio>
+				</div>
+			</div>
+			
+			<div class="row">	
+				<ex-data
+					desativado="isDisabled() || fatura.id"
+					tamanho-span="'span6'"
+					valor="fatura.dataCadastroFatura"
+					rotulo="'data-cadastro'"></ex-data>
+			
+				<ex-data
+					desativado="isDisabled()"
+					msg-erro-quando="!fatura.dataEmissao&&fatura.mostrarMsgErro"
+					obrigatorio="true"
+					tamanho-span="'span6'"
+					valor="fatura.dataEmissao"
+					rotulo="'data-emissao-fatura'"></ex-data>
+			</div>
+			
+			<div class="row">					
+				<div class="span6">
+					<label for="numeroFatura">{{'numero-fatura' | translate}} <em class="form-req">*</em></label>
+					<input 
+						desativado="isDisabled()"
+						id="numeroFatura" 
+						type="text"  
+						maxlength="20" 
+						ng-model="fatura.numeroFatura" 
+						class="ex-number right">
+					<ex-obrigatorio mostrar-quando="!fatura.numeroFatura&&fatura.mostrarMsgErro"></ex-obrigatorio>
+				</div>
+																
+				<div class="span6">
+					<label for="valor">{{'valor-fatura' | translate}} <em class="form-req">*</em></label>
+					<input
+						ng-disabled="isProducao()"
+						id="valor" 
+						type="text" 
+						maxlength="12" 
+						ng-model="fatura.valor" 
+						class="ex-real right">
+					<ex-obrigatorio mostrar-quando="!fatura.valor&&fatura.mostrarMsgErro"></ex-obrigatorio>
+				</div>
+			</div>
+	
+	
+			<div class="row">
+				<div class="span12">
+					<label for="descricaoFatura">{{'descricao-fatura' | translate}}</label>
+					<textarea 
+						desativado="isDisabled()"
+						rows="2" 
+						id="descricaoFatura" 
+						maxlength="300"  
+						ng-model="fatura.descricaoFatura" 
+						placeholder=""></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
