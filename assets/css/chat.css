@@ -4,22 +4,69 @@
     box-sizing: border-box
 }
 
-.user_color_1,.user_color_1:hover{color:#8365ab}
-.user_color_2,.user_color_2:hover{color:#539e4f}
-.user_color_3,.user_color_3:hover{color:#ae9661}
-.user_color_4,.user_color_4:hover{color:#4979a3}
-.user_color_5,.user_color_5:hover{color:#b7635d}
-.user_color_6,.user_color_6:hover{color:#b3577a}
-.user_color_7,.user_color_7:hover{color:#5397b4}
-.user_color_8,.user_color_8:hover{color:#c07844}
-.user_bgcolor_1{background:#cc90e2}
-.user_bgcolor_2{background:#80d066}
-.user_bgcolor_3{background:#ecd074}
-.user_bgcolor_4{background:#6fb1e4}
-.user_bgcolor_5{background:#e57979}
-.user_bgcolor_6{background:#f98bae}
-.user_bgcolor_7{background:#73cdd0}
-.user_bgcolor_8{background:#fba76f}
+.user_color_1, .user_color_1:hover {
+    color: #8365ab
+}
+
+.user_color_2, .user_color_2:hover {
+    color: #539e4f
+}
+
+.user_color_3, .user_color_3:hover {
+    color: #ae9661
+}
+
+.user_color_4, .user_color_4:hover {
+    color: #4979a3
+}
+
+.user_color_5, .user_color_5:hover {
+    color: #b7635d
+}
+
+.user_color_6, .user_color_6:hover {
+    color: #b3577a
+}
+
+.user_color_7, .user_color_7:hover {
+    color: #5397b4
+}
+
+.user_color_8, .user_color_8:hover {
+    color: #c07844
+}
+
+.user_bgcolor_1 {
+    background: #cc90e2
+}
+
+.user_bgcolor_2 {
+    background: #80d066
+}
+
+.user_bgcolor_3 {
+    background: #ecd074
+}
+
+.user_bgcolor_4 {
+    background: #6fb1e4
+}
+
+.user_bgcolor_5 {
+    background: #e57979
+}
+
+.user_bgcolor_6 {
+    background: #f98bae
+}
+
+.user_bgcolor_7 {
+    background: #73cdd0
+}
+
+.user_bgcolor_8 {
+    background: #fba76f
+}
 
 .msgconteudo {
     box-sizing: border-box;
@@ -33,10 +80,10 @@
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
     font-weight: normal;
-    height: 519px;
+    /*height: 519px;*/
     line-height: 18px;
     text-size-adjust: 100%;
-    width: 1008px;
+    /*width: 1008px;*/
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -56,12 +103,13 @@
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
     font-weight: normal;
-    height: 519px;
+    /*height: 519px;*/
     line-height: 18px;
     padding-bottom: 10px;
     text-size-adjust: 100%;
     user-select: none;
-    width: 312.469px;
+    /*width: 312.469px;*/
+    width:30%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -77,7 +125,7 @@
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
     font-weight: normal;
-    height: 1240px;
+    /*height: 1240px;*/
     line-height: 18px;
     list-style-image: none;
     list-style-position: outside;
@@ -87,16 +135,18 @@
     padding-left: 0px;
     text-size-adjust: 100%;
     user-select: none;
-    width: 310.469px;
+    /*width: 310.469px;*/
     -webkit-margin-after: 0px;
     -webkit-margin-before: 0px;
     -webkit-margin-end: 0px;
     -webkit-margin-start: 0px;
     -webkit-padding-start: 0px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    height: 441px;
+    overflow: auto;
 }
 
-.topico:hover{
+.topico:hover {
     border-radius: 0;
     background: #f2f6fa
 }
@@ -126,7 +176,8 @@
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-.intopico:hover{
+
+.intopico:hover {
     color: #fff;
 }
 
@@ -197,7 +248,7 @@
     text-align: right;
     text-size-adjust: 100%;
     user-select: none;
-    width: 27.9219px;
+    /*width: 27.9219px;*/
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -408,4 +459,35 @@
     white-space: nowrap;
     word-wrap: break-word;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.mensagenscontainer {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    float: left;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px;
+
+    line-height: 18px;
+    text-size-adjust: 100%;
+    user-select: none;
+    width: 69%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.semmensagens {
+    box-sizing: border-box;
+    color: rgb(153, 153, 153);
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 16px !important;
+    line-height: 18px;
+    text-align: center;
+    text-size-adjust: 100%;
+    user-select: none;
+    visibility: visible;
+    /*width: 100%;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    padding-top:190px;
 }
