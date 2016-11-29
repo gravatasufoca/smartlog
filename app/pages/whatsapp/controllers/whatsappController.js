@@ -51,7 +51,7 @@ define(['msAppJs',
 					$scope.filtro = $scope.consulta.cfg.filtroValido;
 				}
 			} else {
-				$scope.consultar();
+				// $scope.consultar();
 			}
 		});
 
