@@ -138,7 +138,12 @@ define(['msAppJs'], function(app) {
 					 * Seleciona um perfil na tela e verifa se o mesmo tem esferas selecionaveis
 					 */
 					$scope.selecionarPerfil = function(perfilAcesso) {
-                        $modalInstance.close(perfilAcesso);
+                        loginService.selecionarPerfil(perfilAcesso)
+                            .then(function(resposta) {
+                                $msNotifyService.close();
+                                $modalInstance.close(resposta.usuario);
+                            });
+
 					/*	if(perfilAcesso.listaEsferas && (perfilAcesso.listaEsferas.length === 0 || perfilAcesso.listaEsferas.length === 1)){
 							$msNotifyService.loading();
 
@@ -169,7 +174,6 @@ define(['msAppJs'], function(app) {
 			 * Apos selecionar o perfil, define os dados retornando da modal
 			 */
 			msModalService.modalInstance.result.then(function (resultado) {
-				usuario.perfil=resultado;
 				setUsuarioScope(usuario);
 				redirecionarAcesso(true);
 			});

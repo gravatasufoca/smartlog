@@ -8,7 +8,7 @@ define(['msAppJs'],
 	                            		 $translatePartialLoader){
 
 		var selecionarPerfil = function(perfil) {
-			return resourceRest.login.customPOST(perfil, 'login');
+			return resourceRest.login.customPOST(perfil, 'perfil');
 		};
 
 		return {

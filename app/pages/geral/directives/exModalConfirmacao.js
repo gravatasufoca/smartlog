@@ -5,7 +5,7 @@ define(['msAppJs',
 
 
 
-	//Diretiva para reuso do codigo para a modal de reprovacao de uma fatura
+	//Diretiva para reuso do codigo para a modal de reprovacao de uma whatsapp
 	app.directive('exModalConfirmacao', ["$rootScope",
 	                                     "msModalService",
 	                                     function($rootScope,

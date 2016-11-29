@@ -156,7 +156,7 @@ define(['msAppJs'], function(app) {
 
 		var situacoesFaturaCache = [];
 		var situacoesFaturaList = function() {
-			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'situacoes-fatura', situacoesFaturaCache);
+			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'situacoes-whatsapp', situacoesFaturaCache);
 		};
 
 

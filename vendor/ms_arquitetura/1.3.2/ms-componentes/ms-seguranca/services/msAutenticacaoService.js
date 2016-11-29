@@ -26,7 +26,7 @@ define([
 					$http.get(appConfig.login.url_usuario, {token: token})
 					.then(function(response){
 						$timeout(function() {
-							msSegurancaService.setUsuario(response.data.resultado.usuario);
+							msSegurancaService.setUsuario(response.data.usuario);
 							deferred.resolve(msSegurancaService.getUsuario());
 						}, true);
 					}, function(reason) {
