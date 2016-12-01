@@ -73,7 +73,7 @@
     color: rgb(0, 0, 0);
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -96,7 +96,7 @@
     display: block;
     float: left;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -109,7 +109,7 @@
     text-size-adjust: 100%;
     user-select: none;
     /*width: 312.469px;*/
-    width:30%;
+    width: 30%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -118,7 +118,7 @@
     color: rgb(0, 0, 0);
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -157,7 +157,7 @@
     display: block;
     float: none;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -200,7 +200,7 @@
     cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -233,7 +233,7 @@
     display: block;
     float: right;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -258,7 +258,7 @@
     cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 11.05px;
+    font-size: 11.05px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -287,7 +287,7 @@
     display: block;
     float: left;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -326,7 +326,7 @@
     cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 18px;
+    font-size: 18px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -354,7 +354,7 @@
     cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -381,7 +381,7 @@
     cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -412,7 +412,7 @@
     cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -437,7 +437,7 @@
     cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
     font-stretch: normal;
     font-style: normal;
     font-variant-caps: normal;
@@ -467,7 +467,7 @@
     display: block;
     float: left;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px;
+    font-size: 13px !important;
 
     line-height: 18px;
     text-size-adjust: 100%;
@@ -489,5 +489,366 @@
     visibility: visible;
     /*width: 100%;*/
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    padding-top:190px;
+    padding-top: 190px;
+}
+
+.listamensagem {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    /*height: 1069px;*/
+    line-height: 18px;
+    text-size-adjust: 100%;
+    user-select: none;
+    /*width: 695.516px;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    height: 441px;
+    overflow: auto;
+}
+
+.msgwrap {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    /*height: 58px;*/
+    line-height: 18px;
+    text-size-adjust: 100%;
+    user-select: none;
+    /*width: 654.109px;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    padding-bottom:3px;
+}
+
+.msgoutwrap {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    /*height: 58px;*/
+    line-height: 18px;
+    text-size-adjust: 100%;
+    user-select: text;
+    /*width: 654.109px;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.msginwrap {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    /*height: 58px;*/
+    line-height: 18px;
+    margin-bottom: 0px;
+    margin-left: 47.0469px;
+    margin-right: 47.0625px;
+    margin-top: 0px;
+    max-width: 560px;
+    padding-bottom: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0px;
+    position: relative;
+    text-size-adjust: 100%;
+    user-select: text;
+    /*width: 560px;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.afoto {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    background-origin: padding-box;
+    background-position-x: 0px;
+    background-position-y: 0px;
+    background-size: auto;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    box-sizing: border-box;
+    color: rgb(58, 109, 153);
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    height: 42px;
+    line-height: 18px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 15px;
+    margin-top: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-decoration: none;
+    text-size-adjust: 100%;
+    user-select: text;
+    width: 42px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.foto {
+    border-bottom-color: rgb(58, 109, 153);
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-style: none;
+    border-bottom-width: 0px;
+    border-image-outset: 0px;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-left-color: rgb(58, 109, 153);
+    border-left-style: none;
+    border-left-width: 0px;
+    border-right-color: rgb(58, 109, 153);
+    border-right-style: none;
+    border-right-width: 0px;
+    border-top-color: rgb(58, 109, 153);
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-top-style: none;
+    border-top-width: 0px;
+    box-sizing: border-box;
+    color: rgb(58, 109, 153);
+    cursor: pointer;
+    display: inline;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    height: 42px;
+    line-height: 18px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-size-adjust: 100%;
+    user-select: text;
+    vertical-align: middle;
+    width: 42px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.chora {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: block;
+    float: right;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    height: 18px;
+    line-height: 18px;
+    text-align: right;
+    text-size-adjust: 100%;
+    user-select: none;
+    /*width: 52.8281px;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.data {
+    box-sizing: border-box;
+    color: rgb(173, 173, 173);
+    cursor: pointer;
+    display: inline;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 11.05px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    height: auto;
+    line-height: 18px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 0px;
+    text-align: right;
+    text-size-adjust: 100%;
+    user-select: none;
+    width: auto;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.message_body {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    /*height: 42px;*/
+    line-height: 18px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-size-adjust: 100%;
+    user-select: text;
+    /*width: 394.172px;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.author {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    background-origin: padding-box;
+    background-position-x: 0px;
+    background-position-y: 0px;
+    background-size: auto;
+    box-sizing: border-box;
+    color: rgb(58, 109, 153);
+    cursor: pointer;
+    display: inline-block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 12px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: bold;
+    /*height: 18px;*/
+    line-height: 18px;
+    margin-bottom: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 1px;
+    text-decoration: none;
+    text-size-adjust: 100%;
+    user-select: text;
+    width: 34px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.mensagem {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    /*height: 19px;*/
+    line-height: 18px;
+    text-size-adjust: 100%;
+    user-select: text;
+    /*width: 394.172px;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.msgwrapin {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    /*height: 42px;*/
+    line-height: 18px;
+    margin-bottom: 8px;
+    margin-left: 16px;
+    margin-right: 10px;
+    margin-top: 8px;
+    text-size-adjust: 100%;
+    user-select: text;
+    /*width: 504px;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.msgtxt {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px !important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    /*height: 19px;*/
+    line-height: 19.5px;
+    text-size-adjust: 100%;
+    unicode-bidi: isolate;
+    user-select: text;
+    white-space: pre-wrap;
+    /*width: 394.172px;*/
+    word-wrap: break-word;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.hidden{
+    display: none;
 }

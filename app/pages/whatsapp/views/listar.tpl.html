@@ -3,6 +3,13 @@
     <link type="text/css" rel="stylesheet" href="assets/css/chat.css" media="screen"/>
 
     <div class="row">
+        <div class="span12">
+            <strong class="title">{{ 'home.title' | translate }}</strong>
+        </div>
+    </div>
+
+
+    <div class="row">
         <div class="box conteudo-box">
 
             <div class="msgconteudo ">
@@ -10,35 +17,18 @@
                 <div class="colunatopico">
                     <div class="ctopico">
                         <ul class="ultopico">
-                            <li class="topico">
-                                <a class="intopico">
+                            <li class="topico" ng-repeat="topico in topicos | orderBy:'mensagem().data'">
+                                <a class="intopico" ng-click="selecionarTopico(topico)">
                                     <div class="chora">
-                                        <div class="hora">10:22</div>
+                                        <div class="hora">{{topico.mensagem().data.format('DD/MM/YYYY')}}</div>
                                     </div>
                                     <div class="divavatar">
-                                        <span class="avatar user_bgcolor_4">hc</span>
+                                        <span class="avatar {{topico.mensagem().cor}}">{{topico.nome.acronomo(2)}}</span>
                                     </div>
                                     <div class="nomes">
-                                        <div class="nome">nome nome</div>
+                                        <div class="nome">{{topico.nome}}</div>
                                         <div class="cmensagem">
-                                            <div class="mensagem">mensagem</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-
-                            <li class="topico">
-                                <a class="intopico">
-                                    <div class="chora">
-                                        <div class="hora">10:21</div>
-                                    </div>
-                                    <div class="divavatar">
-                                        <span class="avatar user_bgcolor_1">GL</span>
-                                    </div>
-                                    <div class="nomes">
-                                        <div class="nome">nome nome</div>
-                                        <div class="cmensagem">
-                                            <div class="mensagem">mensagem</div>
+                                            <div class="mensagem">{{topico.mensagem().texto}}</div>
                                         </div>
                                     </div>
                                 </a>
@@ -52,7 +42,59 @@
 
                 <!-- QUANDO NAO TEM MENSAGENS ESCOLHIDAS-->
                 <div class="mensagenscontainer">
-                    <div class="semmensagens">Selecione um chat para começar a conversar</div>
+                    <div class="semmensagens" ng-if="topico==null">Selecione um chat para começar a conversar</div>
+
+                    <div class="listamensagem" ng-if="topico!=null">
+                        <!-- MENSAGEM COMPLETA -->
+                        <div class="msgwrap" ng-repeat="mensagem in topico.mensagens track by mensagem.id ">
+                            <div class="msgoutwrap">
+                                <div class="msginwrap">
+                                    <div class="msgwrapin">
+                                        <a class="afoto">
+                                            <span class="avatar {{mensagem.cor}} {{topico.mesmoGrupo($index)? 'hidden':''}}">{{mensagem.contato.acronomo(2)}}</span>
+                                            <!--<img class="foto" src="filesystem:https://web.telegram.org/temporary/702222036_29437_16181383589578663144.jpg"/>-->
+                                        </a>
+                                        <div class="chora">
+                                            <div class="data">{{mensagem.data.format('hh:mm:ss')}}</div>
+                                        </div>
+                                        <div class="message_body">
+                                            <a class="author {{topico.mesmoGrupo($index)? 'hidden':''}}">{{mensagem.contato}}</a>
+                                            <div class="mensagem">
+                                                <div class="msgtxt">{{mensagem.texto}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MENSAGEM SEM FOTO -->
+                    <!--    <div class="msgwrap">
+                            <div class="msgoutwrap">
+                                <div class="msginwrap">
+                                    <div class="msgwrapin">
+                                        <a class="afoto">
+                                            <span class="avatar hidden user_bgcolor_4">hc</span>
+                                            &lt;!&ndash;<img class="foto" src="filesystem:https://web.telegram.org/temporary/702222036_29437_16181383589578663144.jpg"/>&ndash;&gt;
+                                        </a>
+                                        <div class="chora">
+                                            <div class="data"> 14:30:12</div>
+                                        </div>
+                                        <div class="message_body">
+                                            <a class="author hidden"></a>
+                                            <div class="mensagem">
+                                                <div class="msgtxt">mensagem 1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+
+                    </div>
+
+
                 </div>
 
 

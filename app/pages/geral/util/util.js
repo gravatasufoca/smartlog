@@ -128,6 +128,17 @@ define(['msAppJs'], function(app) {
 	};
 
 
+    String.prototype.acronomo = function (qtd) {
+        if (this != null && this.length > 0) {
+            var matches = this.match(/\b(\w)/g);
+            var acronym = matches.join('');
+            if (acronym.length >= qtd)
+                return acronym.substring(0, qtd);
+            return acronym;
+        }
+        return "";
+    };
+
 	/**
 	 * Converte strings para date
 	 */
@@ -164,6 +175,10 @@ define(['msAppJs'], function(app) {
 	Date.prototype.datetimeToString = function(d) {
 		return moment(this).format('YYYY-MM-DDTHH:mm:ss');
 	};
+
+    Date.prototype.format = function(pattern) {
+        return moment(this).format(pattern);
+    };
 
 
 	//////////////////////////////////////////////////////// UTILIDADES
@@ -252,6 +267,11 @@ define(['msAppJs'], function(app) {
 
 			return new Blob([uInt8Array], {type: contentType});
 		}
+
+		Geral.prototype.randomInt=function (min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
 	}
 
 	window.geral = new Geral();
