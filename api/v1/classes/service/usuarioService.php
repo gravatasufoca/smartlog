@@ -2,7 +2,7 @@
 
 require_once "classes/dao/dbHandler.php";
 
-class usuarioService
+class UsuarioService
 {
 
     private $db;

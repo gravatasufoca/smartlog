@@ -10,7 +10,7 @@ $app->post('/login', function () use ($app) {
     $password = $r->password;
     $email = $r->username;
 
-    $usuarioService = new usuarioService();
+    $usuarioService = new UsuarioService();
 
     $user=$usuarioService->recuperarPorEmail($email,null);
 

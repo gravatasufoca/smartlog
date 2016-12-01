@@ -46,8 +46,9 @@ function echoResponse($status_code, $response)
 
     // setting response content type to json
     $app->contentType('application/json');
-
-    echo json_encode($response);
+    $resultado=array();
+    $resultado["resultado"]=$response;
+    echo json_encode($resultado);
 }
 
 function getSession()

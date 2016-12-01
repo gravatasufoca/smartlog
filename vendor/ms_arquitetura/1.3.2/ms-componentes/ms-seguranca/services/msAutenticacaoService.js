@@ -59,9 +59,9 @@ define([
 				data : credentials
 			}).then(function(response) {
 				//TODO response.data.resultado.usuario.token
-				var token = response.data.access_token ;
+				var token = response.data.resultado.access_token ;
 				msSegurancaService.setToken(token);
-				msSegurancaService.setUsuario(response.data.usuario)
+				msSegurancaService.setUsuario(response.data.resultado.usuario)
 				deferred.resolve(msSegurancaService);
 			}, function(reason){
 				deferred.reject(reason);

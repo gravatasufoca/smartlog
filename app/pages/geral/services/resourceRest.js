@@ -27,7 +27,9 @@ define(['msAppJs'], function(app) {
 				return {
 					api : Restangular.all(controllerPath),
 					usuario : Restangular.all(controllerPath+"/usuario"),
-					login : Restangular.all(controllerPath+"/login")
+					login : Restangular.all(controllerPath+"/login"),
+					topico : Restangular.all(controllerPath+"/topico"),
+                    mensagem : Restangular.all(controllerPath+"/mensagem")
 				};
 			} 
 			]);

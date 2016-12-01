@@ -12,6 +12,8 @@ define(['msAppJs',
 	                                             '$filter',
 	                                             '$state',
 	                                             '$stateParams',
+	                                             'whatsappService',
+	                                             '$rootScope',
 	                                             function($scope,
 	                                            		 ngTableParams,
 	                                            		 $msNotifyService,
@@ -21,7 +23,9 @@ define(['msAppJs',
 	                                            		 apoioService,
 	                                            		 $filter,
 	                                            		 $state,
-	                                            		 $stateParams
+	                                            		 $stateParams,
+                                                         whatsappService,
+														 $rootScope
 	                                            		 ){
 		$translatePartialLoader.addPart('whatsapp');
 
@@ -47,18 +51,52 @@ define(['msAppJs',
 		/**
 		 * Recuperando o estado da tela de consulta
 		 */
-		$scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams, error) {
-			if(toState.controller == 'whatsappController' && fromState.controller == "visualizarWhatsappController"){
-				// var estado = faturaService.getViewConsulta();
+        $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams, error) {
+           /* if ($stateParams.id) {
+                topicoService.recuperarTopicos($stateParams.id)
+                    .then(function (data) {
+                        $scope.agencia = data.resultado;
 
-				if(estado != null) {
-					$scope.consulta = estado;
-					$scope.filtro = $scope.consulta.cfg.filtroValido;
-				}
-			} else {
-				// $scope.consultar();
-			}
-		});
+                        contratoAgencia.recuperarContratoVigentePorAgencia($scope.agencia.id).then(function (d) {
+                            $scope.agencia.contrato = d.resultado;
+                        });
+
+                        //$scope.agenciaSecundaria = $scope.agencia.agenciaAditivo;
+                        if (window.geral.isEmpty($scope.agencia.telefoneAgencia)) {
+                            $scope.agencia.telefoneAgencia = new TelefoneAgencia();
+                        }
+
+                        console.log($scope)
+                    }, function (e) {
+                        $timeout(function () {
+                            $state.go("agencia");
+                            $scope.showMsg('E', e.data.mensagens[0].texto);
+                        }, 100);
+                    });
+            }*/
+           var usuario=$rootScope.usuarioAutenticado;
+           if(usuario!=null && usuario.perfil!=null) {
+               $msNotifyService.loading();
+               whatsappService.recuperarTopicos(usuario.perfil.id).then(function (result) {
+				   $scope.topicos=result.data;
+				   definiAvatar();
+                   $msNotifyService.close();
+               }, function (e) {
+                   $msNotifyService.close();
+                   $scope.showMsg('E', e.data.mensagens[0].texto);
+               });
+           }
+        });
+
+		 /**
+		  *Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
+		  */
+		 $scope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams, error) {
+			 if(fromState.controller == 'whatsappController'){
+				 // faturaService.salvarViewConsulta($scope.consulta);
+			 };
+		 });
+
 
 		var definiAvatar=function () {
 			$scope.topicos.forEach(function (topico) {
@@ -95,14 +133,7 @@ define(['msAppJs',
             });
         }
 
-		/**
-		 *Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
-		 */
-		$scope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams, error) {
-			if(fromState.controller == 'whatsappController'){
-				// faturaService.salvarViewConsulta($scope.consulta);
-			};
-		});
+
 
 
 		 var Topico = function () {
@@ -145,7 +176,7 @@ define(['msAppJs',
 			}
         }
 
-        var hoje=moment(new Date());
+       /* var hoje=moment(new Date());
 
         for(var i=0;i<10;i++){
 			var topico=new Topico();
@@ -163,14 +194,14 @@ define(['msAppJs',
 				mensagem.remetente=a%2==0;
 				mensagem.texto="mensagem "+a;
 				mensagem.data=hora.add(1,"h");
-				mensagem.contato="nome"+(a%2==0);
+				mensagem.contato="nome "+(a%2==0);
 				mensagem.topico=topico;
 				topico.mensagens.push(mensagem);
 			}
 			$scope.topicos.push(topico);
 		}
 
-		definiAvatar();
+		definiAvatar();*/
 
 
 		$scope.selecionarTopico=function (topico) {
