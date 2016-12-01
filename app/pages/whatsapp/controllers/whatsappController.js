@@ -78,8 +78,13 @@ define(['msAppJs',
            if(usuario!=null && usuario.perfil!=null) {
                $msNotifyService.loading();
                whatsappService.recuperarTopicos(usuario.perfil.id).then(function (result) {
-				   $scope.topicos=result.data;
-				   definiAvatar();
+               		angular.forEach(result.resultado,function (topico) {
+						var nt=new Topico();
+						angular.extend(nt,topico);
+						$scope.topicos.push(nt);
+                    });
+
+				   // definiAvatar();
                    $msNotifyService.close();
                }, function (e) {
                    $msNotifyService.close();
@@ -99,7 +104,11 @@ define(['msAppJs',
 
 
 		var definiAvatar=function () {
-			$scope.topicos.forEach(function (topico) {
+            $scope.topicos.map(function (topico) {
+				topico.cor="user_bgcolor_"+window.geral.randomInt(1,8);
+            });
+
+			/*$scope.topicos.forEach(function (topico) {
 
 				var contatos=[];
 
@@ -130,24 +139,23 @@ define(['msAppJs',
  					mensagem.cor= "user_bgcolor_"+contato.id;
                 });
 
-            });
+            });*/
         }
 
 
 
 
 		 var Topico = function () {
+
 			 return {
 			 	 id:null,
 				 idReferencia: null,
 				 nome: null,
 				 idAparelho: null,
                  mensagens:[],
-                 mensagem:function () {
-					 if(this.mensagens.length>0){
-					 	return this.mensagens[0];
-					 }
-                 },
+				 data:null,
+				 tipoMensagem:null,
+                 mensagem:null,
                  mesmoGrupo:function (indice) {
 					 if(indice>0){
 						if(this.mensagens[indice-1].contato==this.mensagens[indice].contato){
@@ -205,7 +213,17 @@ define(['msAppJs',
 
 
 		$scope.selecionarTopico=function (topico) {
-			$scope.topico=topico;
+
+			whatsappService.recuperarMensagens(topico.id).then(function (resposta) {
+
+				topico.mensagens=resposta.resultado;
+				$scope.topico=topico;
+
+            });
+
+
+
+
         }
 
 	}]);

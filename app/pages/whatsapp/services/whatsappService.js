@@ -6,8 +6,13 @@ define(['msAppJs'
 			return resourceRest.topico.one("aparelho",idAparelho).getList();
         };
 
+		var recuperarMensagens = function (idTopico) {
+			return resourceRest.mensagem.one("topico",idTopico).getList();
+        };
+
 		return {
-            recuperarTopicos:recuperarTopicos
+            recuperarTopicos:recuperarTopicos,
+			recuperarMensagens:recuperarMensagens
 
 		};
 

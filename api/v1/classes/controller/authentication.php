@@ -40,29 +40,33 @@ $app->post('/login', function () use ($app) {
 
 $app->get('/login/usuario', function () use ($app) {
     getSession();
-    $user=$_SESSION["usuario"];
-    if(isset($user)){
-        $response = array();
-        $response['usuario'] = $user;
-        echoResponse(200, $response);
-    };
+    if(isset($_SESSION)) {
+        $user = $_SESSION["usuario"];
+        if (isset($user)) {
+            $response = array();
+            $response['usuario'] = $user;
+            echoResponse(200, $response);
+        };
+    }
 });
 
 $app->post('/login/perfil', function () use ($app) {
     getSession();
-    $user=$_SESSION["usuario"];
-    if(isset($user)){
-        $r = json_decode($app->request->getBody());
+    if(isset($_SESSION)) {
+        $user = $_SESSION["usuario"];
+        if (isset($user)) {
+            $r = json_decode($app->request->getBody());
 
-        foreach ($user['perfis'] as $perfil){
-            if($perfil['id']==$r->id){
-                $user['perfil']=$perfil;
+            foreach ($user['perfis'] as $perfil) {
+                if ($perfil['id'] == $r->id) {
+                    $user['perfil'] = $perfil;
+                }
             }
+            $_SESSION["usuario"] = $user;
+            $response = array();
+            $response['usuario'] = $user;
+            echoResponse(200, $response);
         }
-        $_SESSION["usuario"]=$user;
-        $response = array();
-        $response['usuario'] = $user;
-        echoResponse(200, $response);
     }
 });
 

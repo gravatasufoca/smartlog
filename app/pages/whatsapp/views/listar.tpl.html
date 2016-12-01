@@ -17,18 +17,18 @@
                 <div class="colunatopico">
                     <div class="ctopico">
                         <ul class="ultopico">
-                            <li class="topico" ng-repeat="topico in topicos | orderBy:'mensagem().data'">
+                            <li class="topico" ng-repeat="topico in topicos | orderBy:'data'">
                                 <a class="intopico" ng-click="selecionarTopico(topico)">
                                     <div class="chora">
-                                        <div class="hora">{{topico.mensagem().data.format('DD/MM/YYYY')}}</div>
+                                        <div class="hora">{{topico.mensagem.data.format('DD/MM/YYYY')}}</div>
                                     </div>
                                     <div class="divavatar">
-                                        <span class="avatar {{topico.mensagem().cor}}">{{topico.nome.acronomo(2)}}</span>
+                                        <span class="avatar {{topico.mensagem.cor}}">{{topico.nome.acronomo(2)}}</span>
                                     </div>
                                     <div class="nomes">
                                         <div class="nome">{{topico.nome}}</div>
                                         <div class="cmensagem">
-                                            <div class="mensagem">{{topico.mensagem().texto}}</div>
+                                            <div class="mensagem">{{topico.mensagem.texto}}</div>
                                         </div>
                                     </div>
                                 </a>

@@ -141,7 +141,7 @@ define(['msAppJs'], function(app) {
                         loginService.selecionarPerfil(perfilAcesso)
                             .then(function(resposta) {
                                 $msNotifyService.close();
-                                $modalInstance.close(resposta.usuario);
+                                $modalInstance.close(resposta.resultado.usuario);
                             });
 
 					/*	if(perfilAcesso.listaEsferas && (perfilAcesso.listaEsferas.length === 0 || perfilAcesso.listaEsferas.length === 1)){
@@ -174,7 +174,7 @@ define(['msAppJs'], function(app) {
 			 * Apos selecionar o perfil, define os dados retornando da modal
 			 */
 			msModalService.modalInstance.result.then(function (resultado) {
-				setUsuarioScope(usuario);
+				setUsuarioScope(resultado);
 				redirecionarAcesso(true);
 			});
 		};
