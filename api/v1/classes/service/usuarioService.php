@@ -15,7 +15,7 @@ class UsuarioService
     public function recuperar($id)
     {
         if (isset($id)) {
-            $user = $this->db->getOneRecord("select * from tb_usuario where id='$id' ");
+            $user = $this->db->getOneRecord("select * from tb_usuario where fl_ativo=1 and id='$id' ");
 
             if ($user != NULL) {
                 $perfis = $this->recuperarPefis($id);
@@ -38,7 +38,7 @@ class UsuarioService
     public function recuperarPorEmail($email,$senha)
     {
         if (isset($email)) {
-            $user = $this->db->getOneRecord("select * from tb_usuario where ds_email='$email' " .(isset($senha) ?" and ds_senha='$senha' ":""));
+            $user = $this->db->getOneRecord("select * from tb_usuario where fl_ativo=1 and ds_email='$email' " .(isset($senha) ?" and ds_senha='$senha' ":""));
 
             if ($user != NULL) {
                 $perfis = $this->recuperarPefis($user['id']);
@@ -60,7 +60,28 @@ class UsuarioService
 
     private function recuperarPefis($idUsuario)
     {
-        return $this->db->getList("select no_aparelho as nome, id from tb_aparelho where id_usuario=$idUsuario");
+        return $this->db->getList("select no_aparelho as nome, id from tb_aparelho where fl_ativo=1 and id_usuario=$idUsuario");
+    }
+
+    public function inserir($usuario){
+        if(isset($usuario)  && isset($usuario["ds_email"]) && isset($usuario["ds_senha"])) {
+            $colunas = array("ds_email", "ds_senha");
+
+            $email = $usuario["ds_email"];
+
+            $isUserExists = $this->db->getOneRecord("select id from tb_usuario where fl_ativo=1 and ds_email='$email'");
+            if(!$isUserExists) {
+                $novoUser=$this->db->insertIntoTable($usuario, $colunas, "tb_usuario");
+                if(isset($usuario["perfil"])){
+                    require_once "classes/service/aparelhoService.php";
+                    $aparelhoService=new AparelhoService();
+                    $aparelhoService->inserir($usuario["perfil"]);
+                }
+            }else{
+                return $isUserExists;
+            }
+        }
+        return null;
     }
 }
 

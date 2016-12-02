@@ -18,7 +18,7 @@ $app->post('/login', function () use ($app) {
 //        if (passwordHash::check_password($user['ds_email'], $password)) {
         if($user['ds_senha']== $password){
             $response['status'] = "success";
-            $response['message'] = 'Logged in successfully.';
+            $response['message'] = 'Logado com sucesso..';
 
             $response['usuario'] = $user;
             if (!isset($_SESSION)) {
@@ -29,18 +29,18 @@ $app->post('/login', function () use ($app) {
 
         } else {
             $response['status'] = "error";
-            $response['message'] = 'Login failed. Incorrect credentials';
+            $response['message'] = 'Credenciais inválidas.';
         }
     } else {
         $response['status'] = "error";
-        $response['message'] = 'No such user is registered';
+        $response['message'] = 'Usuário não cadastrado.';
     }
     echoResponse(200, $response);
 });
 
 $app->get('/login/usuario', function () use ($app) {
     getSession();
-    if(isset($_SESSION)) {
+    if(isset($_SESSION) && isset($_SESSION["usuario"])) {
         $user = $_SESSION["usuario"];
         if (isset($user)) {
             $response = array();
@@ -52,7 +52,7 @@ $app->get('/login/usuario', function () use ($app) {
 
 $app->post('/login/perfil', function () use ($app) {
     getSession();
-    if(isset($_SESSION)) {
+    if(isset($_SESSION) && isset($_SESSION["usuario"])) {
         $user = $_SESSION["usuario"];
         if (isset($user)) {
             $r = json_decode($app->request->getBody());

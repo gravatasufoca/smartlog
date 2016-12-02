@@ -58,11 +58,14 @@ define([
 				method : 'POST',
 				data : credentials
 			}).then(function(response) {
-				//TODO response.data.resultado.usuario.token
-				var token = response.data.resultado.access_token ;
-				msSegurancaService.setToken(token);
-				msSegurancaService.setUsuario(response.data.resultado.usuario)
-				deferred.resolve(msSegurancaService);
+				if(response.data.resultado.status=="success") {
+                    var token = response.data.resultado.access_token;
+                    msSegurancaService.setToken(token);
+                    msSegurancaService.setUsuario(response.data.resultado.usuario)
+                    deferred.resolve(msSegurancaService);
+                }else{
+                    deferred.reject(response.data.resultado.message);
+				}
 			}, function(reason){
 				deferred.reject(reason);
 			});

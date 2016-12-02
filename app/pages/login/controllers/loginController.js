@@ -66,7 +66,7 @@ define(['msAppJs'], function(app) {
 					});
 				}, function(error) {
 					$msNotifyService.close();
-					$scope.showMsg('E', error.data.mensagens[0].texto);
+					$scope.showMsg('E', error);
 				});
 			}
 		};
