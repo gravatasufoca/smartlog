@@ -80,7 +80,9 @@ class TopicoService
             $tc["numero"]=$ctmp[1];
             $tc["nome"]=$ctmp[0];
             $tc["cor"]="user_bgcolor_".rand(1,8);
-            $mensagem["cor"]=$tc["cor"];
+            if($mensagem["numeroContato"]==$tc["numero"]) {
+                $mensagem["cor"] = $tc["cor"];
+            }
 
             array_push($contatos,$tc);
         }

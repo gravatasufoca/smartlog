@@ -104,45 +104,18 @@ define(['msAppJs',
 
 
 		var definiAvatar=function () {
-            $scope.topicos.map(function (topico) {
-				topico.cor="user_bgcolor_"+window.geral.randomInt(1,8);
-            });
-
-			/*$scope.topicos.forEach(function (topico) {
-
-				var contatos=[];
-
-				topico.mensagens.forEach(function (mensagem) {
-                    var contato=_.find(contatos,function (p) {
-                        return p.contato==mensagem.contato;
-                    });
-					if(contato==null){
-						contatos.push({contato:mensagem.contato,id:window.geral.randomInt(1,8)});
-					}
+            $scope.topico.mensagens.map(function (mensagem) {
+				var contato=_.find($scope.topico.contatos,function (cont) {
+					return cont.numero==mensagem.numeroContato;
                 });
 
-				if(contatos.length<=8){
-					var ids=[];
-					contatos.forEach(function (contato) {
-						var id;
-						do{
-                            id=window.geral.randomInt(1,8);
-						}while (ids.indexOf(id)!=-1);
-						contato.id=id;
-                    });
+				if(contato!=null){
+					mensagem.cor=contato.cor;
 				}
 
-                topico.mensagens.forEach(function (mensagem) {
-                	var contato=_.find(contatos,function (p) {
-						return p.contato==mensagem.contato;
-                    });
- 					mensagem.cor= "user_bgcolor_"+contato.id;
-                });
+            });
 
-            });*/
         }
-
-
 
 
 		 var Topico = function () {
@@ -168,61 +141,34 @@ define(['msAppJs',
 		 };
 
 		var Mensagem = function () {
-			return {
-				id:null,
-				idReferencia:null,
-				remetente:false,
-				texto:null,
-				data:null,
-				dataRecebida:null,
-				mime:null,
-				valorTamanho:null,
-				contato:null,
-				raw:null,
-				tipoMensagem:null,
-				topico:null
-			}
+            return {
+                id: null,
+                idReferencia: null,
+                remetente: false,
+                texto: null,
+                data: null,
+                dataRecebida: null,
+                mime: null,
+                valorTamanho: null,
+                contato: null,
+                raw: null,
+                tipoMensagem: null,
+                topico: null
+            }
         }
-
-       /* var hoje=moment(new Date());
-
-        for(var i=0;i<10;i++){
-			var topico=new Topico();
-			topico.id=i+1;
-			topico.idReferencia=i;
-			topico.nome="Topico chat "+i;
-			topico.dtOrdenacao=hoje.add(i,'d');
-			topico.idAparelho=1;
-
-			var hora=moment(new Date());
-			for(var a=1;a<10;a++){
-				var mensagem=new Mensagem();
-				mensagem.id=a;
-				mensagem.idReferencia=a;
-				mensagem.remetente=a%2==0;
-				mensagem.texto="mensagem "+a;
-				mensagem.data=hora.add(1,"h");
-				mensagem.contato="nome "+(a%2==0);
-				mensagem.topico=topico;
-				topico.mensagens.push(mensagem);
-			}
-			$scope.topicos.push(topico);
-		}
-
-		definiAvatar();*/
 
 
 		$scope.selecionarTopico=function (topico) {
-
+			if($scope.topico!=null && topico.id==$scope.topico.id) return;
+            $msNotifyService.loading();
 			whatsappService.recuperarMensagens(topico.id).then(function (resposta) {
 
 				topico.mensagens=resposta.resultado;
 				$scope.topico=topico;
+				definiAvatar();
+                $msNotifyService.close();
 
             });
-
-
-
 
         }
 
