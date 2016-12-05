@@ -1,12 +1,12 @@
 define([], function(app) {
 	var routes = [
         {
-            module: 'whatsapp',
+            module: 'mensagens',
             view: 'visualizarWhats',
             text: 'Ver mensagens',
             controller : 'visualizarController',
             state: {
-                name : "whatsapp.visualizar",
+                name : "mensagens.visualizar",
                 url: "visualizar/:id"
             },
             roles : ['ROLE_LOGADO']

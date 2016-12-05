@@ -10,33 +10,33 @@ define([], function () {
             "module": "tbas",
             "text": "Mensagens",
             "children": [{
-                "module": "sms",
-                "view": "sms",
-                "controller": "smsController",
+                "module": "mensagens",
+                "view": "listar",
+                "controller": "mensagensController",
                 "text": "SMS",
                 "menuUrl": "sms",
                 "roles": ["ROLE_LOGADO"]
             },
                 {
-                    "module": "whatsapp",
+                    "module": "mensagens",
                     "view": "listar",
-                    "controller": "whatsappController",
+                    "controller": "mensagensController",
                     "text": "Whatsapp",
                     "menuUrl": "whatsapp",
                     "roles": ["ROLE_LOGADO"]
                 },
                 {
-                    "module": "messenger",
-                    "view": "messenger",
-                    "controller": "messengerController",
+                    "module": "mensagens",
+                    "view": "listar",
+                    "controller": "mensagensController",
                     "text": "Messenger",
-                    "menuUrl": "contrato",
+                    "menuUrl": "messenger",
                     "roles": ["ROLE_LOGADO"]
                 }
-                ],
+            ],
             "roles": ["ROLE_LOGADO"]
         }
-       ];
+    ];
 
     var obterMenu = function () {
         return _menu;

@@ -1,9 +1,10 @@
 define(['msAppJs'
         ], function(app) {
-	app.factory('whatsappService', ['resourceRest',"$http", function(resourceRest,$http){
+	app.factory('mensagensService', ['resourceRest',"$http", function(resourceRest,$http){
 
-		var recuperarTopicos=function (idAparelho) {
-			return resourceRest.topico.one("aparelho",idAparelho).getList();
+		var recuperarTopicos=function (idAparelho,tab) {
+
+			return resourceRest.topico.one("aparelho",{idAparelho:idAparelho,tipo:tab.texto}).getList();
         };
 
 		var recuperarMensagens = function (idTopico) {

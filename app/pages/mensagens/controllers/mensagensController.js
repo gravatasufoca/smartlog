@@ -2,7 +2,7 @@ define(['msAppJs',
         'componentes/ms-modal/services/msModalService'], function(app) {
 	'use strict';
 
-	app.controller('whatsappController', ['$scope',
+	app.controller('mensagensController', ['$scope',
 	                                             'ngTableParams',
 	                                             '$msNotifyService',
 	                                             'msModalService',
@@ -12,7 +12,7 @@ define(['msAppJs',
 	                                             '$filter',
 	                                             '$state',
 	                                             '$stateParams',
-	                                             'whatsappService',
+	                                             'mensagensService',
 	                                             '$rootScope',
 	                                             function($scope,
 	                                            		 ngTableParams,
@@ -24,10 +24,10 @@ define(['msAppJs',
 	                                            		 $filter,
 	                                            		 $state,
 	                                            		 $stateParams,
-                                                         whatsappService,
+                                                          mensagensService,
 														 $rootScope
 	                                            		 ){
-		$translatePartialLoader.addPart('whatsapp');
+		$translatePartialLoader.addPart('mensagens');
 
 
 
@@ -36,7 +36,7 @@ define(['msAppJs',
 		 * Controla o nivel de acesso do usuario logado para a funcionalidade em questão
 		 */
 		$timeout(function(){
-			apoioService.recuperarPermissoesAcesso("WHATSAPP")
+			apoioService.recuperarPermissoesAcesso("MENSAGENS")
 			.then(function(data) {
 				$scope.permissaoAcesso = data.resultado;
 			});
@@ -47,6 +47,16 @@ define(['msAppJs',
 		$scope.topicos=[];
 		$scope.topico=null;
 
+		$scope.tabs=[{
+			texto:"SMS",
+			ativo:true
+		},{
+            texto:"WhatsApp",
+            ativo:false
+        },{
+            texto:"Messenger",
+            ativo:false
+        }];
 
 		/**
 		 * Recuperando o estado da tela de consulta
@@ -77,7 +87,7 @@ define(['msAppJs',
            var usuario=$rootScope.usuarioAutenticado;
            if(usuario!=null && usuario.perfil!=null) {
                $msNotifyService.loading();
-               whatsappService.recuperarTopicos(usuario.perfil.id).then(function (result) {
+               mensagensService.recuperarTopicos(usuario.perfil.id,getTab()).then(function (result) {
                		angular.forEach(result.resultado,function (topico) {
 						var nt=new Topico();
 						angular.extend(nt,topico);
@@ -97,7 +107,7 @@ define(['msAppJs',
 		  *Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
 		  */
 		 $scope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams, error) {
-			 if(fromState.controller == 'whatsappController'){
+			 if(fromState.controller == 'mensagensController'){
 				 // faturaService.salvarViewConsulta($scope.consulta);
 			 };
 		 });
@@ -161,7 +171,7 @@ define(['msAppJs',
 		$scope.selecionarTopico=function (topico) {
 			if($scope.topico!=null && topico.id==$scope.topico.id) return;
             $msNotifyService.loading();
-			whatsappService.recuperarMensagens(topico.id).then(function (resposta) {
+            mensagensService.recuperarMensagens(topico.id).then(function (resposta) {
 
 				topico.mensagens=resposta.resultado;
 				$scope.topico=topico;
@@ -169,8 +179,21 @@ define(['msAppJs',
                 $msNotifyService.close();
 
             });
-
         }
+
+        $scope.selecionarTab=function (tab) {
+			$scope.tabs.map(function (t) {
+				t.ativo=false;
+				return t;
+            });
+			tab.ativo=true;
+        };
+
+		var getTab=function () {
+			return _.find($scope.tabs,function (tab) {
+				return tab.ativo;
+            })
+        };
 
 	}]);
 

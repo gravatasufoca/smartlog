@@ -1,11 +1,11 @@
 define(['msAppJs',
         './menu',
         'pages/home/routes/homeRoute',
-        'pages/whatsapp/routes/whatsappRoute',
+        '../../mensagens/routes/mensagensRoute',
         ], function(app,
         		menu,
         		homeRoute,
-				whatsappRoute) {
+				mensagensRoute) {
 	'use strict';
 
 	/**
@@ -43,7 +43,7 @@ define(['msAppJs',
 		 * Cria e registra as rotas do sistema
 		 */
 		msRouteService.create(homeRoute);
-		msRouteService.create(whatsappRoute);
+		msRouteService.create(mensagensRoute);
 
 		$scope.alterarMenu(menu.obterMenu());
 

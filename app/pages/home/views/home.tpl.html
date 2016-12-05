@@ -1,29 +1,45 @@
 <div class="container">
 
-	<div class="row">
-		<div class="span12">
-			<strong class="title">{{ 'home.title' | translate }}</strong>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span12">
-			<div class="box conteudo-box">
-				<div class="span12">
-					<h4 class="titulo">{{ 'home.subtitle' | translate }}</h4>
-					<br />
-
-					<p>
-						Bem vindo ao sistema de gestão financeira da publicidade. <br />
-						O sistema se encontra em fase de desenvolvimento, porém, algumas
-						funcionalidades já podem ser acessadas de acordo com o perfil e
-						esfera do escolhidos no momento do login.
-					</p>
-					<br />
-					<p>Utilize o menú para navegar pelas funcionalidades
-						disponíveis e entre em contato com a equipe de desenvolvimento
-						caso tenha algum problema durante a utilização.</p>
-				</div>
+	<div class="row row-center">
+		<a class="span3 no-padding" ui-sref="sms">
+			<div class="box conteudo-box btn font19px">
+				Mensagens
+				<i class="fa fa-envelope"></i>
 			</div>
-		</div>
+		</a>
+		<a class="span3 no-padding">
+			<div class="box conteudo-box btn font19px">
+				Ligações
+				<i class="fa fa-phone"></i>
+			</div>
+		</a>
+	</div>
+	<div class="row row-center">
+		<a class="span3 no-padding">
+			<div class="box conteudo-box btn font19px">
+				Áudios
+				<i class="fa fa-microphone"></i>
+			</div>
+		</a>
+		<a class="span3 no-padding">
+			<div class="box conteudo-box btn font19px">
+				Vídeos
+				<i class="fa fa-video-camera"></i>
+			</div>
+		</a>
+	</div>
+	<div class="row row-center">
+		<a class="span3 no-padding">
+			<div class="box conteudo-box btn font19px">
+				Localizações
+				<i class="fa fa-map-marker"></i>
+			</div>
+		</a>
+		<a class="span3 no-padding">
+			<div class="box conteudo-box btn font19px">
+				Configurações
+				<i class="fa fa-cogs"></i>
+			</div>
+		</a>
 	</div>
 </div>

@@ -26,7 +26,9 @@ define([
 					$http.get(appConfig.login.url_usuario, {token: token})
 					.then(function(response){
 						$timeout(function() {
-							msSegurancaService.setUsuario(response.data.resultado.usuario);
+                            if(response.data!=null && response.data.resultado!=null) {
+                                msSegurancaService.setUsuario(response.data.resultado.usuario);
+                            }
 							deferred.resolve(msSegurancaService.getUsuario());
 						}, true);
 					}, function(reason) {
@@ -61,7 +63,9 @@ define([
 				if(response.data.resultado.status=="success") {
                     var token = response.data.resultado.access_token;
                     msSegurancaService.setToken(token);
-                    msSegurancaService.setUsuario(response.data.resultado.usuario)
+                    if(response.data!=null && response.data.resultado!=null) {
+                        msSegurancaService.setUsuario(response.data.resultado.usuario);
+                    }
                     deferred.resolve(msSegurancaService);
                 }else{
                     deferred.reject(response.data.resultado.message);

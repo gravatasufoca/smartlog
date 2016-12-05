@@ -1466,3 +1466,11 @@ accordion .panel > .panel-heading:hover{
     z-index: 99999;
     background: #ccc;
 }
+
+.row-center{
+    margin-left: 30%!important;
+}
+.no-padding{
+    padding: 0px;
+    margin-left:0px;
+}
