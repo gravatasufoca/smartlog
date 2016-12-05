@@ -92,6 +92,41 @@ class TopicoService
         return $topico;
 
     }
+
+    public static  function getTopico($topico){
+        if(isset($topico)) {
+            $top=array();
+            $top["id_referencia"] = $topico->id;
+            $top["ds_nome"] = isset($topico->nome)?$topico->nome:null;
+            $top["fl_grupo"] = $topico->grupo;
+            $top["id_aparelho"] = $topico->idAparelho;
+
+            return $top;
+        }
+        return null;
+    }
+
+    public function inserirTopicos($aparelho,$topicos){
+        $tmp=array();
+        $ids=array();
+        foreach ($topicos as $topico){
+            $topico->idAparelho=(int)$aparelho["id"];
+            $top=TopicoService::getTopico($topico);
+            if(isset($top)){
+                array_push($ids,$topico->id);
+                array_push($tmp,$top);
+            }
+        }
+        if(count($tmp)>0) {
+            $r = $this->db->insertListIntoTable($tmp, array("id_referencia", "ds_nome", "fl_grupo", "id_aparelho"), "tb_topico");
+            $resp=array();
+            $resp["ids"]=$ids;
+            $resp["success"]=$r;
+            $resp["tipo"]="topico";
+            return $resp;
+        }
+        return null;
+    }
 }
 
 ?>

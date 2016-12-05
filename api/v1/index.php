@@ -52,6 +52,17 @@ function echoResponse($status_code, $response)
     echo json_encode($resultado);
 }
 
+function echoResponseClean($status_code, $response)
+{
+    $app = \Slim\Slim::getInstance();
+    // Http response code
+    $app->status($status_code);
+
+    // setting response content type to json
+    $app->contentType('application/json');
+    echo json_encode($response);
+}
+
 function getSession()
 {
     if (!isset($_SESSION)) {

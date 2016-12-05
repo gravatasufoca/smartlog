@@ -64,6 +64,56 @@ class DbHandler
         }
     }
 
+    public function insertListIntoTable($objs, $column_names, $table_name)
+    {
+        $query = "";
+        $sep="";
+        $valores="";
+        foreach ($objs as $obj) {
+            $c = (array)$obj;
+            $keys = array_keys($c);
+            $sep2="";
+            $values = '';
+            foreach ($column_names as $desired_key) { // Check the obj received. If blank insert blank into the array.
+                if (!in_array($desired_key, $keys)) {
+                    $$desired_key = null;
+                } else {
+                    $$desired_key = $c[$desired_key];
+                }
+
+//                $columns = $columns . $desired_key . ',';
+                $values = $values . $sep2.($$desired_key == null ? "null" : "'" . $$desired_key . "'");
+                if($sep2==""){
+                    $sep2=",";
+                }
+            }
+            $valores .= $sep."(" . $values . ")";
+            if($sep==""){
+                $sep=",";
+            }
+        }
+        $columns = join(",", $column_names);
+        $query .= "INSERT INTO " . $table_name . "(" . $columns . ") VALUES " . trim($valores, ',');
+        try {
+            $r = $this->conn->query($query) or die($this->conn->error . __LINE__);
+        } catch (Exception $exception) {
+            $exception->getCode();
+        }
+        if ($r) {
+//            $new_row_id = $this->conn->insert_id;
+            return $r;
+        } else {
+            return NULL;
+        }
+    }
+
+    public function executeQuery($query)
+    {
+        if (isset($query)) {
+            return $this->conn->query($query) or die($this->conn->error . __LINE__);
+        }
+        return null;
+    }
 
 }
 

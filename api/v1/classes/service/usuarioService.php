@@ -64,22 +64,27 @@ class UsuarioService
     }
 
     public function inserir($usuario){
-        if(isset($usuario)  && isset($usuario["ds_email"]) && isset($usuario["ds_senha"])) {
+        if(isset($usuario)  && isset($usuario->ds_email) && isset($usuario->ds_senha)) {
             $colunas = array("ds_email", "ds_senha");
 
-            $email = $usuario["ds_email"];
+            $email = $usuario->ds_email;
 
-            $isUserExists = $this->db->getOneRecord("select id from tb_usuario where fl_ativo=1 and ds_email='$email'");
+            $isUserExists = $this->db->getOneRecord("select id,ds_senha from tb_usuario where fl_ativo=1 and ds_email='$email'");
             if(!$isUserExists) {
-                $novoUser=$this->db->insertIntoTable($usuario, $colunas, "tb_usuario");
-                if(isset($usuario["perfil"])){
-                    require_once "classes/service/aparelhoService.php";
-                    $aparelhoService=new AparelhoService();
-                    $aparelhoService->inserir($usuario["perfil"]);
-                }
+                $isUserExists = $this->db->insertIntoTable($usuario, $colunas, "tb_usuario");
             }else{
-                return $isUserExists;
+                if($isUserExists["ds_senha"]!=$usuario->ds_senha) {
+                    return "Senha inválida";
+                }
             }
+
+            if(isset($usuario->perfil)){
+                require_once "classes/service/aparelhoService.php";
+                $aparelhoService=new AparelhoService();
+                $usuario->perfil->id_usuario=$isUserExists["id"];
+                $aparelhoService->inserir($usuario->perfil);
+            }
+           return $isUserExists["id"];
         }
         return null;
     }
