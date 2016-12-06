@@ -1,6 +1,7 @@
 <?php
 
 require_once "classes/dao/dbHandler.php";
+require_once "classes/service/topicoService.php";
 
 class MensagemService
 {
@@ -8,22 +9,20 @@ class MensagemService
     private $db;
 
     private $queryAll="select  id,
-        id_referencia as idReferencia,
-        case fl_remetente when 1 then 'true' else 'false' end as remetente,
-        ds_texto  as texto,
-        dt_data as data,
-        dt_recebida as dataRecebida,
-        ds_midia_mime as midiaMime,
-        vl_tamanho_arquivo as tamanhoArquivo,
-        no_contato as contato,
-        nu_contato as numeroContato,
-        raw_data as raw,
-        tp_mensagem as tipoMensagem,
-        id_topico as idTopico,
-        id_tipo_midia as tipoMidia
-from tb_mensagem ";
-
-
+            id_referencia as idReferencia,
+            case fl_remetente when 1 then 'true' else 'false' end as remetente,
+            ds_texto  as texto,
+            dt_data as data,
+            dt_recebida as dataRecebida,
+            ds_midia_mime as midiaMime,
+            vl_tamanho_arquivo as tamanhoArquivo,
+            no_contato as contato,
+            nu_contato as numeroContato,
+            raw_data as raw,
+            tp_mensagem as tipoMensagem,
+            id_topico as idTopico,
+            id_tipo_midia as tipoMidia
+        from tb_mensagem ";
 
 
     function __construct()
@@ -79,7 +78,7 @@ from tb_mensagem ";
             $mensagem = array();
 
             $mensagem["id_referencia"] = $msg->id;
-            $mensagem["fl_remetente"] = $msg->remetente;
+            $mensagem["fl_remetente"] = !$msg->remetente?0:1;
             $mensagem["ds_texto"] = $msg->texto;
             $mensagem["dt_data"] = $msg->data;
             $mensagem["dt_recebida"] = $msg->dataRecebida;
@@ -89,8 +88,14 @@ from tb_mensagem ";
             $mensagem["nu_contato"] = isset($msg->numeroContato)?$msg->numeroContato:null;
             $mensagem["raw_data"] = isset($msg->raw)?$msg->raw:null;
             $mensagem["tp_mensagem"] = $msg->tipoMensagem;
-            $mensagem["id_topico"] = $msg->topico->id;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
+
+            $topicoService=new TopicoService();
+
+            $topico= $topicoService->recuperarPorReferencia($msg->topico->id);
+            if(isset($topico)) {
+                $mensagem["id_topico"] = $topico["id"];
+            }
 
             return $mensagem;
         }

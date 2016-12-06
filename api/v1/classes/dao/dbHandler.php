@@ -82,7 +82,7 @@ class DbHandler
                 }
 
 //                $columns = $columns . $desired_key . ',';
-                $values = $values . $sep2.($$desired_key == null ? "null" : "'" . $$desired_key . "'");
+                $values = $values . $sep2.(!isset($$desired_key)? "null" : "'" . $$desired_key . "'");
                 if($sep2==""){
                     $sep2=",";
                 }
@@ -95,9 +95,10 @@ class DbHandler
         $columns = join(",", $column_names);
         $query .= "INSERT INTO " . $table_name . "(" . $columns . ") VALUES " . trim($valores, ',');
         try {
-            $r = $this->conn->query($query) or die($this->conn->error . __LINE__);
+            $r = $this->conn->query($query);
         } catch (Exception $exception) {
             $exception->getCode();
+            return null;
         }
         if ($r) {
 //            $new_row_id = $this->conn->insert_id;

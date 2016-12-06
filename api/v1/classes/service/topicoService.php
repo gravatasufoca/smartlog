@@ -45,6 +45,13 @@ class TopicoService
         return null;
     }
 
+    public function recuperarPorReferencia($id)
+    {
+        if (isset($id)) {
+            return $this->db->getOneRecord("select * from tb_topico where id_referencia='$id'");
+        }
+        return null;
+    }
 
 
     public function recuperarPorAparelho($idAparelho)
@@ -98,7 +105,7 @@ class TopicoService
             $top=array();
             $top["id_referencia"] = $topico->id;
             $top["ds_nome"] = isset($topico->nome)?$topico->nome:null;
-            $top["fl_grupo"] = $topico->grupo;
+            $top["fl_grupo"] = !$topico->grupo?0:1;
             $top["id_aparelho"] = $topico->idAparelho;
 
             return $top;
