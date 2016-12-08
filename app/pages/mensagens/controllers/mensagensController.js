@@ -84,27 +84,10 @@ define(['msAppJs',
                         }, 100);
                     });
             }*/
-           var usuario=$rootScope.usuarioAutenticado;
-           if(usuario!=null && usuario.perfil!=null) {
-               $msNotifyService.loading();
-               mensagensService.recuperarTopicos(usuario.perfil.id,getTab()).then(function (result) {
-               		angular.forEach(result.resultado,function (topico) {
-						var nt=new Topico();
-						angular.extend(nt,topico);
-						$scope.topicos.push(nt);
-                    });
-
-				   // definiAvatar();
-                   $msNotifyService.close();
-               }, function (e) {
-                   $msNotifyService.close();
-                   $scope.showMsg('E', e.data.mensagens[0].texto);
-               });
-           }
+            recuperarMensagens();
         });
-
-		 /**
-		  *Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
+		/**
+			*Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
 		  */
 		 $scope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams, error) {
 			 if(fromState.controller == 'mensagensController'){
@@ -112,6 +95,25 @@ define(['msAppJs',
 			 };
 		 });
 
+		 var recuperarMensagens=function () {
+             var usuario=$rootScope.usuarioAutenticado;
+             if(usuario!=null && usuario.perfil!=null) {
+                 $msNotifyService.loading();
+                 mensagensService.recuperarTopicos(usuario.perfil.id, getTab()).then(function (result) {
+                     angular.forEach(result.resultado, function (topico) {
+                         var nt = new Topico();
+                         angular.extend(nt, topico);
+                         $scope.topicos.push(nt);
+                     });
+
+                     // definiAvatar();
+                     $msNotifyService.close();
+                 }, function (e) {
+                     $msNotifyService.close();
+                     $scope.showMsg('E', e.data.mensagens[0].texto);
+                 });
+             }
+         };
 
 		var definiAvatar=function () {
             $scope.topico.mensagens.map(function (mensagem) {
@@ -187,6 +189,8 @@ define(['msAppJs',
 				return t;
             });
 			tab.ativo=true;
+
+			recuperarMensagens();
         };
 
 		var getTab=function () {

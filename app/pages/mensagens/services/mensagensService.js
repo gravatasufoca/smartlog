@@ -4,7 +4,7 @@ define(['msAppJs'
 
 		var recuperarTopicos=function (idAparelho,tab) {
 
-			return resourceRest.topico.one("aparelho",{idAparelho:idAparelho,tipo:tab.texto}).getList();
+			return resourceRest.topico.one("aparelho",idAparelho).one("tipo",tab.texto.toUpperCase()).getList();
         };
 
 		var recuperarMensagens = function (idTopico) {

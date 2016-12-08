@@ -54,11 +54,12 @@ class TopicoService
     }
 
 
-    public function recuperarPorAparelho($idAparelho)
+    public function recuperarPorAparelho($idAparelho,$tipo)
     {
-        if(isset($idAparelho)) {
+        if(isset($idAparelho) && isset($tipo)) {
             try {
-                $result= $this->db->getList($this->queryAll . " where topico.id_aparelho=$idAparelho");
+                $idTipo=getTipoMensagen($tipo);
+                $result= $this->db->getList($this->queryAll . " where topico.id_aparelho=$idAparelho and topico.tp_mensagem=$idTipo ");
                 $tmp=array();
                 foreach ($result as $topico){
                     array_push($tmp,$this->fixTopico($topico));
@@ -74,7 +75,10 @@ class TopicoService
     private function fixTopico($topico){
         require_once "classes/service/mensagemService.php";
 
-        $mensagem=MensagemService::getMensagem($topico["idMensagem"],null,$topico["remetente"],$topico["texto"],$topico["data"],$topico["dataRecebida"],$topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],null,$topico["tipoMensagem"],$topico["id"],$topico["tipoMidia"]);
+        $mensagem=MensagemService::getMensagem($topico["idMensagem"],null,$topico["remetente"],
+                                $topico["texto"],$topico["data"],$topico["dataRecebida"],
+                                $topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],null,
+                                $topico["id"],$topico["tipoMidia"]);
 
         $contatos=array();
 
@@ -100,13 +104,14 @@ class TopicoService
 
     }
 
-    public static  function getTopico($topico){
+    public static function getTopico($topico){
         if(isset($topico)) {
             $top=array();
             $top["id_referencia"] = $topico->id;
             $top["ds_nome"] = isset($topico->nome)?$topico->nome:null;
             $top["fl_grupo"] = !$topico->grupo?0:1;
             $top["id_aparelho"] = $topico->idAparelho;
+            $top["tp_mensagem"] = $topico->tipoMensagem;
 
             return $top;
         }
@@ -125,10 +130,10 @@ class TopicoService
             }
         }
         if(count($tmp)>0) {
-            $r = $this->db->insertListIntoTable($tmp, array("id_referencia", "ds_nome", "fl_grupo", "id_aparelho"), "tb_topico");
+            $r = $this->db->insertListIntoTable($tmp, array("id_referencia"=>'i', "ds_nome"=>'s', "fl_grupo"=>'i', "id_aparelho"=>'i',"tp_mensagem"=>'i'), "tb_topico","id_referencia");
             $resp=array();
-            $resp["ids"]=$ids;
-            $resp["success"]=$r;
+            $resp["ids"]=$r["ids"];
+            $resp["success"]=$r["status"];
             $resp["tipo"]="topico";
             return $resp;
         }

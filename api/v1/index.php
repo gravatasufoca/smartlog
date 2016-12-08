@@ -89,5 +89,24 @@ function destroySession()
     return $msg;
 }
 
+function getTipoMensagen($tipo){
+    switch (strtoupper($tipo)){
+        case "WHATSAPP":
+            $idTipo=0;
+            break;
+        case "SMS":
+            $idTipo=2;
+            break;
+        case "MESSENGER":
+            $idTipo=1;
+            break;
+        default :
+            $idTipo=null;
+            break;
+    }
+
+    return $idTipo;
+}
+
 $app->run();
 ?>

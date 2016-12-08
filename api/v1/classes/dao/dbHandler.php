@@ -64,48 +64,63 @@ class DbHandler
         }
     }
 
-    public function insertListIntoTable($objs, $column_names, $table_name)
-    {
-        $query = "";
-        $sep="";
-        $valores="";
-        foreach ($objs as $obj) {
-            $c = (array)$obj;
-            $keys = array_keys($c);
-            $sep2="";
-            $values = '';
-            foreach ($column_names as $desired_key) { // Check the obj received. If blank insert blank into the array.
-                if (!in_array($desired_key, $keys)) {
-                    $$desired_key = null;
-                } else {
-                    $$desired_key = $c[$desired_key];
-                }
+    private function map($v){
+        return "?";
+    }
 
-//                $columns = $columns . $desired_key . ',';
-                $values = $values . $sep2.(!isset($$desired_key)? "null" : "'" . $$desired_key . "'");
-                if($sep2==""){
-                    $sep2=",";
-                }
-            }
-            $valores .= $sep."(" . $values . ")";
+    public function insertListIntoTable($objs, $column_names, $table_name,$id_column)
+    {
+        $coluns_keys=array_keys($column_names);
+        $columns = join(",", $coluns_keys);
+        $columns_values = join(",", array_map(function($v){return "?";},$coluns_keys));
+        $query= "INSERT INTO " . $table_name . "(" . $columns . ") VALUES (" .$columns_values. ")";
+
+        $stmt= $this->conn->prepare($query);
+        $valores=array();
+        $tipos="";
+        $cols="";
+        $sep="";
+        $index=0;
+        foreach($column_names as $column=>$tipo){
+            $tipos.=$tipo;
+            eval("\$valor$index=$index;");
+            $cols.=$sep."&\$valor$index";
             if($sep==""){
                 $sep=",";
             }
+            $index+=1;
         }
-        $columns = join(",", $column_names);
-        $query .= "INSERT INTO " . $table_name . "(" . $columns . ") VALUES " . trim($valores, ',');
-        try {
-            $r = $this->conn->query($query);
-        } catch (Exception $exception) {
-            $exception->getCode();
-            return null;
+
+        eval("\$valores=array($cols);");
+        call_user_func_array(
+            array( $stmt, 'bind_param' ),
+            array_merge(
+                array($tipos),$valores
+            )
+        );
+
+        $this->conn->query("START TRANSACTION");
+        $ids=array();
+        foreach ($objs as $obj){
+            $c = (array)$obj;
+            foreach($coluns_keys as $index=>$column){
+                $valores[$index]=$c[$column];
+            }
+
+            if($stmt->execute()){
+                array_push($ids,$c[$id_column]);
+            }else{
+                echo "bla";
+            }
+
+
         }
-        if ($r) {
-//            $new_row_id = $this->conn->insert_id;
-            return $r;
-        } else {
-            return NULL;
-        }
+        $stmt->close();
+        $resp=array();
+        $resp["ids"]=$ids;
+        $resp["status"]=$this->conn->query("COMMIT");
+        return $resp;
+
     }
 
     public function executeQuery($query)

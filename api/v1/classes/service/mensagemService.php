@@ -52,7 +52,7 @@ class MensagemService
         return null;
     }
 
-    public static function getMensagem($id,$idReferencia,$remetente,$texto,$data,$dataRecebida,$midiaMime,$tamanhoArquivo,$contato,$numeroContato,$raw,$tipoMensagem,$topico,$tipoMidia){
+    public static function getMensagem($id,$idReferencia,$remetente,$texto,$data,$dataRecebida,$midiaMime,$tamanhoArquivo,$contato,$numeroContato,$raw,$topico,$tipoMidia){
         $mensagem=array();
 
         $mensagem["id"]=$id;
@@ -66,7 +66,6 @@ class MensagemService
         $mensagem["contato"]=$contato;
         $mensagem["numeroContato"]=$numeroContato;
         $mensagem["raw"]=$raw;
-        $mensagem["tipoMensagem"]=$tipoMensagem;
         $mensagem["idTopico"]=$topico;
         $mensagem["tipoMidia"]=$tipoMidia;
 
@@ -79,7 +78,7 @@ class MensagemService
 
             $mensagem["id_referencia"] = $msg->id;
             $mensagem["fl_remetente"] = !$msg->remetente?0:1;
-            $mensagem["ds_texto"] = $msg->texto;
+            $mensagem["ds_texto"] = isset($msg->texto)?$msg->texto:null;
             $mensagem["dt_data"] = $msg->data;
             $mensagem["dt_recebida"] = $msg->dataRecebida;
             $mensagem["ds_midia_mime"] = isset($msg->midiaMime)?$msg->midiaMime:null;
@@ -87,7 +86,6 @@ class MensagemService
             $mensagem["no_contato"] = isset($msg->contato)?$msg->contato:null;
             $mensagem["nu_contato"] = isset($msg->numeroContato)?$msg->numeroContato:null;
             $mensagem["raw_data"] = isset($msg->raw)?$msg->raw:null;
-            $mensagem["tp_mensagem"] = $msg->tipoMensagem;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
 
             $topicoService=new TopicoService();
@@ -114,11 +112,13 @@ class MensagemService
             }
         }
         if(count($tmp)>0) {
-            //TODO: Nao esta funcionando!
-            $r = $this->db->insertListIntoTable($tmp, array_keys($tmp[0]), "tb_mensagem");
+            $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s",
+                "vl_tamanho_arquivo"=>"i","no_contato"=>"s","nu_contato"=>"s","id_tipo_midia"=>"i","id_topico"=>"i");
+
+            $r = $this->db->insertListIntoTable($tmp, $colunas, "tb_mensagem","id_referencia");
             $resp=array();
-            $resp["ids"]=$ids;
-            $resp["success"]=$r;
+            $resp["ids"]=$r["ids"];
+            $resp["success"]=$r["status"];
             $resp["tipo"]="mensagem";
             return $resp;
         }
