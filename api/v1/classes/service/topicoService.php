@@ -19,16 +19,15 @@ class TopicoService
       mensagem.dt_recebida as 'dataRecebida',
       mensagem.no_contato as contato,
       mensagem.nu_contato as numeroContato,
-      mensagem.tp_mensagem as tipoMensagem ,
       mensagem.fl_remetente as remetente ,
       mensagem.ds_midia_mime as midiaMime ,
       mensagem.id_tipo_midia as tipoMidia ,
-      (SELECT group_concat(DISTINCT concat(no_contato,'#',nu_contato) SEPARATOR ',') FROM tb_mensagem WHERE id_topico=topico.id ) as contatos
+      (SELECT group_concat(DISTINCT concat(no_contato,'#',nu_contato) SEPARATOR ',') FROM tb_mensagem WHERE id_topico=topico.id and fl_remetente=0 ) as contatos
       from tb_topico topico 
       inner JOIN tb_mensagem mensagem on mensagem.id=(
         SELECT id
-        FROM tb_mensagem WHERE id_topico=topico.id
-        ORDER BY mensagem.dt_data DESC
+        FROM tb_mensagem msg WHERE id_topico=topico.id
+        ORDER BY msg.dt_data DESC
         limit 1
       )";
 
@@ -59,12 +58,12 @@ class TopicoService
         if(isset($idAparelho) && isset($tipo)) {
             try {
                 $idTipo=getTipoMensagen($tipo);
-                $result= $this->db->getList($this->queryAll . " where topico.id_aparelho=$idAparelho and topico.tp_mensagem=$idTipo ");
+                $result= $this->db->getList($this->queryAll." where topico.id_aparelho=$idAparelho and topico.tp_mensagem=$idTipo ORDER BY mensagem.dt_data DESC");
                 $tmp=array();
                 foreach ($result as $topico){
                     array_push($tmp,$this->fixTopico($topico));
                 }
-                return $tmp;
+                return $tmp;//array_slice($tmp,82,1);
             }catch (Exception $e){
                 throw new Exception($e);
             }
@@ -83,19 +82,20 @@ class TopicoService
         $contatos=array();
 
         $tmp= explode(",", $topico["contatos"]);
+        if($topico["remetente"]!="1") {
+            foreach ($tmp as $contato) {
+                $ctmp = explode("#", $contato);
 
-        foreach ($tmp as $contato){
-            $ctmp= explode("#",$contato);
+                $tc = array();
+                $tc["numero"] = $ctmp[1];
+                $tc["nome"] = $ctmp[0];
+                $tc["cor"] = "user_bgcolor_" . rand(1, 8);
+                if ($mensagem["numeroContato"] == $tc["numero"]) {
+                    $mensagem["cor"] = $tc["cor"];
+                }
 
-            $tc=array();
-            $tc["numero"]=$ctmp[1];
-            $tc["nome"]=$ctmp[0];
-            $tc["cor"]="user_bgcolor_".rand(1,8);
-            if($mensagem["numeroContato"]==$tc["numero"]) {
-                $mensagem["cor"] = $tc["cor"];
+                array_push($contatos, $tc);
             }
-
-            array_push($contatos,$tc);
         }
 
         $topico["mensagem"]=$mensagem;
@@ -108,7 +108,7 @@ class TopicoService
         if(isset($topico)) {
             $top=array();
             $top["id_referencia"] = $topico->id;
-            $top["ds_nome"] = isset($topico->nome)?$topico->nome:null;
+            $top["ds_nome"] = isset($topico->nome)?mb_convert_encoding($topico->nome, 'UTF-8', 'UTF-8'):null;
             $top["fl_grupo"] = !$topico->grupo?0:1;
             $top["id_aparelho"] = $topico->idAparelho;
             $top["tp_mensagem"] = $topico->tipoMensagem;

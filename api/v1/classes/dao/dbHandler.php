@@ -11,6 +11,8 @@ class DbHandler
         // opening db connection
         $db = new dbConnect();
         $this->conn = $db->connect();
+
+//        $this->conn->query("SET NAMES 'utf8'");
     }
 
     /**
@@ -106,12 +108,12 @@ class DbHandler
             foreach($coluns_keys as $index=>$column){
                 $valores[$index]=$c[$column];
             }
-
             if($stmt->execute()){
                 array_push($ids,$c[$id_column]);
             }else{
-                echo "bla";
+                echo $stmt->error;
             }
+
 
 
         }

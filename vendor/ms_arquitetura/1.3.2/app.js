@@ -159,6 +159,12 @@ define([
 						notificationChannel.requestEnded();
 					}
 
+					//custom messages
+					if(rejection.data!=null && rejection.data.mensagens!=null &&rejection.data.mensagens.length>0){
+						rejection=rejection.data.mensagens;
+                        return $q.reject(rejection);
+                    }
+
 					/*
 					 * 404 Interceptor para content text/HTML
 					 * Outros contents devem ser tratados pela aplicação

@@ -2,14 +2,11 @@
 
     <link type="text/css" rel="stylesheet" href="assets/css/chat.css" media="screen"/>
 
-
-
     <div class="row">
         <div class="span12">
             <strong class="title">{{ 'home.title' | translate }}</strong>
         </div>
     </div>
-
 
     <div class="row">
         <div class="box conteudo-box">
@@ -18,13 +15,12 @@
                 <li ng-repeat="tab in tabs" class="{{tab.ativo?'active':''}}"><a ng-click="selecionarTab(tab);">{{tab.texto}}</a></li>
             </ul>
 
-
             <div class="msgconteudo ">
                 <!--COLUNA DOS TOPICOS -->
                 <div class="colunatopico">
                     <div class="ctopico">
                         <ul class="ultopico">
-                            <li class="topico" ng-repeat="topico in topicos | orderBy:'data'">
+                            <li class="topico" ng-repeat="topico in topicos ">
                                 <a class="intopico" ng-click="selecionarTopico(topico)">
                                     <div class="chora">
                                         <div class="hora">{{topico.mensagem.data.format('DD/MM/YYYY')}}</div>

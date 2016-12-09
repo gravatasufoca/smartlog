@@ -11,7 +11,7 @@ var appConfig = {
 			esqueceu: '${scpa.trocarSenha}'
 		},
 		// nome: "SMARTPHONE INSPECTOR",
-		nome: 'GFINP',
+		nome: 'SISAGUA',
 		titulo: "Minist\u00E9rio da Sa\u00FAde",
 		subtitulo: "Gest\u00e3o financeira da publicidade",
 		appBaseUrl: 'app',

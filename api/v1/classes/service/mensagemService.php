@@ -58,7 +58,7 @@ class MensagemService
         $mensagem["id"]=$id;
         $mensagem["idReferencia"]=$idReferencia;
         $mensagem["remetente"]=$remetente;
-        $mensagem["texto"]=$texto;
+        $mensagem["texto"]=isset($texto)? mb_convert_encoding($texto, 'UTF-8', 'UTF-8'):null;
         $mensagem["data"]=$data;
         $mensagem["dataRecebida"]=$dataRecebida;
         $mensagem["midiaMime"]=$midiaMime;
@@ -78,12 +78,12 @@ class MensagemService
 
             $mensagem["id_referencia"] = $msg->id;
             $mensagem["fl_remetente"] = !$msg->remetente?0:1;
-            $mensagem["ds_texto"] = isset($msg->texto)?$msg->texto:null;
+            $mensagem["ds_texto"] = isset($msg->texto)?utf8_encode($msg->texto):null;
             $mensagem["dt_data"] = $msg->data;
             $mensagem["dt_recebida"] = $msg->dataRecebida;
             $mensagem["ds_midia_mime"] = isset($msg->midiaMime)?$msg->midiaMime:null;
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
-            $mensagem["no_contato"] = isset($msg->contato)?$msg->contato:null;
+            $mensagem["no_contato"] = isset($msg->contato)?utf8_encode($msg->contato):null;
             $mensagem["nu_contato"] = isset($msg->numeroContato)?$msg->numeroContato:null;
             $mensagem["raw_data"] = isset($msg->raw)?$msg->raw:null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;

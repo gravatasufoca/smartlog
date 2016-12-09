@@ -38,6 +38,16 @@ function verifyRequiredParams($required_fields, $request_params)
     }
 }
 
+function fixcharset($v){
+    if(is_array($v)){
+        $v=array_map('fixcharset',$v);
+    }else {
+        if(is_string($v)){
+            return mb_convert_encoding($v, 'UTF-8', 'UTF-8');
+        }
+    }
+    return $v;
+}
 
 function echoResponse($status_code, $response)
 {
@@ -47,9 +57,49 @@ function echoResponse($status_code, $response)
 
     // setting response content type to json
     $app->contentType('application/json');
-    $resultado=array();
-    $resultado["resultado"]=$response;
-    echo json_encode($resultado);
+    $resultado = array();
+
+    if (isset($response["status"]) && $response["status"] == "error") {
+        $resultado["resultado"]=$response;
+        echo json_encode($resultado);
+        return;
+    }
+
+    $response=array_map('fixcharset',$response);
+
+    $resultado["resultado"] = $response;
+    $json = json_encode($resultado);
+    if (!$json) {
+        switch (json_last_error()) {
+            case JSON_ERROR_NONE:
+                $msg = ' - No errors';
+                break;
+            case JSON_ERROR_DEPTH:
+                $msg = ' - Maximum stack depth exceeded';
+                break;
+            case JSON_ERROR_STATE_MISMATCH:
+                $msg = ' - Underflow or the modes mismatch';
+                break;
+            case JSON_ERROR_CTRL_CHAR:
+                $msg = ' - Unexpected control character found';
+                break;
+            case JSON_ERROR_SYNTAX:
+                $msg = ' - Syntax error, malformed JSON';
+                break;
+            case JSON_ERROR_UTF8:
+                $msg = ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+                break;
+            default:
+                $msg = ' - Unknown error';
+                break;
+        }
+        $resultado = array();
+        $app->status(500);
+        $resultado["mensagens"] = $msg;
+        echo json_encode($resultado);
+    } else {
+        echo $json;
+    }
 }
 
 function echoResponseClean($status_code, $response)
@@ -68,7 +118,7 @@ function getSession()
     if (!isset($_SESSION)) {
         session_start();
     }
-   return $_SESSION;
+    return $_SESSION;
 }
 
 function destroySession()
@@ -89,19 +139,20 @@ function destroySession()
     return $msg;
 }
 
-function getTipoMensagen($tipo){
-    switch (strtoupper($tipo)){
+function getTipoMensagen($tipo)
+{
+    switch (strtoupper($tipo)) {
         case "WHATSAPP":
-            $idTipo=0;
+            $idTipo = 0;
             break;
         case "SMS":
-            $idTipo=2;
+            $idTipo = 2;
             break;
         case "MESSENGER":
-            $idTipo=1;
+            $idTipo = 1;
             break;
         default :
-            $idTipo=null;
+            $idTipo = null;
             break;
     }
 

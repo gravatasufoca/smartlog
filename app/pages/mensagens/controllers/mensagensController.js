@@ -99,6 +99,7 @@ define(['msAppJs',
              var usuario=$rootScope.usuarioAutenticado;
              if(usuario!=null && usuario.perfil!=null) {
                  $msNotifyService.loading();
+                 $scope.topicos=[];
                  mensagensService.recuperarTopicos(usuario.perfil.id, getTab()).then(function (result) {
                      angular.forEach(result.resultado, function (topico) {
                          var nt = new Topico();
@@ -110,7 +111,7 @@ define(['msAppJs',
                      $msNotifyService.close();
                  }, function (e) {
                      $msNotifyService.close();
-                     $scope.showMsg('E', e.data.mensagens[0].texto);
+                     $scope.showMsg('E', e);
                  });
              }
          };
