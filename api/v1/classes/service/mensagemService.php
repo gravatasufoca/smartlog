@@ -2,27 +2,31 @@
 
 require_once "classes/dao/dbHandler.php";
 require_once "classes/service/topicoService.php";
+require_once "classes/service/contatoService.php";
 
 class MensagemService
 {
 
     private $db;
+    private static $topicos=array();
+    private static $contatos=array();
 
-    private $queryAll="select  id,
-            id_referencia as idReferencia,
-            case fl_remetente when 1 then 'true' else 'false' end as remetente,
-            ds_texto  as texto,
-            dt_data as data,
-            dt_recebida as dataRecebida,
-            ds_midia_mime as midiaMime,
-            vl_tamanho_arquivo as tamanhoArquivo,
-            no_contato as contato,
-            nu_contato as numeroContato,
-            raw_data as raw,
-            tp_mensagem as tipoMensagem,
-            id_topico as idTopico,
-            id_tipo_midia as tipoMidia
-        from tb_mensagem ";
+    private $queryAll="select  mensagem.id,
+            mensagem.id_referencia as idReferencia,
+            case mensagem.fl_remetente when 1 then 'true' else 'false' end as remetente,
+            mensagem.ds_texto  as texto,
+            mensagem.dt_data as data,
+            mensagem.dt_recebida as dataRecebida,
+            mensagem.ds_midia_mime as midiaMime,
+            mensagem.vl_tamanho_arquivo as tamanhoArquivo,
+            contato.no_contato as contato,
+            contato.nu_contato as numeroContato,
+            contato.raw_data as foto,
+            mensagem.raw_data as raw,
+            mensagem.id_topico as idTopico,
+            mensagem.id_tipo_midia as tipoMidia
+        from tb_mensagem mensagem 
+        left join tb_contato contato on contato.id=mensagem.id_contato ";
 
 
     function __construct()
@@ -52,7 +56,7 @@ class MensagemService
         return null;
     }
 
-    public static function getMensagem($id,$idReferencia,$remetente,$texto,$data,$dataRecebida,$midiaMime,$tamanhoArquivo,$contato,$numeroContato,$raw,$topico,$tipoMidia){
+    public static function getMensagem($id,$idReferencia,$remetente,$texto,$data,$dataRecebida,$midiaMime,$tamanhoArquivo,$contato,$numeroContato,$foto,$raw,$topico,$tipoMidia){
         $mensagem=array();
 
         $mensagem["id"]=$id;
@@ -65,6 +69,7 @@ class MensagemService
         $mensagem["tamanhoArquivo"]=$tamanhoArquivo;
         $mensagem["contato"]=$contato;
         $mensagem["numeroContato"]=$numeroContato;
+        $mensagem["foto"]=$foto;
         $mensagem["raw"]=$raw;
         $mensagem["idTopico"]=$topico;
         $mensagem["tipoMidia"]=$tipoMidia;
@@ -83,16 +88,19 @@ class MensagemService
             $mensagem["dt_recebida"] = $msg->dataRecebida;
             $mensagem["ds_midia_mime"] = isset($msg->midiaMime)?$msg->midiaMime:null;
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
-            $mensagem["no_contato"] = isset($msg->contato)?utf8_encode($msg->contato):null;
-            $mensagem["nu_contato"] = isset($msg->numeroContato)?$msg->numeroContato:null;
             $mensagem["raw_data"] = isset($msg->raw)?$msg->raw:null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
 
-            $topicoService=new TopicoService();
-
-            $topico= $topicoService->recuperarPorReferencia($msg->topico->id);
+            $topico= MensagemService::getTopico($msg->topico->id);
             if(isset($topico)) {
                 $mensagem["id_topico"] = $topico["id"];
+            }
+
+            if(isset($msg->numeroContato)) {
+                $contato = MensagemService::getContato($msg->numeroContato);
+                if (isset($contato)) {
+                    $mensagem["id_contato"] = $contato["id"];
+                }
             }
 
             return $mensagem;
@@ -100,8 +108,30 @@ class MensagemService
         return null;
     }
 
-    public function inserirMensagens($mensagens)
+    private static function getTopico($id){
+        foreach (MensagemService::$topicos as $topico){
+            if($topico["id_referencia"]==$id){
+                return $topico;
+            }
+        }
+        return $topico;
+    }
+
+    private static function getContato($numero){
+        foreach (MensagemService::$contatos as $contato){
+            if($contato["nu_numero"]==$numero){
+                return $contato;
+            }
+        }
+    }
+
+    public function inserirMensagens($aparelho,$mensagens)
     {
+        $topicosService=new TopicoService();
+        $this->topicos=$topicosService->recuperarPorAparelho($aparelho["id"]);
+        $contatoService=new ContatoService();
+        $this->contatos=$contatoService->recuperarPorAparelho($aparelho["id"]);
+
         $ids=array();
         $tmp=array();
         foreach ($mensagens as $mensagem){
@@ -112,8 +142,8 @@ class MensagemService
             }
         }
         if(count($tmp)>0) {
-            $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s",
-                "vl_tamanho_arquivo"=>"i","no_contato"=>"s","nu_contato"=>"s","id_tipo_midia"=>"i","id_topico"=>"i");
+            $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s","raw_data"=>"b",
+                "vl_tamanho_arquivo"=>"i","id_tipo_midia"=>"i","id_topico"=>"i","id_contato"=>"i");
 
             $r = $this->db->insertListIntoTable($tmp, $colunas, "tb_mensagem","id_referencia");
             $resp=array();

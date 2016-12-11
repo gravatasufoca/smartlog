@@ -9,7 +9,7 @@ $app->get($route.'/aparelho/:id/tipo/:tipo', function ($id,$tipo) use ($app) {
     $topicoService = new TopicoService();
 
     try {
-        echoResponse(200, $topicoService->recuperarPorAparelho($id,$tipo));
+        echoResponse(200, $topicoService->recuperarPorAparelhoTipo($id,$tipo));
     }catch (Exception $exception){
         echoResponse(500, $exception->getMessage());
     }

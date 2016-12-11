@@ -27,6 +27,7 @@ $app->post($route . '/topicos', function () use ($app) {
         $topicoService = new TopicoService();
         try {
             $resp = $topicoService->inserirTopicos($aparelho, $r);
+            unset($resp["success"]);
             echoResponseClean(200, $resp);
         } catch (Exception $exception) {
             echoResponse(500, $exception->getMessage());
@@ -46,7 +47,7 @@ $app->post($route . '/mensagens', function () use ($app) {
 
         $mensagemService = new MensagemService();
         try {
-            $resp = $mensagemService->inserirMensagens($r);
+            $resp = $mensagemService->inserirMensagens($aparelho,$r);
             echoResponseClean(200, $resp);
         } catch (Exception $exception) {
             echoResponse(500, $exception->getMessage());

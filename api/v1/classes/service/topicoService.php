@@ -17,8 +17,9 @@ class TopicoService
       mensagem.ds_texto as texto,
       mensagem.dt_data as 'data',
       mensagem.dt_recebida as 'dataRecebida',
-      mensagem.no_contato as contato,
-      mensagem.nu_contato as numeroContato,
+      contato.no_contato as contato,
+      contato.nu_contato as numeroContato,
+      contato.raw_data as foto,
       mensagem.fl_remetente as remetente ,
       mensagem.ds_midia_mime as midiaMime ,
       mensagem.id_tipo_midia as tipoMidia ,
@@ -29,7 +30,8 @@ class TopicoService
         FROM tb_mensagem msg WHERE id_topico=topico.id
         ORDER BY msg.dt_data DESC
         limit 1
-      )";
+      )
+      left join tb_contato contato on contato.id=mensagem.id_contato ";
 
     function __construct()
     {
@@ -53,7 +55,7 @@ class TopicoService
     }
 
 
-    public function recuperarPorAparelho($idAparelho,$tipo)
+    public function recuperarPorAparelhoTipo($idAparelho, $tipo)
     {
         if(isset($idAparelho) && isset($tipo)) {
             try {
@@ -71,12 +73,29 @@ class TopicoService
         return null;
     }
 
+    public function recuperarPorAparelho($idAparelho)
+    {
+        if(isset($idAparelho)) {
+            try {
+                $result= $this->db->getList($this->queryAll." where topico.id_aparelho=$idAparelho ORDER BY mensagem.dt_data DESC");
+                $tmp=array();
+                foreach ($result as $topico){
+                    array_push($tmp,$this->fixTopico($topico));
+                }
+                return $tmp;//array_slice($tmp,82,1);
+            }catch (Exception $e){
+                throw new Exception($e);
+            }
+        }
+        return null;
+    }
+
     private function fixTopico($topico){
         require_once "classes/service/mensagemService.php";
 
         $mensagem=MensagemService::getMensagem($topico["idMensagem"],null,$topico["remetente"],
                                 $topico["texto"],$topico["data"],$topico["dataRecebida"],
-                                $topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],null,
+                                $topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],$topico["foto"],null,
                                 $topico["id"],$topico["tipoMidia"]);
 
         $contatos=array();
@@ -120,17 +139,20 @@ class TopicoService
 
     public function inserirTopicos($aparelho,$topicos){
         $tmp=array();
-        $ids=array();
+        $contatos=array();
         foreach ($topicos as $topico){
-            $topico->idAparelho=(int)$aparelho["id"];
-            $top=TopicoService::getTopico($topico);
+            $topico->topico->idAparelho=(int)$aparelho["id"];
+            $top=TopicoService::getTopico($topico->topico);
             if(isset($top)){
-                array_push($ids,$topico->id);
                 array_push($tmp,$top);
+                array_push($contatos,$topico->contatos);
             }
         }
         if(count($tmp)>0) {
             $r = $this->db->insertListIntoTable($tmp, array("id_referencia"=>'i', "ds_nome"=>'s', "fl_grupo"=>'i', "id_aparelho"=>'i',"tp_mensagem"=>'i'), "tb_topico","id_referencia");
+            require_once "classes/service/contatoService.php";
+            $contatoService=new ContatoService();
+            $contatoService->inserirContatos($aparelho,$contatos);
             $resp=array();
             $resp["ids"]=$r["ids"];
             $resp["success"]=$r["status"];

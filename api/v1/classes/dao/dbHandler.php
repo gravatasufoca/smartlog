@@ -72,6 +72,7 @@ class DbHandler
 
     public function insertListIntoTable($objs, $column_names, $table_name,$id_column)
     {
+        $resultado=array();
         $coluns_keys=array_keys($column_names);
         $columns = join(",", $coluns_keys);
         $columns_values = join(",", array_map(function($v){return "?";},$coluns_keys));
@@ -102,6 +103,7 @@ class DbHandler
         );
 
         $this->conn->query("START TRANSACTION");
+
         $ids=array();
         foreach ($objs as $obj){
             $c = (array)$obj;
@@ -117,11 +119,11 @@ class DbHandler
 
 
         }
+        $resultado["ids"]=$ids;
+
+        $resultado["status"]=$this->conn->query("COMMIT");
         $stmt->close();
-        $resp=array();
-        $resp["ids"]=$ids;
-        $resp["status"]=$this->conn->query("COMMIT");
-        return $resp;
+        return $resultado;
 
     }
 
