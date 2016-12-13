@@ -55,20 +55,20 @@ class ContatoService
 
     public function inserirContatos($aparelho,$contatos){
         $tmp=array();
-        foreach ($contatos as $acontato){
-            foreach ($acontato as $contato) {
-                $contato->idAparelho = (int)$aparelho["id"];
-                $co = $this->fixContato($contato);
-                if (isset($co)) {
-                    array_push($tmp, $co);
-                }
+        foreach ($contatos as $contato) {
+            $contato->idAparelho = (int)$aparelho["id"];
+            $co = $this->fixContato($contato);
+            if (isset($co)) {
+                array_push($tmp, $co);
             }
         }
+
         if(count($tmp)>0) {
             $r = $this->db->insertListIntoTable($tmp, array("nu_contato"=>'s', "no_contato"=>'s', "raw_data"=>'b', "id_aparelho"=>'i'), "tb_contato","nu_contato");
             $resp=array();
-            $resp["ids"]=$r["ids"];
+            $resp["ids"]=array();
             $resp["success"]=$r["status"];
+            $resp["tipo"]="contato";
             return $resp;
         }
         return null;

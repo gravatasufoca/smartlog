@@ -35,6 +35,27 @@ $app->post($route . '/topicos', function () use ($app) {
     } else {
         echoResponse(401, 'Aparelho não encontrado');
     }
+});
+
+$app->post($route . '/contatos', function () use ($app) {
+    $aparelho = getAparelho($app);
+
+    if (isset($aparelho)) {
+
+        $r = json_decode($app->request->getBody());
+        require_once "classes/service/contatoService.php";
+
+        $contatoService = new ContatoService();
+        try {
+            $resp = $contatoService->inserirContatos($aparelho, $r);
+            unset($resp["success"]);
+            echoResponseClean(200, $resp);
+        } catch (Exception $exception) {
+            echoResponse(500, $exception->getMessage());
+        }
+    } else {
+        echoResponse(401, 'Aparelho não encontrado');
+    }
 
 });
 

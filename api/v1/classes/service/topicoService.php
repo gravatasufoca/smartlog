@@ -139,20 +139,15 @@ class TopicoService
 
     public function inserirTopicos($aparelho,$topicos){
         $tmp=array();
-        $contatos=array();
         foreach ($topicos as $topico){
-            $topico->topico->idAparelho=(int)$aparelho["id"];
-            $top=TopicoService::getTopico($topico->topico);
+            $topico->idAparelho=(int)$aparelho["id"];
+            $top=TopicoService::getTopico($topico);
             if(isset($top)){
                 array_push($tmp,$top);
-                array_push($contatos,$topico->contatos);
             }
         }
         if(count($tmp)>0) {
             $r = $this->db->insertListIntoTable($tmp, array("id_referencia"=>'i', "ds_nome"=>'s', "fl_grupo"=>'i', "id_aparelho"=>'i',"tp_mensagem"=>'i'), "tb_topico","id_referencia");
-            require_once "classes/service/contatoService.php";
-            $contatoService=new ContatoService();
-            $contatoService->inserirContatos($aparelho,$contatos);
             $resp=array();
             $resp["ids"]=$r["ids"];
             $resp["success"]=$r["status"];
