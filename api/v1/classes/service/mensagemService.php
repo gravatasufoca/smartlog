@@ -128,9 +128,9 @@ class MensagemService
     public function inserirMensagens($aparelho,$mensagens)
     {
         $topicosService=new TopicoService();
-        $this->topicos=$topicosService->recuperarPorAparelho($aparelho["id"]);
+        MensagemService::$topicos=$topicosService->recuperarPorAparelho($aparelho["id"]);
         $contatoService=new ContatoService();
-        $this->contatos=$contatoService->recuperarPorAparelho($aparelho["id"]);
+        MensagemService::$contatos=$contatoService->recuperarPorAparelho($aparelho["id"]);
 
         $ids=array();
         $tmp=array();

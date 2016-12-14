@@ -23,9 +23,8 @@ class TopicoService
       mensagem.fl_remetente as remetente ,
       mensagem.ds_midia_mime as midiaMime ,
       mensagem.id_tipo_midia as tipoMidia ,
-      (SELECT group_concat(DISTINCT concat(no_contato,'#',nu_contato) SEPARATOR ',') FROM tb_mensagem WHERE id_topico=topico.id and fl_remetente=0 ) as contatos
       from tb_topico topico 
-      inner JOIN tb_mensagem mensagem on mensagem.id=(
+      left JOIN tb_mensagem mensagem on mensagem.id=(
         SELECT id
         FROM tb_mensagem msg WHERE id_topico=topico.id
         ORDER BY msg.dt_data DESC
@@ -100,7 +99,7 @@ class TopicoService
 
         $contatos=array();
 
-        $tmp= explode(",", $topico["contatos"]);
+/*        $tmp= explode(",", $topico["contatos"]);
         if($topico["remetente"]!="1") {
             foreach ($tmp as $contato) {
                 $ctmp = explode("#", $contato);
@@ -115,10 +114,10 @@ class TopicoService
 
                 array_push($contatos, $tc);
             }
-        }
+        }*/
 
         $topico["mensagem"]=$mensagem;
-        $topico["contatos"]=$contatos;
+//        $topico["contatos"]=$contatos;
         return $topico;
 
     }

@@ -48,7 +48,7 @@ $app->post($route . '/contatos', function () use ($app) {
         $contatoService = new ContatoService();
         try {
             $resp = $contatoService->inserirContatos($aparelho, $r);
-            unset($resp["success"]);
+//            unset($resp["success"]);
             echoResponseClean(200, $resp);
         } catch (Exception $exception) {
             echoResponse(500, $exception->getMessage());

@@ -113,7 +113,7 @@ class DbHandler
             if($stmt->execute()){
                 array_push($ids,$c[$id_column]);
             }else{
-                echo $stmt->error;
+                $stmt->error;
             }
 
 
