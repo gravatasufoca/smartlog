@@ -22,7 +22,7 @@ class TopicoService
       contato.raw_data as foto,
       mensagem.fl_remetente as remetente ,
       mensagem.ds_midia_mime as midiaMime ,
-      mensagem.id_tipo_midia as tipoMidia ,
+      mensagem.id_tipo_midia as tipoMidia 
       from tb_topico topico 
       left JOIN tb_mensagem mensagem on mensagem.id=(
         SELECT id
@@ -37,13 +37,22 @@ class TopicoService
         $this->db = new DbHandler();
     }
 
-    public function recuperar($id)
+    public function recuperarCompleto($id)
     {
         if (isset($id)) {
            return $this->fixTopico($this->db->getOneRecord($this->queryAll." where topico.id='$id' "));
                     }
         return null;
     }
+
+    public function recuperar($id)
+    {
+        if (isset($id)) {
+            return $this->fixTopico($this->db->getOneRecord("select * from tb_topico where id='$id' "));
+        }
+        return null;
+    }
+
 
     public function recuperarPorReferencia($id)
     {
@@ -81,7 +90,7 @@ class TopicoService
                 foreach ($result as $topico){
                     array_push($tmp,$this->fixTopico($topico));
                 }
-                return $tmp;//array_slice($tmp,82,1);
+                return $tmp;
             }catch (Exception $e){
                 throw new Exception($e);
             }
@@ -97,7 +106,7 @@ class TopicoService
                                 $topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],$topico["foto"],null,
                                 $topico["id"],$topico["tipoMidia"]);
 
-        $contatos=array();
+//        $contatos=array();
 
 /*        $tmp= explode(",", $topico["contatos"]);
         if($topico["remetente"]!="1") {

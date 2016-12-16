@@ -83,7 +83,7 @@ class MensagemService
 
             $mensagem["id_referencia"] = $msg->id;
             $mensagem["fl_remetente"] = !$msg->remetente?0:1;
-            $mensagem["ds_texto"] = isset($msg->texto)?utf8_encode($msg->texto):null;
+            $mensagem["ds_texto"] = isset($msg->texto)?$msg->texto:null;
             $mensagem["dt_data"] = $msg->data;
             $mensagem["dt_recebida"] = $msg->dataRecebida;
             $mensagem["ds_midia_mime"] = isset($msg->midiaMime)?$msg->midiaMime:null;
@@ -96,7 +96,7 @@ class MensagemService
                 $mensagem["id_topico"] = $topico["id"];
             }
 
-            if(isset($msg->numeroContato)) {
+            if(isset($msg->numeroContato) && $msg->numeroContato!="") {
                 $contato = MensagemService::getContato($msg->numeroContato);
                 if (isset($contato)) {
                     $mensagem["id_contato"] = $contato["id"];
@@ -110,7 +110,7 @@ class MensagemService
 
     private static function getTopico($id){
         foreach (MensagemService::$topicos as $topico){
-            if($topico["id_referencia"]==$id){
+            if($topico["idReferencia"]==$id){
                 return $topico;
             }
         }
@@ -119,7 +119,7 @@ class MensagemService
 
     private static function getContato($numero){
         foreach (MensagemService::$contatos as $contato){
-            if($contato["nu_numero"]==$numero){
+            if(endsWith($numero, $contato["nu_contato"])){
                 return $contato;
             }
         }

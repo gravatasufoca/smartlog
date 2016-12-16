@@ -22,7 +22,7 @@ $app->post($route.'/:id', function ($id) use ($app) {
 
     $topicoService = new TopicoService();
     try {
-        echoResponse(200, $topicoService->recuperar($id));
+        echoResponse(200, $topicoService->recuperarCompleto($id));
     }catch (Exception $exception){
         echoResponse(500, $exception->getMessage());
     }
