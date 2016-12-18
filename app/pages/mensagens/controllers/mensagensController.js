@@ -35,12 +35,12 @@ define(['msAppJs',
 		/**
 		 * Controla o nivel de acesso do usuario logado para a funcionalidade em questão
 		 */
-		$timeout(function(){
+/*		$timeout(function(){
 			apoioService.recuperarPermissoesAcesso("MENSAGENS")
 			.then(function(data) {
 				$scope.permissaoAcesso = data.resultado;
 			});
-		}, 100);
+		}, 100);*/
 
 
 
@@ -104,8 +104,21 @@ define(['msAppJs',
                      angular.forEach(result.resultado, function (topico) {
                          var nt = new Topico();
                          angular.extend(nt, topico);
+                         if(nt.data!=null) {
+                             nt.data = nt.data.stringToDatetime();
+                         }
+                         if(nt.dataRecebida!=null) {
+                             nt.dataRecebida = nt.dataRecebida.stringToDatetime();
+                         }
+                         if(nt.mensagem!=null && nt.mensagem.data!=null){
+                             nt.mensagem.data=nt.mensagem.data.stringToDatetime();
+						 }
+                         if(nt.mensagem!=null && nt.mensagem.dataRecebida!=null){
+                             nt.mensagem.dataRecebida=nt.mensagem.dataRecebida.stringToDatetime();
+                         }
                          $scope.topicos.push(nt);
                      });
+
 
                      // definiAvatar();
                      $msNotifyService.close();
@@ -118,16 +131,15 @@ define(['msAppJs',
 
 		var definiAvatar=function () {
             $scope.topico.mensagens.map(function (mensagem) {
-				var contato=_.find($scope.topico.contatos,function (cont) {
-					return cont.numero==mensagem.numeroContato;
-                });
-
-				if(contato!=null){
-					mensagem.cor=contato.cor;
-				}
-
+            	if(!mensagem.remetente) {
+                    var contato = _.find($scope.topico.contatos, function (cont) {
+                        return cont.numero == mensagem.numeroContato;
+                    });
+                    if (contato != null) {
+                        mensagem.cor = contato.cor;
+                    }
+                }
             });
-
         }
 
 
@@ -175,7 +187,11 @@ define(['msAppJs',
 			if($scope.topico!=null && topico.id==$scope.topico.id) return;
             $msNotifyService.loading();
             mensagensService.recuperarMensagens(topico.id).then(function (resposta) {
-
+            	angular.forEach(resposta.resultado,function (a) {
+					a.remetente=a.remetente=="true";
+					a.data=a.data.stringToDatetime();
+                    a.dataRecebida=a.dataRecebida.stringToDatetime()
+                });
 				topico.mensagens=resposta.resultado;
 				$scope.topico=topico;
 				definiAvatar();
@@ -190,7 +206,7 @@ define(['msAppJs',
 				return t;
             });
 			tab.ativo=true;
-
+            $scope.topico={};
 			recuperarMensagens();
         };
 

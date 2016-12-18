@@ -56,7 +56,7 @@ class DbHandler
             $values = $values . "'" . $$desired_key . "',";
         }
         $query = "INSERT INTO " . $table_name . "(" . trim($columns, ',') . ") VALUES(" . trim($values, ',') . ")";
-        $r = $this->conn->query($query) or die($this->conn->error . __LINE__);
+        $r = $this->conn->query($query);
 
         if ($r) {
             $new_row_id = $this->conn->insert_id;

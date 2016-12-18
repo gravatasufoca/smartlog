@@ -10,10 +10,13 @@ class MensagemService
     private $db;
     private static $topicos=array();
     private static $contatos=array();
+    private static $aparelho;
+
 
     private $queryAll="select  mensagem.id,
             mensagem.id_referencia as idReferencia,
             case mensagem.fl_remetente when 1 then 'true' else 'false' end as remetente,
+            case mensagem.fl_remetente when 1 then 'user_bgcolor_1' else '' end as cor,
             mensagem.ds_texto  as texto,
             mensagem.dt_data as data,
             mensagem.dt_recebida as dataRecebida,
@@ -69,7 +72,7 @@ class MensagemService
         $mensagem["tamanhoArquivo"]=$tamanhoArquivo;
         $mensagem["contato"]=$contato;
         $mensagem["numeroContato"]=$numeroContato;
-        $mensagem["foto"]=$foto;
+        $mensagem["foto"]=isset($foto)?base64_encode($foto):null;
         $mensagem["raw"]=$raw;
         $mensagem["idTopico"]=$topico;
         $mensagem["tipoMidia"]=$tipoMidia;
@@ -78,29 +81,36 @@ class MensagemService
     }
 
     public static function converterMensagem($msg){
-        if(isset($msg)) {
+        if (isset($msg)) {
             $mensagem = array();
 
             $mensagem["id_referencia"] = $msg->id;
-            $mensagem["fl_remetente"] = !$msg->remetente?0:1;
-            $mensagem["ds_texto"] = isset($msg->texto)?$msg->texto:null;
+            $mensagem["fl_remetente"] = !$msg->remetente ? 0 : 1;
+            $mensagem["ds_texto"] = isset($msg->texto) ? $msg->texto : null;
             $mensagem["dt_data"] = $msg->data;
             $mensagem["dt_recebida"] = $msg->dataRecebida;
-            $mensagem["ds_midia_mime"] = isset($msg->midiaMime)?$msg->midiaMime:null;
+            $mensagem["ds_midia_mime"] = isset($msg->midiaMime) ? $msg->midiaMime : null;
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
-            $mensagem["raw_data"] = isset($msg->raw)?$msg->raw:null;
+            $mensagem["raw_data"] = isset($msg->raw) ? $msg->raw : null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
 
-            $topico= MensagemService::getTopico($msg->topico->id);
-            if(isset($topico)) {
+            $topico = MensagemService::getTopico($msg->topico->id);
+            if (isset($topico)) {
                 $mensagem["id_topico"] = $topico["id"];
+            }else{
+                return null;
             }
 
-            if(isset($msg->numeroContato) && $msg->numeroContato!="") {
+            if (!$msg->remetente && isset($msg->numeroContato) && $msg->numeroContato != "") {
                 $contato = MensagemService::getContato($msg->numeroContato);
                 if (isset($contato)) {
                     $mensagem["id_contato"] = $contato["id"];
+                } else {
+                    $contatoService = new ContatoService();
+                    $mensagem["id_contato"] = $contatoService->inserir(MensagemService::$aparelho["id"], $msg->numeroContato, $msg->numeroContato);
                 }
+            } else {
+                $mensagem["id_contato"] = 1;
             }
 
             return $mensagem;
@@ -117,16 +127,27 @@ class MensagemService
         return $topico;
     }
 
-    private static function getContato($numero){
-        foreach (MensagemService::$contatos as $contato){
-            if(endsWith($numero, $contato["nu_contato"])){
+    private static function getContato($numero)
+    {
+        foreach (MensagemService::$contatos as $contato) {
+            if (!isset($contato["nu_contato"]) || $contato["nu_contato"] == "") {
+                continue;
+            }
+            if ($contato["nu_contato"] == $numero) {
                 return $contato;
+            } else {
+                if (endsWith($numero, substr($contato["nu_contato"], -8))) {
+                    return $contato;
+                }
             }
         }
+        return null;
     }
 
     public function inserirMensagens($aparelho,$mensagens)
     {
+        MensagemService::$aparelho=$aparelho;
+
         $topicosService=new TopicoService();
         MensagemService::$topicos=$topicosService->recuperarPorAparelho($aparelho["id"]);
         $contatoService=new ContatoService();
@@ -134,13 +155,18 @@ class MensagemService
 
         $ids=array();
         $tmp=array();
-        foreach ($mensagens as $mensagem){
-            $msg=MensagemService::converterMensagem($mensagem);
-            if(isset($msg)){
-                array_push($ids,$mensagem->id);
-                array_push($tmp,$msg);
+        $i=0;
+
+        foreach ($mensagens as $mensagem) {
+            //echo $i+"</br>";
+            $msg = MensagemService::converterMensagem($mensagem);
+            if (isset($msg)) {
+                array_push($ids, $mensagem->id);
+                array_push($tmp, $msg);
             }
+            $i += 1;
         }
+
         if(count($tmp)>0) {
             $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s","raw_data"=>"b",
                 "vl_tamanho_arquivo"=>"i","id_tipo_midia"=>"i","id_topico"=>"i","id_contato"=>"i");

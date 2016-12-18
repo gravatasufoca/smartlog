@@ -26,7 +26,7 @@
                                         <div class="hora">{{topico.mensagem.data.format('DD/MM/YYYY')}}</div>
                                     </div>
                                     <div class="divavatar">
-                                        <span class="avatar {{topico.mensagem.cor}}">{{topico.nome.acronomo(2)}}</span>
+                                        <span class="avatar {{topico.cor}}">{{topico.nome.acronomo(2)}}</span>
                                     </div>
                                     <div class="nomes">
                                         <div class="nome">{{topico.nome}}</div>
@@ -54,7 +54,7 @@
                                 <div class="msginwrap">
                                     <div class="msgwrapin">
                                         <a class="afoto">
-                                            <span class="avatar {{mensagem.cor}} {{topico.mesmoGrupo($index)? 'hidden':''}}">{{mensagem.contato.acronomo(2)}}</span>
+                                            <span class="avatar {{mensagem.cor}} {{topico.mesmoGrupo($index)? 'hidden2':''}}">{{mensagem.contato.acronomo(2)}}</span>
                                             <!--<img class="foto" src="filesystem:https://web.telegram.org/temporary/702222036_29437_16181383589578663144.jpg"/>-->
                                         </a>
                                         <div class="chora">

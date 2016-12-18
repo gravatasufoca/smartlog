@@ -22,7 +22,12 @@ class TopicoService
       contato.raw_data as foto,
       mensagem.fl_remetente as remetente ,
       mensagem.ds_midia_mime as midiaMime ,
-      mensagem.id_tipo_midia as tipoMidia 
+      mensagem.id_tipo_midia as tipoMidia ,
+      (SELECT
+          group_concat(DISTINCT concat(contato.no_contato,'#',contato.nu_contato) SEPARATOR ',') 
+        FROM tb_mensagem msg
+          inner JOIN tb_contato contato on msg.id_contato = contato.id
+        WHERE msg.id_topico=topico.id and msg.fl_remetente=0) as contatos
       from tb_topico topico 
       left JOIN tb_mensagem mensagem on mensagem.id=(
         SELECT id
@@ -106,27 +111,39 @@ class TopicoService
                                 $topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],$topico["foto"],null,
                                 $topico["id"],$topico["tipoMidia"]);
 
-//        $contatos=array();
+        $contatos=array();
 
-/*        $tmp= explode(",", $topico["contatos"]);
-        if($topico["remetente"]!="1") {
+        $topico["cor"] = "user_bgcolor_" . rand(2, 8);
+
+        $tmp= explode(",", $topico["contatos"]);
+//        if($topico["remetente"]!="1") {
             foreach ($tmp as $contato) {
+                if($contato=="") continue;
                 $ctmp = explode("#", $contato);
 
                 $tc = array();
-                $tc["numero"] = $ctmp[1];
+                $tc["numero"] = count($ctmp)>1?$ctmp[1]:null;
                 $tc["nome"] = $ctmp[0];
-                $tc["cor"] = "user_bgcolor_" . rand(1, 8);
+                $tc["cor"] = "user_bgcolor_" . rand(2, 8);
                 if ($mensagem["numeroContato"] == $tc["numero"]) {
-                    $mensagem["cor"] = $tc["cor"];
+                    $mensagem["cor"] = $topico["cor"];
+                    $tc["cor"]= $topico["cor"];
                 }
 
                 array_push($contatos, $tc);
             }
-        }*/
+//        }
 
+        if($topico["remetente"]=="1"){
+            $mensagem["cor"] ="user_bgcolor_1";
+        }
         $topico["mensagem"]=$mensagem;
-//        $topico["contatos"]=$contatos;
+        if(!isset($topico["nome"])){
+            if(count($contatos)>0) {
+                $topico["nome"] = $contatos[0]["nome"];
+            }
+        }
+        $topico["contatos"]=$contatos;
         return $topico;
 
     }

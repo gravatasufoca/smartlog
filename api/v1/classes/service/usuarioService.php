@@ -71,7 +71,7 @@ class UsuarioService
 
             $isUserExists = $this->db->getOneRecord("select id,ds_senha from tb_usuario where fl_ativo=1 and ds_email='$email'");
             if(!$isUserExists) {
-                $isUserExists = $this->db->insertIntoTable($usuario, $colunas, "tb_usuario");
+                $isUserExists["id"] = $this->db->insertIntoTable($usuario, $colunas, "tb_usuario");
             }else{
                 if($isUserExists["ds_senha"]!=$usuario->ds_senha) {
                     return "Senha inválida";

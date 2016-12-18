@@ -22,6 +22,18 @@ class ContatoService
         return null;
     }
 
+    public function inserir($idAparelho,$nome,$numero){
+        $contato=array();
+        $contato["no_contato"]=$nome;
+        $contato["nu_contato"]=$numero;
+        $contato["id_aparelho"]=$idAparelho;
+        try {
+            return $this->db->insertIntoTable($contato, array("no_contato", "nu_contato", "id_aparelho"), "tb_contato");
+        }catch (Exception $exception){
+            $exception->getMessage();
+        }
+    }
+
     public function recuperarPorNumero($idAparelho,$numero)
     {
         if (isset($id)) {
@@ -55,6 +67,14 @@ class ContatoService
 
     public function inserirContatos($aparelho,$contatos){
         $tmp=array();
+        //adiciona sempre o contato 1!!!
+        $cont=array();
+        $cont["id"]=1;
+        $cont["nu_contato"]="";
+        $cont["no_contato"]="me";
+        $cont["id_aparelho"]=(int)$aparelho["id"];
+        $cont["raw_data"]=null;
+        $this->db->insertIntoTable($cont,array("id","nu_contato","no_contato","id_aparelho","raw_data"),"tb_contato");
         foreach ($contatos as $contato) {
             $contato->idAparelho = (int)$aparelho["id"];
             $co = $this->fixContato($contato);
