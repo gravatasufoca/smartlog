@@ -4,8 +4,9 @@ require_once "classes/dao/dbHandler.php";
 
 class TopicoService
 {
-
     private $db;
+    private $carregados=0;
+    private $limite="";
 
     private $queryAll="select 
       topico.id, 
@@ -37,9 +38,15 @@ class TopicoService
       )
       left join tb_contato contato on contato.id=mensagem.id_contato ";
 
-    function __construct()
+    function __construct($carregados)
     {
         $this->db = new DbHandler();
+        $this->carregados=$carregados;
+        if($carregados==0){
+            $this->limite=" limit 20";
+        }else{
+            $this->limite=" limit ".$this->carregados.",".($this->carregados+20);
+        }
     }
 
     public function recuperarCompleto($id)
@@ -73,7 +80,7 @@ class TopicoService
         if(isset($idAparelho) && isset($tipo)) {
             try {
                 $idTipo=getTipoMensagen($tipo);
-                $result= $this->db->getList($this->queryAll." where topico.id_aparelho=$idAparelho and topico.tp_mensagem=$idTipo ORDER BY mensagem.dt_data DESC");
+                $result= $this->db->getList($this->queryAll." where topico.id_aparelho=$idAparelho and topico.tp_mensagem=$idTipo ORDER BY mensagem.dt_data DESC".$this->limite);
                 $tmp=array();
                 foreach ($result as $topico){
                     array_push($tmp,$this->fixTopico($topico));

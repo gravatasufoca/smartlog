@@ -3,10 +3,10 @@
 
 $route="/topico";
 
-$app->get($route.'/aparelho/:id/tipo/:tipo', function ($id,$tipo) use ($app) {
+$app->get($route.'/aparelho/:id/tipo/:tipo/c/:carregados', function ($id,$tipo,$carregado) use ($app) {
     require_once "classes/service/topicoService.php";
 
-    $topicoService = new TopicoService();
+    $topicoService = new TopicoService($carregado);
 
     try {
         echoResponse(200, $topicoService->recuperarPorAparelhoTipo($id,$tipo));

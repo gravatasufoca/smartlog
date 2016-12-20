@@ -47,6 +47,11 @@ define(['msAppJs',
 		$scope.topicos=[];
 		$scope.topico=null;
 
+		$scope.carregados={
+			topicos:0,
+			mensagens:0
+		};
+
 		$scope.tabs=[{
 			texto:"SMS",
 			ativo:true
@@ -84,7 +89,7 @@ define(['msAppJs',
                         }, 100);
                     });
             }*/
-            recuperarMensagens();
+            recuperarTopicos();
         });
 		/**
 			*Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
@@ -95,12 +100,12 @@ define(['msAppJs',
 			 };
 		 });
 
-		 var recuperarMensagens=function () {
+		 var recuperarTopicos=function () {
              var usuario=$rootScope.usuarioAutenticado;
              if(usuario!=null && usuario.perfil!=null) {
                  $msNotifyService.loading();
                  $scope.topicos=[];
-                 mensagensService.recuperarTopicos(usuario.perfil.id, getTab()).then(function (result) {
+                 mensagensService.recuperarTopicos(usuario.perfil.id, getTab(),$scope.carregados.mensagens).then(function (result) {
                      angular.forEach(result.resultado, function (topico) {
                          var nt = new Topico();
                          angular.extend(nt, topico);
@@ -118,6 +123,7 @@ define(['msAppJs',
                          }
                          $scope.topicos.push(nt);
                      });
+                     $scope.carregados.mensagens+=$scope.topicos.length;
 
 
                      // definiAvatar();
@@ -207,7 +213,7 @@ define(['msAppJs',
             });
 			tab.ativo=true;
             $scope.topico={};
-			recuperarMensagens();
+			recuperarTopicos();
         };
 
 		var getTab=function () {
@@ -216,6 +222,9 @@ define(['msAppJs',
             })
         };
 
+		$scope.scrollEnd=function () {
+            recuperarTopicos();
+        };
 	}]);
 
 	return app;

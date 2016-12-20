@@ -272,6 +272,16 @@ define(['msAppJs'], function(app) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
+        $.fn.scrollEnd = function(callback, timeout) {
+            $(this).scroll(function(){
+                var $this = $(this);
+                if ($this.data('scrollTimeout')) {
+                    clearTimeout($this.data('scrollTimeout'));
+                }
+                $this.data('scrollTimeout', setTimeout(callback,timeout));
+            });
+        };
+
 	}
 
 	window.geral = new Geral();

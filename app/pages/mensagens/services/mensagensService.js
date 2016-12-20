@@ -2,9 +2,8 @@ define(['msAppJs'
         ], function(app) {
 	app.factory('mensagensService', ['resourceRest',"$http", function(resourceRest,$http){
 
-		var recuperarTopicos=function (idAparelho,tab) {
-
-			return resourceRest.topico.one("aparelho",idAparelho).one("tipo",tab.texto.toUpperCase()).getList();
+		var recuperarTopicos=function (idAparelho,tab,carregados) {
+			return resourceRest.topico.one("aparelho",idAparelho).one("tipo",tab.texto.toUpperCase()).one("c",carregados).getList();
         };
 
 		var recuperarMensagens = function (idTopico) {

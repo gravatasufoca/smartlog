@@ -22,7 +22,7 @@ define([
 					deferred.resolve(msSegurancaService.getUsuario());
 				else {
 					///TODO comentar qdo autenticação for local
-					$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+					$http.defaults.headers.common['Authorization'] = token;
 					$http.get(appConfig.login.url_usuario, {token: token})
 					.then(function(response){
 						$timeout(function() {
