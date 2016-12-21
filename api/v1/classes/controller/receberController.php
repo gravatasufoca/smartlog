@@ -24,7 +24,7 @@ $app->post($route . '/topicos', function () use ($app) {
         $r = json_decode($app->request->getBody());
         require_once "classes/service/topicoService.php";
 
-        $topicoService = new TopicoService();
+        $topicoService = new TopicoService(null);
         try {
             $resp = $topicoService->inserirTopicos($aparelho, $r);
             unset($resp["success"]);
@@ -66,7 +66,7 @@ $app->post($route . '/mensagens', function () use ($app) {
         $r = json_decode($app->request->getBody());
         require_once "classes/service/mensagemService.php";
 
-        $mensagemService = new MensagemService();
+        $mensagemService = new MensagemService(null);
         try {
             $resp = $mensagemService->inserirMensagens($aparelho,$r);
             echoResponseClean(200, $resp);

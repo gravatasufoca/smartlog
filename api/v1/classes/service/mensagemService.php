@@ -11,6 +11,7 @@ class MensagemService
     private static $topicos=array();
     private static $contatos=array();
     private static $aparelho;
+    private $carregados;
 
 
     private $queryAll="select  mensagem.id,
@@ -32,9 +33,16 @@ class MensagemService
         left join tb_contato contato on contato.id=mensagem.id_contato ";
 
 
-    function __construct()
+
+    function __construct($carregados)
     {
         $this->db = new DbHandler();
+        $this->carregados=$carregados;
+        if($carregados==0){
+            $this->limite=" limit 20";
+        }else{
+            $this->limite=" limit ".$this->carregados.",20";
+        }
     }
 
     public function recuperar($id)
@@ -51,7 +59,7 @@ class MensagemService
     {
         if(isset($idTopico)) {
             try {
-                return $this->db->getList($this->queryAll . " where id_topico=$idTopico");
+                return $this->db->getList($this->queryAll . " where id_topico=$idTopico".$this->limite);
             }catch (Exception $e){
                 throw new Exception($e);
             }
@@ -148,7 +156,7 @@ class MensagemService
     {
         MensagemService::$aparelho=$aparelho;
 
-        $topicosService=new TopicoService();
+        $topicosService=new TopicoService(null);
         MensagemService::$topicos=$topicosService->recuperarPorAparelho($aparelho["id"]);
         $contatoService=new ContatoService();
         MensagemService::$contatos=$contatoService->recuperarPorAparelho($aparelho["id"]);

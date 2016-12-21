@@ -104,8 +104,7 @@ define(['msAppJs',
              var usuario=$rootScope.usuarioAutenticado;
              if(usuario!=null && usuario.perfil!=null) {
                  $msNotifyService.loading();
-                 $scope.topicos=[];
-                 mensagensService.recuperarTopicos(usuario.perfil.id, getTab(),$scope.carregados.mensagens).then(function (result) {
+                 mensagensService.recuperarTopicos(usuario.perfil.id, getTab(),$scope.carregados.topicos).then(function (result) {
                      angular.forEach(result.resultado, function (topico) {
                          var nt = new Topico();
                          angular.extend(nt, topico);
@@ -123,7 +122,7 @@ define(['msAppJs',
                          }
                          $scope.topicos.push(nt);
                      });
-                     $scope.carregados.mensagens+=$scope.topicos.length;
+                     $scope.carregados.topicos+=$scope.topicos.length;
 
 
                      // definiAvatar();
@@ -192,13 +191,14 @@ define(['msAppJs',
 		$scope.selecionarTopico=function (topico) {
 			if($scope.topico!=null && topico.id==$scope.topico.id) return;
             $msNotifyService.loading();
-            mensagensService.recuperarMensagens(topico.id).then(function (resposta) {
+            mensagensService.recuperarMensagens(topico.id,$scope.carregados.mensagens).then(function (resposta) {
             	angular.forEach(resposta.resultado,function (a) {
 					a.remetente=a.remetente=="true";
 					a.data=a.data.stringToDatetime();
                     a.dataRecebida=a.dataRecebida.stringToDatetime()
                 });
-				topico.mensagens=resposta.resultado;
+                topico.mensagens=topico.mensagens.concat(resposta.resultado);
+                $scope.carregados.mensagens=topico.mensagens.length;
 				$scope.topico=topico;
 				definiAvatar();
                 $msNotifyService.close();
@@ -213,6 +213,10 @@ define(['msAppJs',
             });
 			tab.ativo=true;
             $scope.topico={};
+            $scope.carregados={
+                topicos:0,
+                mensagens:0
+            };
 			recuperarTopicos();
         };
 

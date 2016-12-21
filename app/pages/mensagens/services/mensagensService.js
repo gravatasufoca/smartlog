@@ -6,8 +6,8 @@ define(['msAppJs'
 			return resourceRest.topico.one("aparelho",idAparelho).one("tipo",tab.texto.toUpperCase()).one("c",carregados).getList();
         };
 
-		var recuperarMensagens = function (idTopico) {
-			return resourceRest.mensagem.one("topico",idTopico).getList();
+		var recuperarMensagens = function (idTopico,carregados) {
+			return resourceRest.mensagem.one("topico",idTopico).one("c",carregados).getList();
         };
 
 		return {

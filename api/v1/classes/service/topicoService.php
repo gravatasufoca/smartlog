@@ -45,7 +45,7 @@ class TopicoService
         if($carregados==0){
             $this->limite=" limit 20";
         }else{
-            $this->limite=" limit ".$this->carregados.",".($this->carregados+20);
+            $this->limite=" limit ".$this->carregados.",20";
         }
     }
 
