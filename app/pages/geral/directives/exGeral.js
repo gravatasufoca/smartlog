@@ -194,26 +194,64 @@ define(['msAppJs'], function(app) {
 
 
    	app.directive('scrolly', function () {
+		var loaded=false;
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
                 var raw = element[0];
-                element.bind('scroll', function () {
-                    console.log('in scroll');
-                    console.log(raw.scrollTop + raw.offsetHeight);
-                    console.log(raw.scrollHeight);
+
+                if(element.attr("reverse")==null){
+                    scope.reverse=false;
+                }
+
+                if (scope.objeto != null && scope.reverse) {
+					scope.$watch("objeto.mensagens",function (a,b) {
+						if(a!=null && a.length>0 && !loaded) {
+                            raw.scrollTop = raw.scrollHeight;
+                            loaded=true;
+                        }
+                    });
+                }
+
+                var scrollNormal=function () {
                     if (raw.scrollTop + raw.offsetHeight== raw.scrollHeight) { //at the bottom
 
-						if(scope.onEnd!=null){
+                        if(scope.onEnd!=null){
                             setTimeout(function () {
                                 scope.onEnd();
                             },scope.timeout!=null?scope.timeout:500);
-						}
+                        }
                     }
+                };
+
+                var scrollReverse=function () {
+                    if (raw.scrollTop ==0) { //at the bottom
+
+                        if(scope.onEnd!=null){
+                            setTimeout(function () {
+                                scope.onEnd();
+                            },scope.timeout!=null?scope.timeout:500);
+                        }
+                    }
+                };
+
+                element.bind('scroll', function () {
+
+                    console.log('in scroll');
+                    console.log("top:"+raw.scrollTop);
+                    console.log(raw.scrollTop + raw.offsetHeight);
+                    console.log(raw.scrollHeight);
+                    if(!scope.reverse){
+                    	scrollNormal();
+					}else{
+                    	scrollReverse();
+					}
                 })
             },
 			scope:{
-            	onEnd:"="
+            	onEnd:"=",
+				reverse:"=?",
+				objeto:"=?"
 			}
         }
     });

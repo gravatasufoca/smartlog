@@ -134,6 +134,22 @@ define(['msAppJs',
              }
          };
 
+		 var recarregarMensagens=function () {
+             $msNotifyService.loading();
+             mensagensService.recuperarMensagens($scope.topico.id,$scope.carregados.mensagens).then(function (resposta) {
+                 angular.forEach(resposta.resultado,function (a) {
+                     a.remetente=a.remetente=="true";
+                     a.data=a.data.stringToDatetime();
+                     a.dataRecebida=a.dataRecebida.stringToDatetime()
+                 });
+                 $scope.topico.mensagens=$scope.topico.mensagens.concat(resposta.resultado);
+                 $scope.carregados.mensagens=$scope.topico.mensagens.length;
+                 definiAvatar();
+                 $msNotifyService.close();
+
+             });
+		 };
+
 		var definiAvatar=function () {
             $scope.topico.mensagens.map(function (mensagem) {
             	if(!mensagem.remetente) {
@@ -190,21 +206,10 @@ define(['msAppJs',
 
 		$scope.selecionarTopico=function (topico) {
 			if($scope.topico!=null && topico.id==$scope.topico.id) return;
-            $msNotifyService.loading();
-            mensagensService.recuperarMensagens(topico.id,$scope.carregados.mensagens).then(function (resposta) {
-            	angular.forEach(resposta.resultado,function (a) {
-					a.remetente=a.remetente=="true";
-					a.data=a.data.stringToDatetime();
-                    a.dataRecebida=a.dataRecebida.stringToDatetime()
-                });
-                topico.mensagens=topico.mensagens.concat(resposta.resultado);
-                $scope.carregados.mensagens=topico.mensagens.length;
-				$scope.topico=topico;
-				definiAvatar();
-                $msNotifyService.close();
-
-            });
+			$scope.topico=topico;
+            recarregarMensagens();
         }
+
 
         $scope.selecionarTab=function (tab) {
 			$scope.tabs.map(function (t) {
@@ -229,6 +234,11 @@ define(['msAppJs',
 		$scope.scrollEnd=function () {
             recuperarTopicos();
         };
+
+		$scope.scrollMessagesEnd=function () {
+            recarregarMensagens();
+	 	};
+
 	}]);
 
 	return app;

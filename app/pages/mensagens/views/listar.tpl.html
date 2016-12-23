@@ -47,9 +47,9 @@
                 <div class="mensagenscontainer">
                     <div class="semmensagens" ng-if="topico==null">Selecione um chat para começar a conversar</div>
 
-                    <div class="listamensagem" ng-if="topico!=null">
+                    <div class="listamensagem" ng-if="topico!=null"  objeto="topico" scrolly="scrolly" on-end="scrollMessagesEnd" timeout="500" reverse="true">
                         <!-- MENSAGEM COMPLETA -->
-                        <div class="msgwrap" ng-repeat="mensagem in topico.mensagens track by mensagem.id ">
+                        <div class="msgwrap" ng-repeat="mensagem in topico.mensagens track by mensagem.id " >
                             <div class="msgoutwrap">
                                 <div class="msginwrap">
                                     <div class="msgwrapin">
