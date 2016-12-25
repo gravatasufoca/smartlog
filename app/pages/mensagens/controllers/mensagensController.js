@@ -47,6 +47,8 @@ define(['msAppJs',
 		$scope.topicos=[];
 		$scope.topico=null;
 
+		$scope.carregando=false;
+
 		$scope.carregados={
 			topicos:0,
 			mensagens:0
@@ -103,7 +105,7 @@ define(['msAppJs',
 		 var recuperarTopicos=function () {
              var usuario=$rootScope.usuarioAutenticado;
              if(usuario!=null && usuario.perfil!=null) {
-                 $msNotifyService.loading();
+                 // $msNotifyService.loading();
                  mensagensService.recuperarTopicos(usuario.perfil.id, getTab(),$scope.carregados.topicos).then(function (result) {
                      angular.forEach(result.resultado, function (topico) {
                          var nt = new Topico();
@@ -126,16 +128,20 @@ define(['msAppJs',
 
 
                      // definiAvatar();
-                     $msNotifyService.close();
+                     // $msNotifyService.close();
                  }, function (e) {
-                     $msNotifyService.close();
+                     // $msNotifyService.close();
                      $scope.showMsg('E', e);
                  });
              }
          };
 
-		 var recarregarMensagens=function () {
-             $msNotifyService.loading();
+		 var recarregarMensagens=function (elemento) {
+             // $msNotifyService.loading();
+             if(elemento!=null){
+                 console.info("top:"+elemento.scrollTop()+" height: "+elemento.height()+" offset: "+elemento.outerHeight());
+             }
+             $scope.carregando=true;
              mensagensService.recuperarMensagens($scope.topico.id,$scope.carregados.mensagens).then(function (resposta) {
                  angular.forEach(resposta.resultado,function (a) {
                      a.remetente=a.remetente=="true";
@@ -145,10 +151,28 @@ define(['msAppJs',
                  $scope.topico.mensagens=$scope.topico.mensagens.concat(resposta.resultado);
                  $scope.carregados.mensagens=$scope.topico.mensagens.length;
                  definiAvatar();
-                 $msNotifyService.close();
+                 $scope.carregando=false;
+                 if($scope.topico.mensagens.length>0) {
+                     corrigeAvatares();
+                 }
+                 // $msNotifyService.close();
 
              });
 		 };
+
+		 var corrigeAvatares=function () {
+             $scope.topico.mensagens=$scope.topico.mensagens.reverse();
+		     var contato=$scope.topico.mensagens[0].contato;
+             angular.forEach($scope.topico.mensagens,function (a) {
+                 if(a.contato!=contato){
+                     a.ma=true;
+                     contato=a.contato;
+                 }else{
+                     a.ma=false;
+                 }
+             });
+             $scope.topico.mensagens=$scope.topico.mensagens.reverse();
+         }
 
 		var definiAvatar=function () {
             $scope.topico.mensagens.map(function (mensagem) {
@@ -176,12 +200,11 @@ define(['msAppJs',
 				 tipoMensagem:null,
                  mensagem:null,
                  mesmoGrupo:function (indice) {
-					 if(indice>0){
-						if(this.mensagens[indice-1].contato==this.mensagens[indice].contato){
-							return true;
-						}
-					 }
-					 return false;
+                     return indice > 0 && this.mensagens[indice]!=null && this.mensagens[indice-1]!=null && this.mensagens[indice].contato == this.mensagens[indice-1].contato;
+                 },
+                 mesmaData:function (indice) {
+                     return indice > 0 && this.mensagens[indice]!=null && this.mensagens[indice-1]!=null && this.mensagens[indice].data.format("L") == this.mensagens[indice-1].data.format("L");
+
                  }
 			 }
 		 };
@@ -206,7 +229,8 @@ define(['msAppJs',
 
 		$scope.selecionarTopico=function (topico) {
 			if($scope.topico!=null && topico.id==$scope.topico.id) return;
-			$scope.topico=topico;
+			$scope.topico=angular.copy(topico);
+			$scope.carregados.mensagens=0;
             recarregarMensagens();
         }
 
@@ -218,6 +242,7 @@ define(['msAppJs',
             });
 			tab.ativo=true;
             $scope.topico={};
+            $scope.topicos=[];
             $scope.carregados={
                 topicos:0,
                 mensagens:0
@@ -231,13 +256,14 @@ define(['msAppJs',
             })
         };
 
-		$scope.scrollEnd=function () {
+		$scope.scrollEnd=function (elemento) {
             recuperarTopicos();
         };
 
-		$scope.scrollMessagesEnd=function () {
-            recarregarMensagens();
+		$scope.scrollMessagesEnd=function (elemento) {
+            recarregarMensagens(elemento);
 	 	};
+
 
 	}]);
 

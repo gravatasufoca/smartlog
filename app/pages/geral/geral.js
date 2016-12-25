@@ -8,5 +8,5 @@ define(['msAppJs',
         'pages/geral/directives/exModalConfirmacao',
         ], function(app){
 	'use strict';
-	return app;
+    return app;
 });

@@ -2,7 +2,8 @@ define(['msAppJs'], function(app) {
 
 	//////////////////////////PLUGINS
 
-	/**
+
+    /**
 	 * Plugin que faz a tela rolar para determinado componente visivel na tela
 	 */
 	$.fn.scrollTo = function() {

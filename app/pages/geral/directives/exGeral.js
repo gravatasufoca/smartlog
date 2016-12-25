@@ -193,7 +193,7 @@ define(['msAppJs'], function(app) {
 	}]);
 
 
-   	app.directive('scrolly', function () {
+   	app.directive('scrolly',["$timeout", function ($timeout) {
 		var loaded=false;
         return {
             restrict: 'A',
@@ -206,10 +206,13 @@ define(['msAppJs'], function(app) {
 
                 if (scope.objeto != null && scope.reverse) {
 					scope.$watch("objeto.mensagens",function (a,b) {
-						if(a!=null && a.length>0 && !loaded) {
+						if(a!=null && b.length==0&& !loaded) {
                             raw.scrollTop = raw.scrollHeight;
+                            element.attr("scroll",raw.scrollHeight);
+                            element.attr("scrollheight",raw.scrollHeight);
                             loaded=true;
                         }
+
                     });
                 }
 
@@ -217,9 +220,12 @@ define(['msAppJs'], function(app) {
                     if (raw.scrollTop + raw.offsetHeight== raw.scrollHeight) { //at the bottom
 
                         if(scope.onEnd!=null){
-                            setTimeout(function () {
-                                scope.onEnd();
-                            },scope.timeout!=null?scope.timeout:500);
+                        	if(scope.loading!=null){
+                        		scope.loading=true;
+							}
+                            $timeout(function () {
+                                scope.onEnd(element);
+                            },scope.timeout!=null?scope.timeout:0);
                         }
                     }
                 };
@@ -228,19 +234,19 @@ define(['msAppJs'], function(app) {
                     if (raw.scrollTop ==0) { //at the bottom
 
                         if(scope.onEnd!=null){
-                            setTimeout(function () {
-                                scope.onEnd();
-                            },scope.timeout!=null?scope.timeout:500);
+                            if(scope.loading!=null){
+                                scope.loading=true;
+                            }
+                            $timeout(function () {
+                                scope.onEnd(element);
+                            },scope.timeout!=null?scope.timeout:0);
                         }
                     }
                 };
 
                 element.bind('scroll', function () {
 
-                    console.log('in scroll');
-                    console.log("top:"+raw.scrollTop);
-                    console.log(raw.scrollTop + raw.offsetHeight);
-                    console.log(raw.scrollHeight);
+                    // console.log("top:"+raw.scrollTop+" height: "+raw.scrollHeight);
                     if(!scope.reverse){
                     	scrollNormal();
 					}else{
@@ -251,10 +257,11 @@ define(['msAppJs'], function(app) {
 			scope:{
             	onEnd:"=",
 				reverse:"=?",
-				objeto:"=?"
+				objeto:"=?",
+				loading:"=?"
 			}
         }
-    });
+    }]);
 
 
 	return app;

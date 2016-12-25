@@ -39,9 +39,9 @@ class MensagemService
         $this->db = new DbHandler();
         $this->carregados=$carregados;
         if($carregados==0){
-            $this->limite=" limit 20";
+            $this->limite=" limit 15";
         }else{
-            $this->limite=" limit ".$this->carregados.",20";
+            $this->limite=" limit ".$this->carregados.",15";
         }
     }
 
@@ -59,7 +59,7 @@ class MensagemService
     {
         if(isset($idTopico)) {
             try {
-                return $this->db->getList($this->queryAll . " where id_topico=$idTopico".$this->limite);
+                return $this->db->getList($this->queryAll . " where id_topico=$idTopico"." order by mensagem.dt_data desc ".$this->limite);
             }catch (Exception $e){
                 throw new Exception($e);
             }
