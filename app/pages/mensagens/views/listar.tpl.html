@@ -20,7 +20,7 @@
                 <!--COLUNA DOS TOPICOS -->
                 <div class="colunatopico">
                     <div class="ctopico">
-                        <ul class="ultopico" scrolly="scrolly" on-end="scrollEnd" timeout="500">
+                        <ul class="ultopico" scrolly="scrolly" on-end="scrollEnd" timeout="500" scrolling="scrolling">
                             <li class="topico" ng-repeat="topico in topicos ">
                                 <a class="intopico" ng-click="selecionarTopico(topico)">
                                     <div class="chora">
@@ -47,7 +47,7 @@
                 <!-- QUANDO NAO TEM MENSAGENS ESCOLHIDAS-->
                 <div class="mensagenscontainer">
                     <div class="semmensagens" ng-if="topico==null">Selecione um chat para começar a conversar</div>
-                    <div class="listamensagem" ng-if="topico!=null" objeto="topico" scrolly="scrolly" loading="carregando"
+                    <div class="listamensagem" ng-if="topico!=null" objeto="topico" scrolly="scrolly" loading="carregando" scrolling="scrolling"
                          on-end="scrollMessagesEnd" timeout="500" reverse="true">
 
                         <div class="im_history_loading_more im_history_loading_more_active loadingwrapper" ng-show="carregando"

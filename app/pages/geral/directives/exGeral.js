@@ -194,7 +194,6 @@ define(['msAppJs'], function(app) {
 
 
    	app.directive('scrolly',["$timeout", function ($timeout) {
-		var loaded=false;
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -206,11 +205,10 @@ define(['msAppJs'], function(app) {
 
                 if (scope.objeto != null && scope.reverse) {
 					scope.$watch("objeto.mensagens",function (a,b) {
-						if(a!=null && b.length==0&& !loaded) {
+						if(a!=null && b!=null && b.length==0) {
                             raw.scrollTop = raw.scrollHeight;
                             element.attr("scroll",raw.scrollHeight);
                             element.attr("scrollheight",raw.scrollHeight);
-                            loaded=true;
                         }
 
                     });
@@ -245,7 +243,7 @@ define(['msAppJs'], function(app) {
                 };
 
                 element.bind('scroll', function () {
-
+					scope.scrolling=true;
                     // console.log("top:"+raw.scrollTop+" height: "+raw.scrollHeight);
                     if(!scope.reverse){
                     	scrollNormal();
@@ -258,7 +256,8 @@ define(['msAppJs'], function(app) {
             	onEnd:"=",
 				reverse:"=?",
 				objeto:"=?",
-				loading:"=?"
+				loading:"=?",
+                scrolling:"="
 			}
         }
     }]);

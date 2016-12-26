@@ -48,6 +48,7 @@ define(['msAppJs',
 		$scope.topico=null;
 
 		$scope.carregando=false;
+        $scope.scrolling=true;
 
 		$scope.carregados={
 			topicos:0,
@@ -229,7 +230,9 @@ define(['msAppJs',
 
 		$scope.selecionarTopico=function (topico) {
 			if($scope.topico!=null && topico.id==$scope.topico.id) return;
+            $scope.scrolling=false;
 			$scope.topico=angular.copy(topico);
+            $scope.topico.mensagens=[];
 			$scope.carregados.mensagens=0;
             recarregarMensagens();
         }
@@ -261,7 +264,9 @@ define(['msAppJs',
         };
 
 		$scope.scrollMessagesEnd=function (elemento) {
-            recarregarMensagens(elemento);
+		    if($scope.scrolling) {
+                recarregarMensagens(elemento);
+            }
 	 	};
 
 
