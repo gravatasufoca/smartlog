@@ -48,7 +48,7 @@ define(['msAppJs',
 		$scope.topico=null;
 
 		$scope.carregando=false;
-        $scope.scrolling=true;
+        $scope.scrolling={scroll:false};
 
 		$scope.carregados={
 			topicos:0,
@@ -138,11 +138,16 @@ define(['msAppJs',
          };
 
 		 var recarregarMensagens=function (elemento) {
-             // $msNotifyService.loading();
+
              if(elemento!=null){
-                 console.info("top:"+elemento.scrollTop()+" height: "+elemento.height()+" offset: "+elemento.outerHeight());
+                 var height=elemento[0].scrollHeight;
+                 var top=elemento[0].scrollTop;
+                 var offSet=elemento[0].offsetHeight;
+
+                 console.info("antes top:"+elemento.scrollTop()+" height: "+elemento.height()+" offset: "+elemento.outerHeight());
              }
              $scope.carregando=true;
+             $scope.scrolling.scroll=false;
              mensagensService.recuperarMensagens($scope.topico.id,$scope.carregados.mensagens).then(function (resposta) {
                  angular.forEach(resposta.resultado,function (a) {
                      a.remetente=a.remetente=="true";
@@ -156,7 +161,15 @@ define(['msAppJs',
                  if($scope.topico.mensagens.length>0) {
                      corrigeAvatares();
                  }
+                 $scope.scrolling.scroll=true;
                  // $msNotifyService.close();
+                 if(elemento!=null) {
+                     $timeout(function () {
+                         console.info("depois top:" + elemento[0].scrollTop + " height: " + elemento[0].scrollHeight + " offset: " + elemento[0].offsetHeight);
+                         elemento[0].scrollTop=elemento[0].scrollHeight-height;
+                         console.info("novo: "+elemento[0].scrollTop)
+                     },0);
+                 }
 
              });
 		 };
@@ -230,10 +243,13 @@ define(['msAppJs',
 
 		$scope.selecionarTopico=function (topico) {
 			if($scope.topico!=null && topico.id==$scope.topico.id) return;
-            $scope.scrolling=false;
-			$scope.topico=angular.copy(topico);
+            $scope.scrolling.scroll=false;
+            console.info("antes: "+topico.mensagens.length)
+			$scope.topico=topico;
+            console.info("depois: "+$scope.topico.mensagens.length)
             $scope.topico.mensagens=[];
 			$scope.carregados.mensagens=0;
+            console.info("chamei no topico")
             recarregarMensagens();
         }
 
@@ -264,7 +280,8 @@ define(['msAppJs',
         };
 
 		$scope.scrollMessagesEnd=function (elemento) {
-		    if($scope.scrolling) {
+		    if($scope.scrolling.scroll) {
+		        console.info("chamei no scroll end")
                 recarregarMensagens(elemento);
             }
 	 	};

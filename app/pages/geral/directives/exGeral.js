@@ -243,13 +243,14 @@ define(['msAppJs'], function(app) {
                 };
 
                 element.bind('scroll', function () {
-					scope.scrolling=true;
-                    // console.log("top:"+raw.scrollTop+" height: "+raw.scrollHeight);
-                    if(!scope.reverse){
-                    	scrollNormal();
-					}else{
-                    	scrollReverse();
-					}
+					if(scope.scrolling.scroll) {
+                        // console.log("top:"+raw.scrollTop+" height: "+raw.scrollHeight);
+                        if (!scope.reverse) {
+                            scrollNormal();
+                        } else {
+                            scrollReverse();
+                        }
+                    }
                 })
             },
 			scope:{
