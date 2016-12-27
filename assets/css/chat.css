@@ -81,7 +81,7 @@
     font-variant-numeric: normal;
     font-weight: normal;
     /*height: 519px;*/
-    line-height: 18px;
+    /*line-height: 18px;*/
     text-size-adjust: 100%;
     /*width: 1008px;*/
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -104,7 +104,7 @@
     font-variant-numeric: normal;
     font-weight: normal;
     /*height: 519px;*/
-    line-height: 18px;
+    /*line-height: 18px;*/
     padding-bottom: 10px;
     text-size-adjust: 100%;
     user-select: none;
@@ -126,7 +126,7 @@
     font-variant-numeric: normal;
     font-weight: normal;
     /*height: 1240px;*/
-    line-height: 18px;
+    /*line-height: 18px;*/
     list-style-image: none;
     list-style-position: outside;
     list-style-type: none;
@@ -164,8 +164,8 @@
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
     font-weight: normal;
-    height: 62px;
-    line-height: 18px;
+    /*height: 62px;*/
+    /*line-height: 18px;*/
     list-style-image: none;
     list-style-position: outside;
     list-style-type: none;
@@ -207,8 +207,8 @@
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
     font-weight: normal;
-    height: 62px;
-    line-height: 18px;
+    /*height: 62px;*/
+    /*line-height: 18px;*/
     list-style-image: none;
     list-style-position: outside;
     list-style-type: none;
@@ -419,8 +419,8 @@
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
     font-weight: normal;
-    height: 18px;
-    line-height: 18px;
+    /*height: 18px;*/
+    /*line-height: 18px;*/
     list-style-image: none;
     list-style-position: outside;
     list-style-type: none;
@@ -444,8 +444,8 @@
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
     font-weight: normal;
-    height: 18px;
-    line-height: 18px;
+    /*height: 18px;*/
+    /*line-height: 18px;*/
     list-style-image: none;
     list-style-position: outside;
     list-style-type: none;
@@ -736,7 +736,7 @@
     font-variant-numeric: normal;
     font-weight: normal;
     /*height: 42px;*/
-    line-height: 18px;
+    /*line-height: 18px;*/
     overflow-x: hidden;
     overflow-y: hidden;
     text-size-adjust: 100%;
@@ -779,7 +779,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.mensagem {
+/*.mensagem {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
     cursor: pointer;
@@ -792,13 +792,13 @@
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
     font-weight: normal;
-    /*height: 19px;*/
-    line-height: 18px;
+    !*height: 19px;*!
+    !*line-height: 18px;*!
     text-size-adjust: 100%;
     user-select: text;
-    /*width: 394.172px;*/
+    !*width: 394.172px;*!
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
+}*/
 
 .msgwrapin {
     box-sizing: border-box;
@@ -814,7 +814,7 @@
     font-variant-numeric: normal;
     font-weight: normal;
     /*height: 42px;*/
-    line-height: 18px;
+    /*line-height: 18px;*/
     margin-bottom: 8px;
     margin-left: 16px;
     margin-right: 10px;
@@ -839,7 +839,7 @@
     font-variant-numeric: normal;
     font-weight: normal;
     /*height: 19px;*/
-    line-height: 19.5px;
+    /*line-height: 19.5px;*/
     text-size-adjust: 100%;
     unicode-bidi: isolate;
     user-select: text;

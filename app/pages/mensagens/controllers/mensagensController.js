@@ -286,6 +286,10 @@ define(['msAppJs',
             }
 	 	};
 
+		$scope.isImage=function (mensagem) {
+            return mensagem.tipoMedia==1 || mensagem.tipoMedia==13;
+        }
+
 
 	}]);
 
