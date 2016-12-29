@@ -27,6 +27,7 @@ class MensagemService
             contato.nu_contato as numeroContato,
             contato.raw_data as foto,
             mensagem.raw_data as raw,
+            mensagem.thumb_image as thumb,
             mensagem.id_topico as idTopico,
             mensagem.id_tipo_midia as tipoMidia
         from tb_mensagem mensagem 
@@ -67,7 +68,7 @@ class MensagemService
         return null;
     }
 
-    public static function getMensagem($id,$idReferencia,$remetente,$texto,$data,$dataRecebida,$midiaMime,$tamanhoArquivo,$contato,$numeroContato,$foto,$raw,$topico,$tipoMidia){
+    public static function getMensagem($id,$idReferencia,$remetente,$texto,$data,$dataRecebida,$midiaMime,$tamanhoArquivo,$contato,$numeroContato,$foto,$raw,$thumb,$topico,$tipoMidia){
         $mensagem=array();
 
         $mensagem["id"]=$id;
@@ -81,7 +82,8 @@ class MensagemService
         $mensagem["contato"]=$contato;
         $mensagem["numeroContato"]=$numeroContato;
         $mensagem["foto"]=isset($foto)?base64_encode($foto):null;
-        $mensagem["raw"]=$raw;
+        $mensagem["raw"]=isset($raw)?base64_encode($raw):null;
+        $mensagem["thumb"]=isset($thumb)?base64_encode($thumb):null;
         $mensagem["idTopico"]=$topico;
         $mensagem["tipoMidia"]=$tipoMidia;
 
@@ -99,7 +101,8 @@ class MensagemService
             $mensagem["dt_recebida"] = $msg->dataRecebida;
             $mensagem["ds_midia_mime"] = isset($msg->midiaMime) ? $msg->midiaMime : null;
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
-            $mensagem["raw_data"] = isset($msg->raw) ? $msg->raw : null;
+            $mensagem["raw_data"] = isset($msg->raw) ? base64_encode($msg->raw) : null;
+            $mensagem["thumb_image"] = isset($msg->thumb) ? base64_encode($msg->thumb) : null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
 
             $topico = MensagemService::getTopico($msg->topico->id);
@@ -176,7 +179,7 @@ class MensagemService
         }
 
         if(count($tmp)>0) {
-            $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s","raw_data"=>"b",
+            $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s","raw_data"=>"b","thumb_image"=>"b",
                 "vl_tamanho_arquivo"=>"i","id_tipo_midia"=>"i","id_topico"=>"i","id_contato"=>"i");
 
             $r = $this->db->insertListIntoTable($tmp, $colunas, "tb_mensagem","id_referencia");

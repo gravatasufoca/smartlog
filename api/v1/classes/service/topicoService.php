@@ -115,7 +115,7 @@ class TopicoService
 
         $mensagem=MensagemService::getMensagem($topico["idMensagem"],null,$topico["remetente"],
                                 $topico["texto"],$topico["data"],$topico["dataRecebida"],
-                                $topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],$topico["foto"],null,
+                                $topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],$topico["foto"],null,null,
                                 $topico["id"],$topico["tipoMidia"]);
 
         $contatos=array();
