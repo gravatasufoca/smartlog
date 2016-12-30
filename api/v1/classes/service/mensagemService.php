@@ -144,10 +144,15 @@ class MensagemService
             if (!isset($contato["nu_contato"]) || $contato["nu_contato"] == "") {
                 continue;
             }
-            if ($contato["nu_contato"] == $numero) {
+            $num=$numero;
+            if(strpos($numero,"-")){
+                $num=substr($numero,0,strpos($numero,"-"));
+            }
+
+            if ($contato["nu_contato"] == $num) {
                 return $contato;
             } else {
-                if (endsWith($numero, substr($contato["nu_contato"], -8))) {
+                if (endsWith($num, substr($contato["nu_contato"], -8))) {
                     return $contato;
                 }
             }
