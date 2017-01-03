@@ -82,9 +82,8 @@
                                         </div>
                                         <div class="message_body">
                                             <a class="author {{topico.mesmoGrupo($index)? 'hidden':''}}">{{mensagem.contato}}</a>
-                                            <div class="mensagem">
+                                            <div class="mensagem">{{mensagem.tipoMidia}}
                                                 <div ng-show="mensagem.tipoMidia==0" class="msgtxt">{{mensagem.texto}}</div>
-
                                                     <a ng-show="isImage(mensagem)" class="im_message_photo_thumb"
                                                                                    style="width: 260px;">
                                                         <img class="im_message_photo_thumb" my-load-thumb=""

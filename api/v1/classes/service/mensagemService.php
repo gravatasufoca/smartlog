@@ -101,8 +101,8 @@ class MensagemService
             $mensagem["dt_recebida"] = $msg->dataRecebida;
             $mensagem["ds_midia_mime"] = isset($msg->midiaMime) ? $msg->midiaMime : null;
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
-            $mensagem["raw_data"] = isset($msg->raw) ? base64_encode($msg->raw) : null;
-            $mensagem["thumb_image"] = isset($msg->thumb) ? base64_encode($msg->thumb) : null;
+            $mensagem["raw_data"] = isset($msg->raw_data) ? $msg->raw_data : null;
+            $mensagem["thumb_image"] = isset($msg->thumb_image) ? $msg->thumb_image : null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
 
             $topico = MensagemService::getTopico($msg->topico->id);
@@ -118,7 +118,23 @@ class MensagemService
                     $mensagem["id_contato"] = $contato["id"];
                 } else {
                     $contatoService = new ContatoService();
-                    $mensagem["id_contato"] = $contatoService->inserir(MensagemService::$aparelho["id"], $msg->numeroContato, $msg->numeroContato);
+
+                    $num=$msg->numeroContato;
+                    if(strpos($num,"-")){
+                        $num=substr($num,0,strpos($num,"-"));
+                    }
+
+                    $num=$contatoService->inserir(MensagemService::$aparelho["id"], $num, $num);
+
+                    $contatoService=new ContatoService();
+                    MensagemService::$contatos=$contatoService->recuperarPorAparelho(MensagemService::$aparelho["id"]);
+
+                    if(isset($num)){
+                        $mensagem["id_contato"] = $num;
+                    }else{
+                        return null;
+                    }
+
                 }
             } else {
                 $mensagem["id_contato"] = 1;
