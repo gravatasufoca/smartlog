@@ -287,7 +287,7 @@ define(['msAppJs',
 	 	};
 
 		$scope.isImage=function (mensagem) {
-            return mensagem.tipoMedia==1 || mensagem.tipoMedia==13;
+            return mensagem.tipoMidia=="1" || mensagem.tipoMidia=="13";
         }
 
 

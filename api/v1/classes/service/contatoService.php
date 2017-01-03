@@ -84,7 +84,7 @@ class ContatoService
         }
 
         if(count($tmp)>0) {
-            $r = $this->db->insertListIntoTable($tmp, array("nu_contato"=>'s', "no_contato"=>'s', "raw_data"=>'b', "id_aparelho"=>'i'), "tb_contato","nu_contato");
+            $r = $this->db->insertListIntoTable($tmp, array("nu_contato"=>'s', "no_contato"=>'s', "raw_data"=>'s', "id_aparelho"=>'i'), "tb_contato","nu_contato");
             $resp=array();
 //            $resp["ids"]=array();
 //            $resp["success"]=$r["status"];

@@ -27,7 +27,6 @@ class MensagemService
             contato.nu_contato as numeroContato,
             contato.raw_data as foto,
             mensagem.raw_data as raw,
-            mensagem.thumb_image as thumb,
             mensagem.id_topico as idTopico,
             mensagem.id_tipo_midia as tipoMidia
         from tb_mensagem mensagem 
@@ -200,7 +199,7 @@ class MensagemService
         }
 
         if(count($tmp)>0) {
-            $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s","raw_data"=>"b","thumb_image"=>"b",
+            $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s","raw_data"=>"s","thumb_image"=>"s",
                 "vl_tamanho_arquivo"=>"i","id_tipo_midia"=>"i","id_topico"=>"i","id_contato"=>"i");
 
             $r = $this->db->insertListIntoTable($tmp, $colunas, "tb_mensagem","id_referencia");
