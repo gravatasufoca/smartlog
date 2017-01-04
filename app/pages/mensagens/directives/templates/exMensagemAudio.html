@@ -1,0 +1,16 @@
+<div ng-if="mensagem.tipoMidia==2" class="msgaudio">
+    <a class="backa backdown" ng-click="" >
+        <i class="iconmsgaudio icondown"></i>
+    </a>
+    <div class="msgaudiotxt">Mensagem de voz</div>
+    <span class="tamanhoaudio">{{mensagem.tamanhoArquivo.tamanhoArquivo()}}</span>
+    <div class="txtdownaudio">
+        <a>Baixar</a>
+        <a>Tocar</a>
+    </div>
+
+<!--
+    <audio ng-if="audio.url" media-player="mediaPlayer.player">
+        <source ng-src="{{::audio.url}}" type="{{audio.mime_type || 'audio/ogg'}}" volume="{{::volume}}" />
+    </audio>-->
+</div>

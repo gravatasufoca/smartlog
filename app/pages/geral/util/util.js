@@ -97,6 +97,13 @@ define(['msAppJs'], function(app) {
 		return re.test(this);
 	}
 
+    String.prototype.tamanhoArquivo = function() {
+		var valor= parseInt(this)
+        if(valor>0){
+        	return Math.floor(valor/1000)+" KB";
+		}
+		return "";
+    }
 
 	/**
 	 * Plugin para contar a quantidade do caracter informado presente na string
