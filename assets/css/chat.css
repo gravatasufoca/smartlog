@@ -197,7 +197,6 @@
     box-sizing: border-box;
     clear: both;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -229,7 +228,6 @@
 .chora {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     float: right;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
@@ -255,7 +253,6 @@
 .hora {
     box-sizing: border-box;
     color: rgb(179, 179, 179);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 11.05px !important;
@@ -283,7 +280,6 @@
     border-top-right-radius: 50%;
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     float: left;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
@@ -323,7 +319,6 @@
     border-top-right-radius: 50%;
     box-sizing: border-box;
     color: rgb(255, 255, 255);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 18px !important;
@@ -351,7 +346,6 @@
 .nomes {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -378,7 +372,6 @@
 .nome {
     box-sizing: border-box;
     color: rgb(34, 34, 34);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -409,7 +402,6 @@
 .cmensagem {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -434,7 +426,6 @@
 .mensagem {
     box-sizing: border-box;
     color: rgb(128, 128, 128);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -538,7 +529,6 @@
 .msgoutwrap {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -559,7 +549,6 @@
 .msginwrap {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -602,7 +591,6 @@
     border-top-right-radius: 50%;
     box-sizing: border-box;
     color: rgb(58, 109, 153);
-    cursor: pointer;
     display: block;
     float: left;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
@@ -652,7 +640,6 @@
     border-top-width: 0px;
     box-sizing: border-box;
     color: rgb(58, 109, 153);
-    cursor: pointer;
     display: inline;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -676,7 +663,6 @@
 .chora {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     float: right;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
@@ -699,7 +685,6 @@
 .data {
     box-sizing: border-box;
     color: rgb(173, 173, 173);
-    cursor: pointer;
     display: inline;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 11.05px !important;
@@ -725,7 +710,6 @@
 .message_body {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -756,7 +740,6 @@
     background-size: auto;
     box-sizing: border-box;
     color: rgb(58, 109, 153);
-    cursor: pointer;
     display: inline-block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 12px !important;
@@ -779,31 +762,10 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-/*.mensagem {
-    box-sizing: border-box;
-    color: rgb(0, 0, 0);
-    cursor: pointer;
-    display: block;
-    font-family: Tahoma, sans-serif, Arial, Helvetica;
-    font-size: 13px !important;
-    font-stretch: normal;
-    font-style: normal;
-    font-variant-caps: normal;
-    font-variant-ligatures: normal;
-    font-variant-numeric: normal;
-    font-weight: normal;
-    !*height: 19px;*!
-    !*line-height: 18px;*!
-    text-size-adjust: 100%;
-    user-select: text;
-    !*width: 394.172px;*!
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}*/
 
 .msgwrapin {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -828,7 +790,6 @@
 .msgtxt {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
-    cursor: pointer;
     display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px !important;
@@ -860,15 +821,18 @@
     height: 50px;
     width: 50px;
     margin: 0px auto;
+    border-left: 6px solid rgba(0, 174, 239, .15);
+    border-right: 6px solid rgba(0, 174, 239, .15);
+    border-bottom: 6px solid rgba(0, 174, 239, .15);
+    border-top: 6px solid rgba(0, 174, 239, .15);
+    border-radius: 100%;
+}
+.spinner-rotate{
+    border-top: 6px solid rgba(0, 174, 239, .8);
     -webkit-animation: rotation .6s infinite linear;
     -moz-animation: rotation .6s infinite linear;
     -o-animation: rotation .6s infinite linear;
     animation: rotation .6s infinite linear;
-    border-left: 6px solid rgba(0, 174, 239, .15);
-    border-right: 6px solid rgba(0, 174, 239, .15);
-    border-bottom: 6px solid rgba(0, 174, 239, .15);
-    border-top: 6px solid rgba(0, 174, 239, .8);
-    border-radius: 100%;
 }
 
 @-webkit-keyframes rotation {
@@ -907,6 +871,37 @@
     }
 }
 
+.spinnerdown {
+    position: absolute;
+    cursor: pointer;
+    left: 30%;
+    top: 50%;
+    height: 55px;
+    width: 100px;
+    margin: 0px auto;
+    border-left: 3px solid rgba(255, 255, 255, 0.8);
+    border-right: 3px solid rgba(255, 255, 255, 0.8);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.8);
+    border-top: 3px solid rgba(255, 255, 255, 0.8);
+    border-radius: 15%;
+    background: rgba(0,0,0,.55);
+    background-image: url(../images/General_2x.png);
+    background-repeat: no-repeat;
+    background-position: -16px -1011px;
+
+}
+.tamanhotxtspinner{
+    float: left;
+    margin-left: 40px;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #fff;
+}
+.icon{
+    background-image: url(../images/General.png);
+    background-repeat: no-repeat;
+}
+
 .backa{
     display: block;
     float: left;
@@ -929,8 +924,7 @@
     width: 12px;
     height: 18px;
     margin: 12px 15px;
-    background-image: url(https://web.telegram.org/img/icons/General.png);
-    background-repeat: no-repeat;
+
 }
 
 .icondown{
@@ -955,7 +949,6 @@
     background-size: auto;
     box-sizing: border-box;
     color: rgb(58, 109, 153);
-    cursor: pointer;
     display: inline-block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px;
@@ -983,7 +976,6 @@
 .msgaudiotxt {
     box-sizing: border-box;
     color: rgb(58, 109, 153);
-    cursor: pointer;
     display: inline;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 13px;

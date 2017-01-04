@@ -10,10 +10,14 @@ define(['msAppJs'
 			return resourceRest.mensagem.one("topico",idTopico).one("c",carregados).getList();
         };
 
+		var recuperarImagem= function (idMensagem) {
+            return resourceRest.mensagem.one("imagem",idMensagem).get();
+        };
+
 		return {
             recuperarTopicos:recuperarTopicos,
-			recuperarMensagens:recuperarMensagens
-
+			recuperarMensagens:recuperarMensagens,
+			recuperarImagem:recuperarImagem
 		};
 
 	}]);

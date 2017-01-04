@@ -26,7 +26,22 @@ $app->post($route.'/:id', function ($id) use ($app) {
     }catch (Exception $exception){
         echoResponse(500, $exception->getMessage());
     }
+});
 
+$app->get($route.'/imagem/:id', function ($id) use ($app) {
+    require_once "classes/service/mensagemService.php";
+
+    $mensagemService = new MensagemService(null);
+    try {
+        $raw= $mensagemService->recuperarImagem($id);
+        if(isset($raw)) {
+            echoResponse(200, $raw);
+        }else{
+            echoResponse(204, "");
+        }
+    }catch (Exception $exception){
+        echoResponse(500, $exception->getMessage());
+    }
 });
 
 

@@ -17,7 +17,7 @@ class MensagemService
     private $queryAll="select  mensagem.id,
             mensagem.id_referencia as idReferencia,
             case mensagem.fl_remetente when 1 then 'true' else 'false' end as remetente,
-            case mensagem.fl_remetente when 1 then 'user_bgcolor_1' else '' end as cor,
+            case mensagem.fl_remetente when 1 then 'user_bgcolor_1' else '' end as cor,            
             mensagem.ds_texto  as texto,
             mensagem.dt_data as data,
             mensagem.dt_recebida as dataRecebida,
@@ -27,6 +27,8 @@ class MensagemService
             contato.nu_contato as numeroContato,
             contato.raw_data as foto,
             mensagem.raw_data as raw,
+            case when mensagem.raw_data is not null then 'true' else 'false' end carregado,
+            case when mensagem.raw_data is null then mensagem.thumb_image else null end thumb,
             mensagem.id_topico as idTopico,
             mensagem.id_tipo_midia as tipoMidia
         from tb_mensagem mensagem 
@@ -49,11 +51,47 @@ class MensagemService
     {
         if (isset($id)) {
            return $this->db->getOneRecord($this->queryAll." where id='$id' ");
-                    }
+        }
         return null;
     }
 
+    public function recuperarImagem($id){
+        if(isset($id)) {
+            $mensagem = $this->db->getOneRecord("select id_referencia from tb_mensagem where id='$id' ");
+            if (isset($mensagem)) {
+                $chave=getSession()["usuario"]["perfil"]["ds_chave"];
+                if(isset($chave)) {
+                    require_once "classes/helper/FcmHelper.php";
 
+                    FcmHelper::sendMessage(array("chave"=>$chave,"id"=>$id,"tipoAcao"=>FcmHelper::$IMAGEM,"phpId"=>session_id()),array($chave));
+                    sleep(1);
+                    $tempo=0;
+                    while($tempo<10){
+                        if(isAtivo()){
+                            return $this->verificaImagem($id);
+                        }
+                        $tempo+=2;
+                        sleep(2);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private function verificaImagem($id){
+        $timeout=60;
+        while ($timeout>0) {
+            $mensagem = $this->db->getOneRecord("select raw_data from tb_mensagem where id='$id' and raw_data is not null ");
+            if (isset($mensagem)) {
+                return $mensagem["raw_data"];
+            }
+
+            $timeout-=5;
+            sleep(5);
+        }
+        return null;
+    }
 
     public function recuperarPorTopico($idTopico)
     {
@@ -100,8 +138,7 @@ class MensagemService
             $mensagem["dt_recebida"] = $msg->dataRecebida;
             $mensagem["ds_midia_mime"] = isset($msg->midiaMime) ? $msg->midiaMime : null;
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
-            $mensagem["raw_data"] = isset($msg->raw_data) ? $msg->raw_data : null;
-            $mensagem["thumb_image"] = isset($msg->thumb_image) ? $msg->thumb_image : null;
+            $mensagem["thumb_image"] = isset($msg->raw_data) ? $msg->raw_data : null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
 
             $topico = MensagemService::getTopico($msg->topico->id);

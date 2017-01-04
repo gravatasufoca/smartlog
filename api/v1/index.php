@@ -113,6 +113,15 @@ function echoResponseClean($status_code, $response)
     echo json_encode($response);
 }
 
+
+function isAtivo(){
+    return isset(getSession()["ativo"]);
+}
+
+function inativar(){
+    unset (getSession()["ativo"]);
+}
+
 function getSession()
 {
     if (!isset($_SESSION)) {

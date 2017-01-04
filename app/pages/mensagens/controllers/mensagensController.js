@@ -151,6 +151,7 @@ define(['msAppJs',
              mensagensService.recuperarMensagens($scope.topico.id,$scope.carregados.mensagens).then(function (resposta) {
                  angular.forEach(resposta.resultado,function (a) {
                      a.remetente=a.remetente=="true";
+                     a.carregado=a.carregado=="true";
                      a.data=a.data.stringToDatetime();
                      a.dataRecebida=a.dataRecebida.stringToDatetime()
                  });
@@ -234,7 +235,9 @@ define(['msAppJs',
                 mime: null,
                 tamanhoArquivo: null,
                 contato: null,
+                carregado:false,
                 raw: null,
+                thumb: null,
                 tipoMensagem: null,
                 topico: null
             }

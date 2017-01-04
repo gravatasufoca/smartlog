@@ -1,0 +1,8 @@
+<a ng-if="isImage(mensagem)" class="im_message_photo_thumb"
+   style="width: 260px">
+    <div ng-show="false" class="spinner"></div>
+    <img class="im_message_photo_thumb" my-load-thumb=""
+         style="width: 260px"
+         alt="[Foto]"
+         src="data:{{mensagem.midiaMime}};base64,{{mensagem.raw}}">
+</a>

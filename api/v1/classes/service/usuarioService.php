@@ -60,7 +60,7 @@ class UsuarioService
 
     private function recuperarPefis($idUsuario)
     {
-        return $this->db->getList("select no_aparelho as nome, id from tb_aparelho where fl_ativo=1 and id_usuario=$idUsuario");
+        return $this->db->getList("select no_aparelho as nome, id,ds_chave from tb_aparelho where fl_ativo=1 and id_usuario=$idUsuario");
     }
 
     public function inserir($usuario){

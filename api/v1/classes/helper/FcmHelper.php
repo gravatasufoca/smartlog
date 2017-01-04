@@ -9,8 +9,11 @@
 class FcmHelper
 {
     private static $url = 'https://fcm.googleapis.com/fcm/send';
-    private static $server_key = 'AIzaSyBk6RPeEzlZ4nQF2Op882zAG2tx5YbWMnU';
+    private static $server_key = 'AIzaSyAIIXSeF6syF2PcnG9FQE_jjtte8RgHblI';
 
+    public static $IMAGEM=0;
+    public static $AUDIO=1;
+    public static $VIDEO=2;
 
     /*
     Parameter Example
@@ -47,10 +50,14 @@ class FcmHelper
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_PROXY, "localhost");
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
         $result = curl_exec($ch);
         if ($result === FALSE) {
-            die('FCM Send Error: ' . curl_error($ch));
+            // die('FCM Send Error: ' . curl_error($ch));
+            return curl_error($ch);
         }
         curl_close($ch);
         return $result;
