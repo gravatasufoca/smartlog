@@ -1,6 +1,6 @@
 define(['msAppJs'
         ], function(app) {
-	app.factory('mensagensService', ['resourceRest',"$http", function(resourceRest,$http){
+	app.factory('mensagensService', ['resourceRest',"$http","$q", function(resourceRest,$http,$q){
 
 		var recuperarTopicos=function (idAparelho,tab,carregados) {
 			return resourceRest.topico.one("aparelho",idAparelho).one("tipo",tab.texto.toUpperCase()).one("c",carregados).getList();
@@ -11,7 +11,9 @@ define(['msAppJs'
         };
 
 		var recuperarImagem= function (idMensagem) {
-            return resourceRest.mensagem.one("imagem",idMensagem).get();
+			var verificarSeExiste=$q.defer();
+
+            // return resourceRest.mensagem.one("imagem",idMensagem).get();
         };
 
 		return {

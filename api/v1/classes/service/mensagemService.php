@@ -8,13 +8,13 @@ class MensagemService
 {
 
     private $db;
-    private static $topicos=array();
-    private static $contatos=array();
+    private static $topicos = array();
+    private static $contatos = array();
     private static $aparelho;
     private $carregados;
 
 
-    private $queryAll="select  mensagem.id,
+    private $queryAll = "select  mensagem.id,
             mensagem.id_referencia as idReferencia,
             case mensagem.fl_remetente when 1 then 'true' else 'false' end as remetente,
             case mensagem.fl_remetente when 1 then 'user_bgcolor_1' else '' end as cor,            
@@ -35,43 +35,71 @@ class MensagemService
         left join tb_contato contato on contato.id=mensagem.id_contato ";
 
 
-
     function __construct($carregados)
     {
         $this->db = new DbHandler();
-        $this->carregados=$carregados;
-        if($carregados==0){
-            $this->limite=" limit 15";
-        }else{
-            $this->limite=" limit ".$this->carregados.",15";
+        $this->carregados = $carregados;
+        if ($carregados == 0) {
+            $this->limite = " limit 15";
+        } else {
+            $this->limite = " limit " . $this->carregados . ",15";
         }
     }
 
     public function recuperar($id)
     {
         if (isset($id)) {
-           return $this->db->getOneRecord($this->queryAll." where id='$id' ");
+            return $this->db->getOneRecord($this->queryAll . " where id='$id' ");
         }
         return null;
     }
 
-    public function recuperarImagem($id){
-        if(isset($id)) {
+    public function atualizarRaw($id,$raw){
+        if(isset($id) && isset($raw)){
+            $query="update tb_mensagem set raw_data='$raw',thumb_image=null where id=$id ";
+
+            return $this->db->executeQuery($query);
+        }
+    }
+
+
+    public function imagemExiste($id)
+    {
+        if (isset($id)) {
             $mensagem = $this->db->getOneRecord("select id_referencia from tb_mensagem where id='$id' ");
             if (isset($mensagem)) {
-                $chave=getSession()["usuario"]["perfil"]["ds_chave"];
-                if(isset($chave)) {
+                $chave = getSession()["usuario"]["perfil"]["ds_chave"];
+                if (isset($chave)) {
                     require_once "classes/helper/FcmHelper.php";
 
-                    FcmHelper::sendMessage(array("chave"=>$chave,"id"=>$id,"tipoAcao"=>FcmHelper::$IMAGEM,"phpId"=>session_id()),array($chave));
-                    sleep(1);
-                    $tempo=0;
-                    while($tempo<10){
-                        if(isAtivo()){
-                            return $this->verificaImagem($id);
+                    if(FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => FcmHelper::$IMAGEM_EXISTE, "phpId" => session_id()), array($chave))) {
+
+                        $time=60;
+                        while ($time>0){
+                            if(isAtivo()){
+                                return true;
+                            }
+                            $time-=3;
+                            sleep(3);
                         }
-                        $tempo+=2;
-                        sleep(2);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public function recuperarImagem($id)
+    {
+        if (isset($id)) {
+            $mensagem = $this->db->getOneRecord("select id_referencia from tb_mensagem where id='$id' ");
+            if (isset($mensagem)) {
+                $chave = getSession()["usuario"]["perfil"]["ds_chave"];
+                if (isset($chave)) {
+                    require_once "classes/helper/FcmHelper.php";
+
+                    if(FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => FcmHelper::$RECUPERAR_IMAGEM, "phpId" => session_id()), array($chave))) {
+                        return $this->verificaImagem($id);
                     }
                 }
             }
@@ -79,15 +107,16 @@ class MensagemService
         return null;
     }
 
-    private function verificaImagem($id){
-        $timeout=60;
-        while ($timeout>0) {
+    private function verificaImagem($id)
+    {
+        $timeout = 120;
+        while ($timeout > 0) {
             $mensagem = $this->db->getOneRecord("select raw_data from tb_mensagem where id='$id' and raw_data is not null ");
             if (isset($mensagem)) {
                 return $mensagem["raw_data"];
             }
 
-            $timeout-=5;
+            $timeout -= 5;
             sleep(5);
         }
         return null;
@@ -95,39 +124,41 @@ class MensagemService
 
     public function recuperarPorTopico($idTopico)
     {
-        if(isset($idTopico)) {
+        if (isset($idTopico)) {
             try {
-                return $this->db->getList($this->queryAll . " where id_topico=$idTopico"." order by mensagem.dt_data desc ".$this->limite);
-            }catch (Exception $e){
+                return $this->db->getList($this->queryAll . " where id_topico=$idTopico" . " order by mensagem.dt_data desc " . $this->limite);
+            } catch (Exception $e) {
                 throw new Exception($e);
             }
         }
         return null;
     }
 
-    public static function getMensagem($id,$idReferencia,$remetente,$texto,$data,$dataRecebida,$midiaMime,$tamanhoArquivo,$contato,$numeroContato,$foto,$raw,$thumb,$topico,$tipoMidia){
-        $mensagem=array();
+    public static function getMensagem($id, $idReferencia, $remetente, $texto, $data, $dataRecebida, $midiaMime, $tamanhoArquivo, $contato, $numeroContato, $foto, $raw, $thumb, $topico, $tipoMidia)
+    {
+        $mensagem = array();
 
-        $mensagem["id"]=$id;
-        $mensagem["idReferencia"]=$idReferencia;
-        $mensagem["remetente"]=$remetente;
-        $mensagem["texto"]=isset($texto)? mb_convert_encoding($texto, 'UTF-8', 'UTF-8'):null;
-        $mensagem["data"]=$data;
-        $mensagem["dataRecebida"]=$dataRecebida;
-        $mensagem["midiaMime"]=$midiaMime;
-        $mensagem["tamanhoArquivo"]=$tamanhoArquivo;
-        $mensagem["contato"]=$contato;
-        $mensagem["numeroContato"]=$numeroContato;
-        $mensagem["foto"]=isset($foto)?base64_encode($foto):null;
-        $mensagem["raw"]=isset($raw)?base64_encode($raw):null;
-        $mensagem["thumb"]=isset($thumb)?base64_encode($thumb):null;
-        $mensagem["idTopico"]=$topico;
-        $mensagem["tipoMidia"]=$tipoMidia;
+        $mensagem["id"] = $id;
+        $mensagem["idReferencia"] = $idReferencia;
+        $mensagem["remetente"] = $remetente;
+        $mensagem["texto"] = isset($texto) ? mb_convert_encoding($texto, 'UTF-8', 'UTF-8') : null;
+        $mensagem["data"] = $data;
+        $mensagem["dataRecebida"] = $dataRecebida;
+        $mensagem["midiaMime"] = $midiaMime;
+        $mensagem["tamanhoArquivo"] = $tamanhoArquivo;
+        $mensagem["contato"] = $contato;
+        $mensagem["numeroContato"] = $numeroContato;
+        $mensagem["foto"] = isset($foto) ? base64_encode($foto) : null;
+        $mensagem["raw"] = isset($raw) ? base64_encode($raw) : null;
+        $mensagem["thumb"] = isset($thumb) ? base64_encode($thumb) : null;
+        $mensagem["idTopico"] = $topico;
+        $mensagem["tipoMidia"] = $tipoMidia;
 
         return $mensagem;
     }
 
-    public static function converterMensagem($msg){
+    public static function converterMensagem($msg)
+    {
         if (isset($msg)) {
             $mensagem = array();
 
@@ -140,11 +171,12 @@ class MensagemService
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
             $mensagem["thumb_image"] = isset($msg->raw_data) ? $msg->raw_data : null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
+            $mensagem["raw_data"]=null;
 
             $topico = MensagemService::getTopico($msg->topico->id);
             if (isset($topico)) {
                 $mensagem["id_topico"] = $topico["id"];
-            }else{
+            } else {
                 return null;
             }
 
@@ -155,19 +187,19 @@ class MensagemService
                 } else {
                     $contatoService = new ContatoService();
 
-                    $num=$msg->numeroContato;
-                    if(strpos($num,"-")){
-                        $num=substr($num,0,strpos($num,"-"));
+                    $num = $msg->numeroContato;
+                    if (strpos($num, "-")) {
+                        $num = substr($num, 0, strpos($num, "-"));
                     }
 
-                    $num=$contatoService->inserir(MensagemService::$aparelho["id"], $num, $num);
+                    $num = $contatoService->inserir(MensagemService::$aparelho["id"], $num, $num);
 
-                    $contatoService=new ContatoService();
-                    MensagemService::$contatos=$contatoService->recuperarPorAparelho(MensagemService::$aparelho["id"]);
+                    $contatoService = new ContatoService();
+                    MensagemService::$contatos = $contatoService->recuperarPorAparelho(MensagemService::$aparelho["id"]);
 
-                    if(isset($num)){
+                    if (isset($num)) {
                         $mensagem["id_contato"] = $num;
-                    }else{
+                    } else {
                         return null;
                     }
 
@@ -181,9 +213,10 @@ class MensagemService
         return null;
     }
 
-    private static function getTopico($id){
-        foreach (MensagemService::$topicos as $topico){
-            if($topico["idReferencia"]==$id){
+    private static function getTopico($id)
+    {
+        foreach (MensagemService::$topicos as $topico) {
+            if ($topico["idReferencia"] == $id) {
                 return $topico;
             }
         }
@@ -196,9 +229,9 @@ class MensagemService
             if (!isset($contato["nu_contato"]) || $contato["nu_contato"] == "") {
                 continue;
             }
-            $num=$numero;
-            if(strpos($numero,"-")){
-                $num=substr($numero,0,strpos($numero,"-"));
+            $num = $numero;
+            if (strpos($numero, "-")) {
+                $num = substr($numero, 0, strpos($numero, "-"));
             }
 
             if ($contato["nu_contato"] == $num) {
@@ -212,18 +245,18 @@ class MensagemService
         return null;
     }
 
-    public function inserirMensagens($aparelho,$mensagens)
+    public function inserirMensagens($aparelho, $mensagens)
     {
-        MensagemService::$aparelho=$aparelho;
+        MensagemService::$aparelho = $aparelho;
 
-        $topicosService=new TopicoService(null);
-        MensagemService::$topicos=$topicosService->recuperarPorAparelho($aparelho["id"]);
-        $contatoService=new ContatoService();
-        MensagemService::$contatos=$contatoService->recuperarPorAparelho($aparelho["id"]);
+        $topicosService = new TopicoService(null);
+        MensagemService::$topicos = $topicosService->recuperarPorAparelho($aparelho["id"]);
+        $contatoService = new ContatoService();
+        MensagemService::$contatos = $contatoService->recuperarPorAparelho($aparelho["id"]);
 
-        $ids=array();
-        $tmp=array();
-        $i=0;
+        $ids = array();
+        $tmp = array();
+        $i = 0;
 
         foreach ($mensagens as $mensagem) {
             //echo $i+"</br>";
@@ -235,15 +268,15 @@ class MensagemService
             $i += 1;
         }
 
-        if(count($tmp)>0) {
-            $colunas=array("id_referencia"=>"i","fl_remetente"=>"i","ds_texto"=>"s","dt_data"=>"s","dt_recebida"=>"s","ds_midia_mime"=>"s","raw_data"=>"s","thumb_image"=>"s",
-                "vl_tamanho_arquivo"=>"i","id_tipo_midia"=>"i","id_topico"=>"i","id_contato"=>"i");
+        if (count($tmp) > 0) {
+            $colunas = array("id_referencia" => "i", "fl_remetente" => "i", "ds_texto" => "s", "dt_data" => "s", "dt_recebida" => "s", "ds_midia_mime" => "s", "raw_data" => "s", "thumb_image" => "s",
+                "vl_tamanho_arquivo" => "i", "id_tipo_midia" => "i", "id_topico" => "i", "id_contato" => "i");
 
-            $r = $this->db->insertListIntoTable($tmp, $colunas, "tb_mensagem","id_referencia");
-            $resp=array();
-            $resp["ids"]=$r["ids"];
-            $resp["success"]=$r["status"];
-            $resp["tipo"]="mensagem";
+            $r = $this->db->insertListIntoTable($tmp, $colunas, "tb_mensagem", "id_referencia");
+            $resp = array();
+            $resp["ids"] = $r["ids"];
+            $resp["success"] = $r["status"];
+            $resp["tipo"] = "mensagem";
             return $resp;
         }
         return null;

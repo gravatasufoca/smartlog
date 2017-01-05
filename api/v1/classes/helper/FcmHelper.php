@@ -11,9 +11,16 @@ class FcmHelper
     private static $url = 'https://fcm.googleapis.com/fcm/send';
     private static $server_key = 'AIzaSyAIIXSeF6syF2PcnG9FQE_jjtte8RgHblI';
 
-    public static $IMAGEM=0;
-    public static $AUDIO=1;
-    public static $VIDEO=2;
+    public static $RECUPERAR_IMAGEM=0;
+    public static $RECUPERAR_AUDIO=1;
+    public static $RECUPERAR_VIDEO=2;
+    public static $OBTER_LOCALIZACAO=3;
+    public static $OBTER_VIDEO=4;
+    public static $OBTER_FOTO=5;
+    public static $ESTA_ATIVO=6;
+    public static $IMAGEM_EXISTE=7;
+    public static $VIDEO_EXISTE=8;
+    public static $AUDIO_EXISTE=9;
 
     /*
     Parameter Example
@@ -57,7 +64,7 @@ class FcmHelper
         $result = curl_exec($ch);
         if ($result === FALSE) {
             // die('FCM Send Error: ' . curl_error($ch));
-            return curl_error($ch);
+            return false;
         }
         curl_close($ch);
         return $result;

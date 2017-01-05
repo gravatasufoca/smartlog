@@ -28,6 +28,19 @@ $app->post($route.'/:id', function ($id) use ($app) {
     }
 });
 
+
+$app->get($route.'/imagem/existe/:id', function ($id) use ($app) {
+    require_once "classes/service/mensagemService.php";
+
+    $mensagemService = new MensagemService(null);
+    try {
+        $raw= $mensagemService->imagemExiste($id);
+        echoResponse(200, array("existe"=>$raw));
+    }catch (Exception $exception){
+        echoResponse(500, $exception->getMessage());
+    }
+});
+
 $app->get($route.'/imagem/:id', function ($id) use ($app) {
     require_once "classes/service/mensagemService.php";
 
@@ -35,9 +48,9 @@ $app->get($route.'/imagem/:id', function ($id) use ($app) {
     try {
         $raw= $mensagemService->recuperarImagem($id);
         if(isset($raw)) {
-            echoResponse(200, $raw);
+            echoResponse(200, array("imagem"=>$raw));
         }else{
-            echoResponse(204, "");
+            echoResponse(204, array("imagem"=>null));
         }
     }catch (Exception $exception){
         echoResponse(500, $exception->getMessage());

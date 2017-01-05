@@ -12,6 +12,15 @@ class AparelhoService
         $this->db = new DbHandler();
     }
 
+    public function recuperar($id){
+        if(!isset($id)){
+            return null;
+        }
+        $aparelho = $this->db->getOneRecord("select * from tb_aparelho where fl_ativo=1 and id='$id'");
+
+        return $aparelho;
+    }
+
     public function inserir($perfil){
         if(isset($perfil->ds_chave) && isset($perfil->no_aparelho) && isset($perfil->id_usuario)) {
             $colunas = array("ds_chave", "no_aparelho","id_usuario");

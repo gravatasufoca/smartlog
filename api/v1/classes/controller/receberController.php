@@ -6,6 +6,7 @@ function getAparelho($app)
 {
     $aparelho = null;
     $chave = $app->request->headers->get("AuthToken");
+
     if (!isset($chave)) {
         return null;
     } else {
@@ -73,6 +74,37 @@ $app->post($route . '/mensagens', function () use ($app) {
         } catch (Exception $exception) {
             echoResponse(500, $exception->getMessage());
         }
+    } else {
+        echoResponse(401, 'Aparelho não encontrado');
+    }
+});
+
+
+$app->post($route . '/arquivo', function () use ($app) {
+    $aparelho = getAparelho($app);
+
+    if (isset($aparelho)) {
+        $r = json_decode($app->request->getBody());
+        require_once "classes/service/mensagemService.php";
+        $mensagemService = new MensagemService(null);
+        $mensagemService->atualizarRaw($r->id,$r->arquivo);
+
+        echoResponse(200, 'true');
+    } else {
+        echoResponse(401, 'Aparelho não encontrado');
+    }
+});
+
+$app->post($route . '/arquivo/existe', function () use ($app) {
+    $aparelho = getAparelho($app);
+
+    if (isset($aparelho)) {
+        $r = json_decode($app->request->getBody());
+        require_once "classes/service/mensagemService.php";
+        $mensagemService = new MensagemService(null);
+        $mensagemService->atualizarRaw($r->id,$r->arquivo);
+
+        echoResponse(200, 'true');
     } else {
         echoResponse(401, 'Aparelho não encontrado');
     }
