@@ -89,7 +89,7 @@ $app->post($route . '/arquivo', function () use ($app) {
         $mensagemService = new MensagemService(null);
         $mensagemService->atualizarRaw($r->id,$r->arquivo);
 
-        echoResponse(200, 'true');
+        echoResponse(200, array(true));
     } else {
         echoResponse(401, 'Aparelho não encontrado');
     }
@@ -100,11 +100,8 @@ $app->post($route . '/arquivo/existe', function () use ($app) {
 
     if (isset($aparelho)) {
         $r = json_decode($app->request->getBody());
-        require_once "classes/service/mensagemService.php";
-        $mensagemService = new MensagemService(null);
-        $mensagemService->atualizarRaw($r->id,$r->arquivo);
 
-        echoResponse(200, 'true');
+        echoResponseClean(200, true);
     } else {
         echoResponse(401, 'Aparelho não encontrado');
     }

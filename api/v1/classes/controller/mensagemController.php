@@ -29,7 +29,7 @@ $app->post($route.'/:id', function ($id) use ($app) {
 });
 
 
-$app->get($route.'/imagem/existe/:id', function ($id) use ($app) {
+$app->get($route.'/imagem/:id/existe', function ($id) use ($app) {
     require_once "classes/service/mensagemService.php";
 
     $mensagemService = new MensagemService(null);

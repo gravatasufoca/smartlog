@@ -10,10 +10,14 @@ define(['msAppJs'
 			return resourceRest.mensagem.one("topico",idTopico).one("c",carregados).getList();
         };
 
-		var recuperarImagem= function (idMensagem) {
-			var verificarSeExiste=$q.defer();
-
-            // return resourceRest.mensagem.one("imagem",idMensagem).get();
+        var recuperarImagem = function (idMensagem) {
+            return resourceRest.mensagem.one("imagem", idMensagem).getList("existe").then(function (resultado) {
+            	if(resultado) {
+                    return resourceRest.mensagem.one("imagem", idMensagem).get();
+                }else{
+            		return $q.when(false);
+				}
+            });
         };
 
 		return {
