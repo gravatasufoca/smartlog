@@ -1,6 +1,5 @@
 <?php
 
-
 $route="/mensagem";
 
 $app->get($route.'/topico/:id/c/:carregados', function ($id,$carregados) use ($app) {
@@ -11,7 +10,7 @@ $app->get($route.'/topico/:id/c/:carregados', function ($id,$carregados) use ($a
     try {
         echoResponse(200, $mensagemService->recuperarPorTopico($id));
     }catch (Exception $exception){
-        echoResponse(500, $exception->getMessage());
+        echoResponseClean(500, $exception->getMessage());
     }
 
 });
@@ -24,38 +23,31 @@ $app->post($route.'/:id', function ($id) use ($app) {
     try {
         echoResponse(200, $mensagemService->recuperar($id));
     }catch (Exception $exception){
-        echoResponse(500, $exception->getMessage());
+        echoResponseClean(500, $exception->getMessage());
     }
 });
 
 
-$app->get($route.'/imagem/:id/existe', function ($id) use ($app) {
+$app->get($route.'/arquivo/:id/solicita/:solicitar', function ($id,$solicitar) use ($app) {
     require_once "classes/service/mensagemService.php";
 
     $mensagemService = new MensagemService(null);
     try {
-        $raw= $mensagemService->imagemExiste($id);
-        echoResponse(200, array("existe"=>$raw));
-    }catch (Exception $exception){
-        echoResponse(500, $exception->getMessage());
-    }
-});
 
-$app->get($route.'/imagem/:id', function ($id) use ($app) {
-    require_once "classes/service/mensagemService.php";
+        if($solicitar=="true") {
+            $raw = $mensagemService->solicitarArquivo($id);
+        }else {
+            $raw = $mensagemService->recuperarArquivo($id);
+        }
 
-    $mensagemService = new MensagemService(null);
-    try {
-        $raw= $mensagemService->recuperarImagem($id);
         if(isset($raw)) {
-            echoResponse(200, array("imagem"=>$raw));
+            echoResponseClean(200, array("success"=>true,"arquivo"=>is_bool($raw)?null:$raw));
         }else{
-            echoResponse(204, array("imagem"=>null));
+            echoResponseClean(204, array("success"=>false));
         }
     }catch (Exception $exception){
-        echoResponse(500, $exception->getMessage());
+        echoResponseClean(500, $exception->getMessage());
     }
 });
-
 
 ?>

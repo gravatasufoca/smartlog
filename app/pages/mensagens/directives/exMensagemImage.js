@@ -7,10 +7,16 @@ define(['msAppJs'], function (app) {
 
             scope.carregarImagem = function () {
                 scope.mensagem.carregando=true;
-                mensagensService.recuperarImagem(scope.mensagem.id).then(function (resultado) {
-
-                    scope.mensagem.carregando=false;
-                    scope.mensagem.carregado=true;
+                mensagensService.recuperarArquivo(scope.mensagem.id).then(function (resultado) {
+                    console.info("resultado!!!",resultado);
+                    if(resultado!=null && resultado.raw_data!=null) {
+                        scope.mensagem.raw = resultado.raw_data;
+                        scope.mensagem.carregando = false;
+                        scope.mensagem.carregado = true;
+                    }else{
+                        scope.mensagem.carregando=false;
+                        scope.mensagem.carregado=false;
+                    }
                 }, function (e) {
                     $timeout(function () {
                        console.error(e);

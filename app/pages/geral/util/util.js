@@ -280,6 +280,15 @@ define(['msAppJs'], function(app) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
+        Geral.prototype.sleep = function (milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
+                }
+            }
+        };
+
         $.fn.scrollEnd = function(callback, timeout) {
             $(this).scroll(function(){
                 var $this = $(this);

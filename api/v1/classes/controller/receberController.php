@@ -89,22 +89,11 @@ $app->post($route . '/arquivo', function () use ($app) {
         $mensagemService = new MensagemService(null);
         $mensagemService->atualizarRaw($r->id,$r->arquivo);
 
-        echoResponse(200, array(true));
-    } else {
-        echoResponse(401, 'Aparelho não encontrado');
-    }
-});
-
-$app->post($route . '/arquivo/existe', function () use ($app) {
-    $aparelho = getAparelho($app);
-
-    if (isset($aparelho)) {
-        $r = json_decode($app->request->getBody());
-
         echoResponseClean(200, true);
     } else {
-        echoResponse(401, 'Aparelho não encontrado');
+        echoResponseClean(401, false);
     }
 });
+
 
 ?>

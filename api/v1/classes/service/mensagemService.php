@@ -4,6 +4,7 @@ require_once "classes/dao/dbHandler.php";
 require_once "classes/service/topicoService.php";
 require_once "classes/service/contatoService.php";
 
+
 class MensagemService
 {
 
@@ -63,33 +64,7 @@ class MensagemService
     }
 
 
-    public function imagemExiste($id)
-    {
-        if (isset($id)) {
-            $mensagem = $this->db->getOneRecord("select id_referencia from tb_mensagem where id='$id' ");
-            if (isset($mensagem)) {
-                $chave = getSession()["usuario"]["perfil"]["ds_chave"];
-                if (isset($chave)) {
-                    require_once "classes/helper/FcmHelper.php";
-
-                    if(FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => FcmHelper::$IMAGEM_EXISTE, "phpId" => session_id()), array($chave))) {
-
-                        $time=60;
-                        while ($time>0){
-                            if(isAtivo()){
-                                return true;
-                            }
-                            $time-=3;
-                            sleep(3);
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public function recuperarImagem($id)
+    public function solicitarArquivo($id)
     {
         if (isset($id)) {
             $mensagem = $this->db->getOneRecord("select id_referencia from tb_mensagem where id='$id' ");
@@ -99,25 +74,21 @@ class MensagemService
                     require_once "classes/helper/FcmHelper.php";
 
                     if(FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => FcmHelper::$RECUPERAR_IMAGEM, "phpId" => session_id()), array($chave))) {
-                        return $this->verificaImagem($id);
+                        return true;
                     }
                 }
             }
         }
-        return null;
+        return false;
     }
 
-    private function verificaImagem($id)
+    public function recuperarArquivo($id)
     {
-        $timeout = 120;
-        while ($timeout > 0) {
-            $mensagem = $this->db->getOneRecord("select raw_data from tb_mensagem where id='$id' and raw_data is not null ");
+        if (isset($id)) {
+            $mensagem = $this->db->getOneRecord("select raw_data from tb_mensagem where id='$id' ");
             if (isset($mensagem)) {
-                return $mensagem["raw_data"];
+                return $mensagem;
             }
-
-            $timeout -= 5;
-            sleep(5);
         }
         return null;
     }

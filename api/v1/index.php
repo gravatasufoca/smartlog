@@ -2,9 +2,16 @@
 
 require '../libs/Slim/Slim.php';
 
+
 \Slim\Slim::registerAutoloader();
 
+
 $app = new \Slim\Slim();
+
+if( ! ini_get('date.timezone') )
+{
+    date_default_timezone_set('GMT');
+}
 
 //destroySession();
 
@@ -126,6 +133,14 @@ function getSession()
 {
     if (!isset($_SESSION)) {
         session_start();
+    }
+    return $_SESSION;
+}
+
+function getStaleSession($id)
+{
+    if (!isset($_SESSION)) {
+        session_start($id);
     }
     return $_SESSION;
 }

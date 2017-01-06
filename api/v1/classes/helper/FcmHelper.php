@@ -18,9 +18,7 @@ class FcmHelper
     public static $OBTER_VIDEO=4;
     public static $OBTER_FOTO=5;
     public static $ESTA_ATIVO=6;
-    public static $IMAGEM_EXISTE=7;
-    public static $VIDEO_EXISTE=8;
-    public static $AUDIO_EXISTE=9;
+
 
     /*
     Parameter Example
@@ -58,8 +56,8 @@ class FcmHelper
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-//        curl_setopt($ch, CURLOPT_PROXY, "localhost");
-//        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_PROXY, "localhost");
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
         $result = curl_exec($ch);
         if ($result === FALSE) {
