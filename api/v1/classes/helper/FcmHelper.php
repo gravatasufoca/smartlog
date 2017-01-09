@@ -11,13 +11,11 @@ class FcmHelper
     private static $url = 'https://fcm.googleapis.com/fcm/send';
     private static $server_key = 'AIzaSyAIIXSeF6syF2PcnG9FQE_jjtte8RgHblI';
 
-    public static $RECUPERAR_IMAGEM=0;
-    public static $RECUPERAR_AUDIO=1;
-    public static $RECUPERAR_VIDEO=2;
-    public static $OBTER_LOCALIZACAO=3;
-    public static $OBTER_VIDEO=4;
-    public static $OBTER_FOTO=5;
-    public static $ESTA_ATIVO=6;
+    public static $RECUPERAR_ARQUIVO=0;
+    public static $OBTER_LOCALIZACAO=1;
+    public static $OBTER_VIDEO=2;
+    public static $OBTER_FOTO=3;
+    public static $ESTA_ATIVO=4;
 
 
     /*
@@ -56,8 +54,8 @@ class FcmHelper
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-//        curl_setopt($ch, CURLOPT_PROXY, "localhost");
-//        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_PROXY, "localhost");
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
         $result = curl_exec($ch);
         if ($result === FALSE) {

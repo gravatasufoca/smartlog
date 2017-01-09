@@ -85,9 +85,10 @@
                                         <div class="message_body">
                                             <a class="author {{topico.mesmoGrupo($index)? 'hidden':''}}">{{mensagem.contato}}</a>
                                             <div class="mensagem ">
-                                                <div ng-show="mensagem.tipoMidia==0" class="msgtxt">{{mensagem.texto}}</div>
-                                                <ex-mensagem-audio ng-show="mensagem.tipoMidia==2" mensagem="mensagem" />
-                                                <ex-mensagem-image ng-show="isImage(mensagem)" mensagem="mensagem"/>
+                                                <div ng-show="mensagem && mensagem.tipoMidia==0" class="msgtxt">{{mensagem.texto}}</div>
+                                                <ex-mensagem-image ng-show="mensagem && mensagem.tipoMidia==1 || mensagem.tipoMidia==13" mensagem="mensagem"/>
+                                                <ex-mensagem-audio ng-show="mensagem && mensagem.tipoMidia==2" mensagem="mensagem" />
+                                                <ex-mensagem-video ng-show="mensagem.tipoMidia==3" mensagem="mensagem" />
 
                                             </div>
 

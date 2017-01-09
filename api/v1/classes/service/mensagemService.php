@@ -73,7 +73,7 @@ class MensagemService
                 if (isset($chave)) {
                     require_once "classes/helper/FcmHelper.php";
 
-                    if(FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => FcmHelper::$RECUPERAR_IMAGEM, "phpId" => session_id()), array($chave))) {
+                    if(FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => FcmHelper::$RECUPERAR_ARQUIVO, "phpId" => session_id()), array($chave))) {
                         return true;
                     }
                 }
@@ -97,7 +97,7 @@ class MensagemService
     {
         if (isset($idTopico)) {
             try {
-                return $this->db->getList($this->queryAll . " where id_tipo_midia=2 and id_topico=$idTopico" . " order by mensagem.dt_data desc " . $this->limite);
+                return $this->db->getList($this->queryAll . " where (id_tipo_midia=2 or id_tipo_midia=3) and id_topico=$idTopico" . " order by mensagem.dt_data desc " . $this->limite);
             } catch (Exception $e) {
                 throw new Exception($e);
             }

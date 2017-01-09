@@ -1,8 +1,10 @@
-<a ng-if="isImage(mensagem)" class="im_message_photo_thumb"
-   style="width: 260px">
-    <div ng-show="false" class="spinner"></div>
-    <img class="im_message_photo_thumb" my-load-thumb=""
-         style="width: 260px"
-         alt="[Foto]"
-         src="data:{{mensagem.midiaMime}};base64,{{mensagem.raw}}">
-</a>
+<div>
+    <div ng-show="mensagem.carregando" class="spinner spinner-rotate"></div>
+    <div ng-click="carregarVideo()" ng-show="!mensagem.carregado && !mensagem.carregando" class="spinnerdown">
+        <span class="tamanhotxtspinner">{{mensagem.tamanhoArquivo.tamanhoArquivo()}}</span>
+    </div>
+
+    <span class="im_message_photo_thumb" style="">
+        <video type="mensagem.midiaMime" ng-if="mensagem.carregado && (mensagem.raw!=null || mensagem.thumb!=null)" controls ng-src="data:{{mensagem.midiaMime}};base64,{{mensagem.raw}}" />
+    </span>
+</div>

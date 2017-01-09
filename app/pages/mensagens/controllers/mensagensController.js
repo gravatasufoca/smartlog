@@ -290,10 +290,6 @@ define(['msAppJs',
             }
 	 	};
 
-		$scope.isImage=function (mensagem) {
-            return mensagem.tipoMidia==1 || mensagem.tipoMidia==13;
-        }
-
 
 	}]);
 

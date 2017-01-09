@@ -4,7 +4,9 @@ define(['msAppJs'], function(app) {
     app.directive('exMensagemAudio', ['mensagensService','$q','$timeout', function (mensagensService,$q,$timeout) {
 
 		function link(scope, element, attrs) {
-            scope.carregarAudio = function () {
+            scope.baixarAudio = function () {
+                scope.mensagem.carregando = true;
+                scope.mensagem.carregado = false;
                 mensagensService.recuperarArquivo(scope.mensagem.idReferencia).then(function (resultado) {
                     console.info("resultado!!!",resultado);
                     if(resultado!=null && resultado.raw_data!=null) {
@@ -23,6 +25,7 @@ define(['msAppJs'], function(app) {
                     }, 100);
                 });
             };
+
 		}
 
 		return {
