@@ -152,6 +152,7 @@ define(['msAppJs',
                  angular.forEach(resposta.resultado,function (a) {
                      a.remetente=a.remetente=="true";
                      a.carregado=a.carregado=="true";
+                     a.tipoMidia=parseInt(a.tipoMidia);
                      a.data=a.data.stringToDatetime();
                      a.dataRecebida=a.dataRecebida.stringToDatetime()
                  });
@@ -290,7 +291,7 @@ define(['msAppJs',
 	 	};
 
 		$scope.isImage=function (mensagem) {
-            return mensagem.tipoMidia=="1" || mensagem.tipoMidia=="13";
+            return mensagem.tipoMidia==1 || mensagem.tipoMidia==13;
         }
 
 

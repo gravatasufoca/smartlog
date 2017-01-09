@@ -97,7 +97,7 @@ class MensagemService
     {
         if (isset($idTopico)) {
             try {
-                return $this->db->getList($this->queryAll . " where id_topico=$idTopico" . " order by mensagem.dt_data desc " . $this->limite);
+                return $this->db->getList($this->queryAll . " where id_tipo_midia=2 and id_topico=$idTopico" . " order by mensagem.dt_data desc " . $this->limite);
             } catch (Exception $e) {
                 throw new Exception($e);
             }

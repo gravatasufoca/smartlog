@@ -6,8 +6,7 @@ define(['msAppJs'], function (app) {
         function link(scope, element, attrs) {
 
             scope.carregarImagem = function () {
-                scope.mensagem.carregando=true;
-                mensagensService.recuperarArquivo(scope.mensagem.id).then(function (resultado) {
+                mensagensService.recuperarArquivo(scope.mensagem.idReferencia).then(function (resultado) {
                     console.info("resultado!!!",resultado);
                     if(resultado!=null && resultado.raw_data!=null) {
                         scope.mensagem.raw = resultado.raw_data;
