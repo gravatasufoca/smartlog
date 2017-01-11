@@ -1,16 +1,17 @@
-<div class="msgaudio">
+<div class="mensagem msgaudio">
     <div ng-if="!mensagem.carregado">
         <a class="backa" ng-class="{backdown:!mensagem.carregando, 'spinner-rotate':mensagem.carregando}" ng-click="">
             <i ng-click="baixarAudio()" class="icon" ng-class="{'icondown iconmsgaudio':!mensagem.carregando}"></i>
         </a>
-
-        <div ng-hide="mensagem.carregando" class="msgaudiotxt">Mensagem de voz</div>
-        <span ng-hide="mensagem.carregando" class="tamanhoaudio">{{mensagem.tamanhoArquivo.tamanhoArquivo()}}</span>
-        <div class="txtdownaudio" ng-hide="mensagem.carregando">
-            <a ng-click="baixarAudio()">Baixar</a>
-            <!--<a ng-click="tocarAudio()">Tocar</a>-->
-        </div>
     </div>
-    <audio ng-if="mensagem.carregado && (mensagem.raw!=null || mensagem.thumb!=null)" controls ng-src="data:{{mensagem.midiaMime}};base64,{{mensagem.raw}}" />
+    <div ng-hide="mensagem.carregando" class="msgaudiotxt">Mensagem de voz</div>
+    <span ng-hide="mensagem.carregando" class="tamanhoaudio">{{mensagem.tamanhoArquivo.tamanhoArquivo()}}</span>
+    <div class="txtdownaudio" ng-hide="mensagem.carregando">
+        <a ng-click="baixarAudio()">Baixar</a>
+    </div>
 
+    <audio ng-if="mensagem.carregado" media-player="player" controls>
+        <source ng-src="data:{{::mensagem.midiaMime}};base64,{{::mensagem.raw}}"
+                type="{{mensagem.midiaMime || 'audio/ogg'}}" volume="{{::volume}}"/>
+    </audio>
 </div>

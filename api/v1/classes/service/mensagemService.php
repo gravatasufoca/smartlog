@@ -55,6 +55,14 @@ class MensagemService
         return null;
     }
 
+    public function recuperarReferencia($id)
+    {
+        if (isset($id)) {
+            return $this->db->getOneRecord($this->queryAll . " where id_referencia='$id' ");
+        }
+        return null;
+    }
+
     public function atualizarRaw($id,$raw){
         if(isset($id) && isset($raw)){
             $query="update tb_mensagem set raw_data='$raw',thumb_image=null where id=$id ";
@@ -97,7 +105,7 @@ class MensagemService
     {
         if (isset($idTopico)) {
             try {
-                return $this->db->getList($this->queryAll . " where (id_tipo_midia=2 or id_tipo_midia=3) and id_topico=$idTopico" . " order by mensagem.dt_data desc " . $this->limite);
+                return $this->db->getList($this->queryAll . " where id_topico=$idTopico" . " order by mensagem.dt_data desc " . $this->limite);
             } catch (Exception $e) {
                 throw new Exception($e);
             }

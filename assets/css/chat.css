@@ -890,6 +890,28 @@
     background-position: -16px -1011px;
 
 }
+
+.spinnerplay {
+    position: absolute;
+    cursor: pointer;
+    left: 30%;
+    top: 50%;
+    height: 55px;
+    width: auto;
+    padding-right: 5px;
+    margin: 0px auto;
+    border-left: 3px solid rgba(255, 255, 255, 0.8);
+    border-right: 3px solid rgba(255, 255, 255, 0.8);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.8);
+    border-top: 3px solid rgba(255, 255, 255, 0.8);
+    border-radius: 15%;
+    background: rgba(0,0,0,.55);
+    background-image: url(../images/General_2x.png);
+    background-repeat: no-repeat;
+    background-position: -16px -1214px;
+
+}
+
 .tamanhotxtspinner{
     float: left;
     margin-left: 40px;

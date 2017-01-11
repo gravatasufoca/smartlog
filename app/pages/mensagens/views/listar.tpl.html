@@ -38,7 +38,6 @@
                                 </a>
                             </li>
 
-
                         </ul>
 
                     </div>
@@ -56,19 +55,19 @@
                              ng-class="{im_history_loading_more_active: state.moreActive}" style="">
                             <div my-arc-progress="" stroke="3" width="26" ng-show="carregando"
                                  class="progress-arc-wrap progress-arc-intermediate" style="width: 26px; height: 26px;">
-                                <div class="arc-hider" ng-show="carregando"/>
+                                <div class="arc-hider" ng-show="carregando"></div>
                             </div>
                         </div>
 
 
                         <!-- MENSAGEM COMPLETA -->
-                        <div class="msgwrap" ng-repeat="mensagem in topico.mensagens | orderBy:'data':reverse">
+                        <div class="msgwrap" ng-repeat="msg in topico.mensagens | orderBy:'data':reverse">
 
 
                             <div class="im_message_date_split im_service_message_wrap msgdata"
                                  ng-hide="topico.mesmaData($index)">
                                 <div class="im_service_message"><span
-                                        class="im_message_date_split_text msgdatai">{{mensagem.data.format('LL')}}</span>
+                                        class="im_message_date_split_text msgdatai">{{msg.data.format('LL')}}</span>
                                 </div>
                             </div>
 
@@ -76,60 +75,33 @@
                                 <div class="msginwrap">
                                     <div class="msgwrapin">
                                         <a class="afoto">
-                                            <span class="avatar {{mensagem.cor}} {{!mensagem.ma? 'hidden':''}}">{{mensagem.contato.acronomo(2)}}</span>
+                                            <span class="avatar {{msg.cor}} {{!msg.ma? 'hidden':''}}">{{msg.contato.acronomo(2)}}</span>
                                             <!--<img class="foto" src="filesystem:https://web.telegram.org/temporary/702222036_29437_16181383589578663144.jpg"/>-->
                                         </a>
                                         <div class="chora">
-                                            <div class="data">{{mensagem.data.format('hh:mm:ss')}}</div>
+                                            <div class="data">{{msg.data.format('hh:mm:ss')}}</div>
                                         </div>
                                         <div class="message_body">
-                                            <a class="author {{topico.mesmoGrupo($index)? 'hidden':''}}">{{mensagem.contato}}</a>
-                                            <div class="mensagem ">
-                                                <div ng-show="mensagem && mensagem.tipoMidia==0" class="msgtxt">{{mensagem.texto}}</div>
-                                                <ex-mensagem-image ng-show="mensagem && mensagem.tipoMidia==1 || mensagem.tipoMidia==13" mensagem="mensagem"/>
-                                                <ex-mensagem-audio ng-show="mensagem && mensagem.tipoMidia==2" mensagem="mensagem" />
-                                                <ex-mensagem-video ng-show="mensagem.tipoMidia==3" mensagem="mensagem" />
-
+                                            <a class="author {{topico.mesmoGrupo($index)? 'hidden':''}}">{{::msg.contato}}</a>
+                                            <div class="mensagem " ng-if="msg && msg.tipoMidia==0">
+                                                <div class="msgtxt">{{::msg.texto}}</div>
                                             </div>
+
+                                            <ex-mensagem-audio ng-if="msg.tipoMidia==2" mensagem="msg"></ex-mensagem-audio>
+                                            <ex-mensagem-image ng-if="msg.tipoMidia==1 || msg.tipoMidia==13"
+                                                               mensagem="msg"></ex-mensagem-image>
+                                            <ex-mensagem-video ng-if="msg.tipoMidia==3" mensagem="msg"></ex-mensagem-video>
 
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
-
-                        <!-- MENSAGEM SEM FOTO -->
-                        <!--    <div class="msgwrap">
-                                <div class="msgoutwrap">
-                                    <div class="msginwrap">
-                                        <div class="msgwrapin">
-                                            <a class="afoto">
-                                                <span class="avatar hidden user_bgcolor_4">hc</span>
-                                                &lt;!&ndash;<img class="foto" src="filesystem:https://web.telegram.org/temporary/702222036_29437_16181383589578663144.jpg"/>&ndash;&gt;
-                                            </a>
-                                            <div class="chora">
-                                                <div class="data"> 14:30:12</div>
-                                            </div>
-                                            <div class="message_body">
-                                                <a class="author hidden"></a>
-                                                <div class="mensagem">
-                                                    <div class="msgtxt">mensagem 1</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
-
-
                     </div>
-
-
                 </div>
-
 
             </div>
         </div>
     </div>
-
 </div>

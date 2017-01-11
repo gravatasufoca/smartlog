@@ -14,6 +14,7 @@ requirejs.config({
 		'angular': [appConfig.servidor + '/vendor/angularjs/'+angularVersion+'/angular'+ sufixo],
 		'angularSanitize': [appConfig.servidor + '/vendor/angularjs/'+angularVersion+'/angular-sanitize' + sufixo],
 		'angularNgCookies': [appConfig.servidor + '/vendor/angularjs/'+angularVersion+'/angular-cookies' + sufixo],
+		'angularMediaPlayer': [appConfig.servidor + '/vendor/angular-media-player/angular-media-player'],
 		'angularResource': [appConfig.servidor + '/vendor/angularjs/'+angularVersion+'/angular-resource' + sufixo],
 		'angularUiBootstrap': [appConfig.servidor + '/vendor/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls-0.9.0' + sufixo],
 		'angularTranslate': [appConfig.servidor + '/vendor/angular-translate/2.0.0/angular-translate' + sufixo],
@@ -60,6 +61,10 @@ requirejs.config({
 			deps: ['angular'],
 			exports: 'angularValidator'
 		},
+        'angularMediaPlayer': {
+            deps: ['angular'],
+            exports: 'angularMediaPlayer'
+        },
 		'underscore': {
 			exports: 'underscore'
 		},

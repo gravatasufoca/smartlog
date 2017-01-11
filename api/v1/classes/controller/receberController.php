@@ -87,7 +87,10 @@ $app->post($route . '/arquivo', function () use ($app) {
         $r = json_decode($app->request->getBody());
         require_once "classes/service/mensagemService.php";
         $mensagemService = new MensagemService(null);
-        $mensagemService->atualizarRaw($r->id,$r->arquivo);
+        $mensagem=$mensagemService->recuperarReferencia($r->id);
+        if(isset($mensagem)) {
+            $mensagemService->atualizarRaw($mensagem["id"], $r->arquivo);
+        }
 
         echoResponseClean(200, true);
     } else {

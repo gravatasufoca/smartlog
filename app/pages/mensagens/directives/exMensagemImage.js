@@ -35,7 +35,8 @@ define(['msAppJs'], function (app) {
             link: link,
             templateUrl: './app/pages/mensagens/directives/templates/exMensagemImage.html',
             scope: {
-                mensagem: "="
+                mensagem: "=",
+                force:"="
             }
         };
     }]);

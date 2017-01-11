@@ -1,10 +1,10 @@
-<div>
-    <div ng-show="mensagem.carregando" class="spinner spinner-rotate"></div>
-    <div ng-click="carregarImagem()" ng-show="!mensagem.carregado && !mensagem.carregando" class="spinnerdown">
+<div class="mensagem">
+    <div ng-if="mensagem.carregando" class="spinner spinner-rotate"></div>
+    <div ng-click="carregarImagem()" ng-if="!mensagem.carregado && !mensagem.carregando" class="spinnerdown">
         <span class="tamanhotxtspinner">{{mensagem.tamanhoArquivo.tamanhoArquivo()}}</span>
     </div>
 
-    <span class="im_message_photo_thumb" style="">
+    <span class="im_message_photo_thumb">
         <img class="im_message_photo_thumb" style="width: 260px" ng-if="mensagem.raw!=null || mensagem.thumb!=null"
              ng-src="data:{{mensagem.midiaMime}};base64,{{mensagem.carregado?mensagem.raw:mensagem.thumb}}">
     </span>

@@ -1,9 +1,10 @@
-define(['msAppJs'], function(app) {
+define(['msAppJs','angularMediaPlayer'], function(app) {
 	'use strict';
 
     app.directive('exMensagemAudio', ['mensagensService','$q','$timeout', function (mensagensService,$q,$timeout) {
 
 		function link(scope, element, attrs) {
+		    scope.player={};
             scope.baixarAudio = function () {
                 scope.mensagem.carregando = true;
                 scope.mensagem.carregado = false;
