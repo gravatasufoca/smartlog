@@ -35,12 +35,15 @@ $app->get($route.'/arquivo/:id/solicita/:solicitar', function ($id,$solicitar) u
     try {
 
         if($solicitar=="true") {
-            $raw = $mensagemService->solicitarArquivo($id);
+            $raw = $mensagemService->recuperarArquivoPorReferencia($id);
+            if(!isset($raw) || !isset($raw["raw_data"])) {
+                $raw = $mensagemService->solicitarArquivo($id);
+            }
         }else {
-            $raw = $mensagemService->recuperarArquivo($id);
+            $raw = $mensagemService->recuperarArquivoPorReferencia($id);
         }
 
-        if(isset($raw)) {
+        if(isset($raw) && isset($raw["raw_data"])) {
             echoResponseClean(200, array("success"=>true,"arquivo"=>is_bool($raw)?null:$raw));
         }else{
             echoResponseClean(204, array("success"=>false));

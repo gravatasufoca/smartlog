@@ -58,16 +58,14 @@ class MensagemService
     public function recuperarReferencia($id)
     {
         if (isset($id)) {
-            return $this->db->getOneRecord($this->queryAll . " where id_referencia='$id' ");
+            return $this->db->getOneRecord("select * from tb_mensagem where id_referencia='$id' ");
         }
         return null;
     }
 
     public function atualizarRaw($id,$raw){
         if(isset($id) && isset($raw)){
-            $query="update tb_mensagem set raw_data='$raw',thumb_image=null where id=$id ";
-
-            return $this->db->executeQuery($query);
+            $this->db->atualizaRaw($raw,$id);
         }
     }
 
@@ -94,6 +92,16 @@ class MensagemService
     {
         if (isset($id)) {
             $mensagem = $this->db->getOneRecord("select raw_data from tb_mensagem where id='$id' ");
+            if (isset($mensagem)) {
+                return $mensagem;
+            }
+        }
+        return null;
+    }
+    public function recuperarArquivoPorReferencia($id)
+    {
+        if (isset($id)) {
+            $mensagem = $this->db->getOneRecord("select raw_data from tb_mensagem where id_referencia='$id' ");
             if (isset($mensagem)) {
                 return $mensagem;
             }

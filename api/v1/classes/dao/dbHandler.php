@@ -116,8 +116,6 @@ class DbHandler
                 $stmt->error;
             }
 
-
-
         }
         $resultado["ids"]=$ids;
 
@@ -133,6 +131,24 @@ class DbHandler
             return $this->conn->query($query) or die($this->conn->error . __LINE__);
         }
         return null;
+    }
+
+    public function atualizaRaw($raw,$id){
+
+        $this->conn->query("set global net_buffer_length=500000");
+        $this->conn->query("set global max_allowed_packet=500000");
+
+        $query="update tb_mensagem set raw_data=?,thumb_image=null where id=? ";
+        $stmt= $this->conn->prepare($query);
+        $stmt->bind_param("si", $raw, $id);
+        if($stmt->execute()){
+            $stmt->close();
+            return true;
+        }else{
+            $stmt->error;
+            $stmt->close();
+            return false;
+        }
     }
 
 }
