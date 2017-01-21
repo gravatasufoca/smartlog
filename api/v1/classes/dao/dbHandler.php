@@ -133,11 +133,28 @@ class DbHandler
         return null;
     }
 
-    public function atualizaRaw($raw,$id){
+    public function atualizaRawMensagem($raw,$id){
 
 //        $this->conn->query( 'SET @@global.max_allowed_packet = ' . strlen( $raw ) + 1024 );
 
         $query="update tb_mensagem set raw_data=?,thumb_image=null where id=? ";
+        $stmt= $this->conn->prepare($query);
+        $stmt->bind_param("si", $raw, $id);
+        if($stmt->execute()){
+            $stmt->close();
+            return true;
+        }else{
+            $stmt->error;
+            $stmt->close();
+            return false;
+        }
+    }
+
+    public function atualizaRawGravacao($raw,$id){
+
+//        $this->conn->query( 'SET @@global.max_allowed_packet = ' . strlen( $raw ) + 1024 );
+
+        $query="update tb_gravacao set raw_data=? where id=? ";
         $stmt= $this->conn->prepare($query);
         $stmt->bind_param("si", $raw, $id);
         if($stmt->execute()){

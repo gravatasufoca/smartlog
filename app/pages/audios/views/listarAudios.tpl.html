@@ -1,0 +1,64 @@
+<div class="container">
+
+    <link type="text/css" rel="stylesheet" href="assets/css/chat.css" media="screen"/>
+
+    <div class="row">
+        <div class="span12">
+            <strong class="title">{{ 'home.title' | translate }}</strong>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="box conteudo-box">
+
+            <div class="msgconteudo ">
+                <!--COLUNA DOS TOPICOS -->
+                <div class="colunatopico">
+                    <div class="ctopico">
+
+                    </div>
+                </div>
+
+                <!-- QUANDO NAO TEM MENSAGENS ESCOLHIDAS-->
+                <div class="mensagenscontainer">
+                    <div class="semmensagens" ng-if="audios.length==0">Nenhum audio registrado</div>
+                    <div class="listamensagem" ng-if="audios.length>0" objeto="audios" scrolly="scrolly"
+                         loading="carregando" scrolling="scrolling"
+                         on-end="scrollMessagesEnd" timeout="500" reverse="true">
+
+                        <div class="im_history_loading_more im_history_loading_more_active loadingwrapper"
+                             ng-show="carregando"
+                             ng-class="{im_history_loading_more_active: state.moreActive}" style="">
+                            <div my-arc-progress="" stroke="3" width="26" ng-show="carregando"
+                                 class="progress-arc-wrap progress-arc-intermediate" style="width: 26px; height: 26px;">
+                                <div class="arc-hider" ng-show="carregando"></div>
+                            </div>
+                        </div>
+
+                        <!-- MENSAGEM COMPLETA -->
+                        <div class="msgwrap" ng-repeat="msg in audios | orderBy:'data':reverse">
+
+                            <div class="msgoutwrap">
+                                <div class="msginwrap">
+                                    <div class="msgwrapin">
+                                        <a class="afoto"/>
+                                        <div class="chora">
+                                            <div class="data">{{msg.data.format('hh:mm:ss')}}</div>
+                                        </div>
+                                        <div class="message_body">
+                                            <a class="author hidden"></a>
+                                            <ex-audio mensagem="msg"></ex-audio>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

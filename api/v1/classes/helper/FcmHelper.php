@@ -15,7 +15,8 @@ class FcmHelper
     public static $OBTER_LOCALIZACAO=1;
     public static $OBTER_VIDEO=2;
     public static $OBTER_FOTO=3;
-    public static $ESTA_ATIVO=4;
+    public static $OBTER_AUDIO=4;
+    public static $ESTA_ATIVO=5;
 
 
     /*

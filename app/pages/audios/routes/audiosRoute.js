@@ -1,7 +1,5 @@
 define([], function(app) {
-	var routes = [
-
-	              ];
+	var routes = [];
 
 	return routes;
 });

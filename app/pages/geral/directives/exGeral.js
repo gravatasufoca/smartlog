@@ -204,7 +204,7 @@ define(['msAppJs'], function(app) {
                 }
 
                 if (scope.objeto != null && scope.reverse) {
-					scope.$watch("objeto.mensagens",function (a,b) {
+					scope.$watch("objeto",function (a,b) {
 						if(a!=null && b!=null && b.length==0) {
                             raw.scrollTop = raw.scrollHeight;
                             element.attr("scroll",raw.scrollHeight);

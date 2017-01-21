@@ -35,6 +35,14 @@ define([], function () {
                 }
             ],
             "roles": ["ROLE_LOGADO"]
+        },
+        {
+            "module": "audios",
+            "view": "listarAudios",
+            "controller": "audiosController",
+            "text": "Audios",
+            "menuUrl": "audios",
+            "roles": ["ROLE_LOGADO"]
         }
     ];
 

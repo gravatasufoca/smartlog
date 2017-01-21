@@ -65,7 +65,7 @@ class MensagemService
 
     public function atualizarRaw($id,$raw){
         if(isset($id) && isset($raw)){
-            $this->db->atualizaRaw($raw,$id);
+            $this->db->atualizaRawMensagem($raw,$id);
         }
     }
 

@@ -46,7 +46,7 @@
                 <!-- QUANDO NAO TEM MENSAGENS ESCOLHIDAS-->
                 <div class="mensagenscontainer">
                     <div class="semmensagens" ng-if="topico==null">Selecione um chat para começar a conversar</div>
-                    <div class="listamensagem" ng-if="topico!=null" objeto="topico" scrolly="scrolly"
+                    <div class="listamensagem" ng-if="topico!=null" objeto="topico.mensagens" scrolly="scrolly"
                          loading="carregando" scrolling="scrolling"
                          on-end="scrollMessagesEnd" timeout="500" reverse="true">
 
