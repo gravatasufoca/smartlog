@@ -8,10 +8,10 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
             scope.baixarAudio = function () {
                 scope.mensagem.carregando = true;
                 scope.mensagem.carregado = false;
-                audiosService.recuperarArquivo(scope.mensagem.idReferencia).then(function (resultado) {
+                audiosService.recuperarArquivo(scope.mensagem.id).then(function (resultado) {
                     console.info("resultado!!!",resultado);
-                    if(resultado!=null && resultado.raw_data!=null) {
-                        scope.mensagem.raw = resultado.raw_data;
+                    if(!geral.isEmpty(resultado)) {
+                        scope.mensagem.raw = resultado;
                         scope.mensagem.carregando = false;
                         scope.mensagem.carregado = true;
                     }else{
@@ -26,6 +26,13 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
                     }, 100);
                 });
             };
+
+            scope.$watch("mensagem.countdown",function (a) {
+                if(a==0){
+                    scope.baixarAudio();
+                    delete scope.mensagem.countdown;
+                }
+            });
 
 		}
 

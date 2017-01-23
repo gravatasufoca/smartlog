@@ -10,6 +10,7 @@ class GravacaoService
 
 
     private $queryAll = "select 
+            gravacao.id,
             gravacao.dt_criacao data, 
             gravacao.vl_duracao duracao , 
             gravacao.raw_data raw, 
@@ -37,11 +38,19 @@ class GravacaoService
         return null;
     }
 
-    public function recuperarPorAparelho($idAparelho)
+    public function deletar($id)
     {
-        if (isset($idAparelho)) {
+        if (isset($id)) {
+            return $this->db->executeQuery("delete from tb_gravacao where id='$id' ");
+        }
+        return null;
+    }
+
+    public function recuperarPorAparelho($idAparelho,$tipo)
+    {
+        if (isset($idAparelho) && isset($tipo)) {
             try {
-                return $this->db->getList($this->queryAll . " where id_aparelho=$idAparelho" . " order by gravacao.dt_criacao desc " . $this->limite);
+                return $this->db->getList($this->queryAll . " where fl_video=$tipo and id_aparelho=$idAparelho" . " order by gravacao.dt_criacao desc " . $this->limite);
             } catch (Exception $e) {
                 throw new Exception($e);
             }
@@ -59,13 +68,15 @@ class GravacaoService
     public function solicitarArquivo($aparelho, $tipo, $duracao)
     {
         if (isset($tipo) && isset($duracao) && isset($aparelho)) {
-            $id=$this->inserirSolicitacao($aparelho,$duracao);
+            $id=$this->inserirSolicitacao($aparelho,$duracao,$tipo);
             $chave = getSession()["usuario"]["perfil"]["ds_chave"];
             if (isset($chave) && isset($id)) {
                 require_once "classes/helper/FcmHelper.php";
 
                 if (FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => $tipo, "phpId" => session_id(), "duracao" => $duracao), array($chave))) {
                     return $id;
+                }else{
+                    $this->deletar($id);
                 }
             }
         }
@@ -83,15 +94,15 @@ class GravacaoService
         return null;
     }
 
-    private function inserirSolicitacao($idAparelho, $duracao)
+    private function inserirSolicitacao($idAparelho, $duracao,$tipo)
     {
 
         $tmp = array();
-        $tmp["dt_criacao"] = new DateTime();
+        $tmp["dt_criacao"] = $date = date('Y-m-d H:i:s');
         $tmp["vl_duracao"] = $duracao;
         $tmp["id_aparelho"] = $idAparelho;
-        $tmp["fL_video"] = 0;
-        $tmp["raw_data"] = "";
+        $tmp["fl_video"] = $tipo=="3" || $tipo==3?"1":"0";
+        $tmp["raw_data"] = null;
 
         $colunas = array("dt_criacao", "vl_duracao", "fl_video", "id_aparelho" , "raw_data");
 

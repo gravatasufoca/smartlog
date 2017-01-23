@@ -16,6 +16,41 @@
                 <div class="colunatopico">
                     <div class="ctopico">
 
+                        <div class="filder panel panel-default">
+                            <div class="panel-heading">
+                                <b class="panel-title">{{'solicitar-gravacao' | translate}}</b>
+                            </div>
+
+                            <div class="panel-body">
+
+                                <div class="row">
+                                    <div class="span6">
+                                        <label for="duracao">{{'duracao' | translate}} <em
+                                                class="form-req">*</em></label>
+                                        <input id="duracao" type="number" max="300" style="width: 60px"
+                                               ng-model="audio.duracao"
+                                               class="" maxlength="3" ng-required="true">
+                                        <span class="data" style="padding: 0px;">segundos</span>
+                                        <ex-obrigatorio
+                                                mostrar-quando="!audio.duracao&&audio.mostrarMsgErro"></ex-obrigatorio>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="span12">
+                                        <div class="pull-right">
+                                            <button ng-click="solicitarAudio()" type="button" class="btn btn-success"
+                                                    title="{{'novo-audio' | translate}}">
+                                                <i class="font15px fa fa-plus"></i>
+                                                {{'novo-audio' | translate}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -45,15 +80,22 @@
                                         <div class="chora">
                                             <div class="data">{{msg.data.format('hh:mm:ss')}}</div>
                                         </div>
+                                        <button ng-click="apagarAudio(msg)" type="button" class="btn-small btn-danger apagargravacao"
+                                                title="{{'novo-audio' | translate}}">
+                                            <i class="font15px fa fa-trash"></i>
+                                        </button>
                                         <div class="message_body">
                                             <a class="author hidden"></a>
                                             <ex-audio mensagem="msg"></ex-audio>
 
                                         </div>
+
+
                                     </div>
 
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

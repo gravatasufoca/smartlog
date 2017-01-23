@@ -1023,3 +1023,10 @@
     color: #999;
     padding-left: 2px;
 }
+
+.apagargravacao{
+    float: right;
+    margin-top: 26px;
+    height: 25px;
+    margin-right: 55px;
+}

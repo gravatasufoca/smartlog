@@ -3,24 +3,20 @@ define(['msAppJs',
 	'use strict';
 
 	app.controller('audiosController', ['$scope',
-	                                             'ngTableParams',
 	                                             '$msNotifyService',
 	                                             'msModalService',
 	                                             '$timeout',
 	                                             '$translatePartialLoader',
-	                                             'apoioService',
 	                                             '$filter',
 	                                             '$state',
 	                                             '$stateParams',
 	                                             'audiosService',
 	                                             '$rootScope',
 	                                             function($scope,
-	                                            		 ngTableParams,
 	                                            		 $msNotifyService,
 	                                            		 msModalService,
 	                                            		 $timeout,
 	                                            		 $translatePartialLoader,
-	                                            		 apoioService,
 	                                            		 $filter,
 	                                            		 $state,
 	                                            		 $stateParams,
@@ -28,9 +24,6 @@ define(['msAppJs',
 														 $rootScope
 	                                            		 ){
 		$translatePartialLoader.addPart('audios');
-
-
-
 
 		/**
 		 * Controla o nivel de acesso do usuario logado para a funcionalidade em questão
@@ -42,6 +35,17 @@ define(['msAppJs',
 			});
 		}, 100);*/
 
+		 var Audio = function () {
+			 return {
+				 id: null,
+				 duracao: 10,
+				 data: null,
+				 carregado:false,
+				 raw: null,
+				 thumb: null
+			 }
+		 };
+
 
 
 		$scope.carregando=false;
@@ -52,6 +56,7 @@ define(['msAppJs',
 		};
 
 		$scope.audios=[];
+		$scope.audio=new Audio();
 
 		/**
 		 * Recuperando o estado da tela de consulta
@@ -87,8 +92,7 @@ define(['msAppJs',
                  audiosService.recuperarAudios(usuario.perfil.id, $scope.carregados.audios).then(function (resposta) {
 
                      angular.forEach(resposta.resultado,function (a) {
-                         a.data=a.data.stringToDatetime();
-                         a.carregado=a.carregado=="true";
+                         a=fixAudio(a);
                      });
 
                      $scope.audios = $scope.audios.concat(resposta.resultado);
@@ -109,18 +113,44 @@ define(['msAppJs',
              }
 		 };
 
+		 var fixAudio=function (a) {
+             a.data=a.data.stringToDatetime();
+             a.carregado=a.carregado=="true";
+             return a;
+         }
 
-		var Audio = function () {
-            return {
-                id: null,
-                duracao: false,
-                data: null,
-                carregado:false,
-                raw: null,
-                thumb: null
+
+		$scope.solicitarAudio=function () {
+            var usuario=$rootScope.usuarioAutenticado;
+            if(usuario!=null && usuario.perfil!=null && !geral.isEmpty($scope.audio.duracao)) {
+                audiosService.solicitarAudio(usuario.perfil.id,$scope.audio.duracao).then(function (resp) {
+                	if(resp.resultado!=null){
+                		var audio=fixAudio(resp.resultado);
+                		audio.carregando=true;
+                		audio.carregado=false;
+                		audio.countdown=audio.duracao*1.8;
+                		audio.timer=function () {
+                			if(audio.countdown>0) {
+                                $timeout(function () {
+                                    audio.countdown--;
+                                    audio.timer();
+                                }, 1000);
+                            }
+                        };
+                		audio.timer();
+                		$scope.audios.push(audio);
+					}
+                });
             }
         };
 
+		 $scope.apagarAudio=function (audio) {
+			 audiosService.apagar(audio.id).then(function (resp) {
+				if(resp){
+
+				}
+             });
+         };
 
 		$scope.scrollEnd=function (elemento) {
             recuperarAudios();

@@ -7,12 +7,16 @@ define(['msAppJs'
 			return resourceRest.gravacao.get(id);
         };
 
+        var apagar = function (id) {
+            return resourceRest.gravacao.one("gravacao",id).remove();
+        };
+
 		var recuperarAudios = function (idAparelho,carregados) {
-			return resourceRest.gravacao.one("aparelho",idAparelho).one("tipo",2).one("c",carregados).getList();
+			return resourceRest.gravacao.one("aparelho",idAparelho).one("tipo",0).one("c",carregados).getList();
         };
 
 		var solicitarAudio=function (idAparelho,duracao) {
-            return resourceRest.gravacao.one("aparelho",idAparelho).one("tipo",2).one("duracao",duracao).getList();
+            return resourceRest.gravacao.one("aparelho",idAparelho).one("tipo",0).one("duracao",duracao).getList();
         }
 
         var recuperarGravacao = function (id) {
@@ -20,14 +24,14 @@ define(['msAppJs'
             window.geral.sleep(time*1000);
             console.info(time);
             return resourceRest.gravacao.get(id).then(function (resultado) {
-            	console.info(resultado);
-            	if(resultado!=null){
+            	console.info(resultado.resultado);
+            	if(resultado.resultado!=null){
             		if(time==60) return null;
 
-            		if(geral.isEmpty(resultado.raw)){
+            		if(geral.isEmpty(resultado.resultado.raw)){
 						return recuperarGravacao(id,time+10);
 					}else{
-            			return resultado.raw;
+            			return resultado.resultado.raw;
 					}
 				}
             });
@@ -37,7 +41,8 @@ define(['msAppJs'
 			recuperar:recuperar,
 			solicitarAudio:solicitarAudio,
             recuperarAudios:recuperarAudios,
-			recuperarArquivo:recuperarGravacao
+			recuperarArquivo:recuperarGravacao,
+			apagar:apagar
 		};
 
 	}]);
