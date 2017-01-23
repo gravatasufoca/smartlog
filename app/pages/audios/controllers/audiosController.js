@@ -147,7 +147,9 @@ define(['msAppJs',
 		 $scope.apagarAudio=function (audio) {
 			 audiosService.apagar(audio.id).then(function (resp) {
 				if(resp){
-
+					$scope.audios=_.reject($scope.audios,function (item) {
+						return item.id==audio.id;
+                    });
 				}
              });
          };

@@ -1027,6 +1027,6 @@
 .apagargravacao{
     float: right;
     margin-top: 26px;
-    height: 25px;
+    height: 25px !important;
     margin-right: 55px;
 }
