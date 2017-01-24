@@ -165,6 +165,18 @@ define(['msAppJs',
             }
 	 	};
 
+		$scope.abreModal=function () {
+            msModalService.setConfig({
+                backdrop: true,
+                keyboard: false,
+                modalFade: true,
+//				windowClass : 'modalWidth800',
+                template : null,
+                templateUrl: './app/pages/audios/directives/templates/novaGravacao.html',
+                controller:'audiosController'
+            }).open();
+		};
+
 
 	}]);
 

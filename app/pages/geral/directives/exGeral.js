@@ -263,6 +263,46 @@ define(['msAppJs'], function(app) {
         }
     }]);
 
+    app.directive('myModalPosition', function ($window, $timeout) {
+        return {
+            link: link
+        }
 
-	return app;
+        function link ($scope, element, attrs) {
+            var updateMargin = function () {
+                if (Config.Mobile &&
+                    $(element[0].parentNode.parentNode.parentNode).hasClass('mobile_modal')) {
+                    return
+                }
+                var height = element[0].parentNode.offsetHeight
+                var modal = element[0].parentNode.parentNode.parentNode
+                var bottomPanel = $('.media_modal_bottom_panel_wrap', modal)[0]
+                var contHeight = modal.offsetHeight - (bottomPanel && bottomPanel.offsetHeight || 0)
+
+                if (height < contHeight) {
+                    $(element[0].parentNode).css('marginTop', (contHeight - height) / 2)
+                } else {
+                    $(element[0].parentNode).css('marginTop', '')
+                }
+
+                if (attrs.animation != 'no') {
+                    $timeout(function () {
+                        $(element[0].parentNode).addClass('modal-content-animated')
+                    }, 300)
+                }
+            }
+
+            $($window).on('resize', updateMargin)
+
+            $scope.$on('ui_height', function (e, sync) {
+                if (sync) {
+                    updateMargin()
+                } else {
+                }
+            })
+        }
+    })
+
+
+    return app;
 });

@@ -762,7 +762,6 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-
 .msgwrapin {
     box-sizing: border-box;
     color: rgb(0, 0, 0);
@@ -827,7 +826,8 @@
     border-top: 6px solid rgba(0, 174, 239, .15);
     border-radius: 100%;
 }
-.spinner-rotate{
+
+.spinner-rotate {
     border-top: 6px solid rgba(0, 174, 239, .8);
     -webkit-animation: rotation .6s infinite linear;
     -moz-animation: rotation .6s infinite linear;
@@ -884,7 +884,7 @@
     border-bottom: 3px solid rgba(255, 255, 255, 0.8);
     border-top: 3px solid rgba(255, 255, 255, 0.8);
     border-radius: 15%;
-    background: rgba(0,0,0,.55);
+    background: rgba(0, 0, 0, .55);
     background-image: url(../images/General_2x.png);
     background-repeat: no-repeat;
     background-position: -16px -1011px;
@@ -905,26 +905,27 @@
     border-bottom: 3px solid rgba(255, 255, 255, 0.8);
     border-top: 3px solid rgba(255, 255, 255, 0.8);
     border-radius: 15%;
-    background: rgba(0,0,0,.55);
+    background: rgba(0, 0, 0, .55);
     background-image: url(../images/General_2x.png);
     background-repeat: no-repeat;
     background-position: -16px -1214px;
 
 }
 
-.tamanhotxtspinner{
+.tamanhotxtspinner {
     float: left;
     margin-left: 40px;
     margin-top: 15px;
     font-weight: bold;
     color: #fff;
 }
-.icon{
+
+.icon {
     background-image: url(../images/General.png);
     background-repeat: no-repeat;
 }
 
-.backa{
+.backa {
     display: block;
     float: left;
     width: 42px;
@@ -932,13 +933,14 @@
     border-radius: 50%;
     margin-right: 10px;
 }
-.backdown{
-    background: rgba(218,228,234,.5);
-}
-.backplay{
-    background:#6490b1;
+
+.backdown {
+    background: rgba(218, 228, 234, .5);
 }
 
+.backplay {
+    background: #6490b1;
+}
 
 .iconmsgaudio {
     display: inline-block;
@@ -949,12 +951,12 @@
 
 }
 
-.icondown{
+.icondown {
     background-position: -14px -509px;
 }
 
-.iconpause{
-    color:#3a6d99;
+.iconpause {
+    color: #3a6d99;
     background-position: -14px -587px;
 }
 
@@ -1019,14 +1021,38 @@
 .txtdownaudio a {
     margin-right: 10px;
 }
-.tamanhoaudio{
+
+.tamanhoaudio {
     color: #999;
     padding-left: 2px;
 }
 
-.apagargravacao{
+.apagargravacao {
     float: right;
     margin-top: 26px;
     height: 25px !important;
     margin-right: 55px;
+}
+
+.md_simple_modal_body {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Tahoma, sans-serif, Arial, Helvetica;
+    font-size: 13px;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    height: 439px;
+    line-height: 18px;
+    padding-bottom: 0px;
+    padding-left: 37px;
+    padding-right: 37px;
+    padding-top: 40px;
+    text-size-adjust: 100%;
+    width: 348px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
