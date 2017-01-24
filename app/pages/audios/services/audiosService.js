@@ -11,8 +11,12 @@ define(['msAppJs'
             return resourceRest.gravacao.one("gravacao",id).remove();
         };
 
-		var recuperarAudios = function (idAparelho,carregados) {
-			return resourceRest.gravacao.one("aparelho",idAparelho).one("tipo",0).one("c",carregados).getList();
+		var recuperarAudios = function (data,idAparelho,carregados) {
+			return resourceRest.gravacao.one("data",data.replace(/\D+/g,"")).one("aparelho",idAparelho).one("tipo",0).one("c",carregados).getList();
+        };
+
+        var recuperarTopicos = function (idAparelho) {
+            return resourceRest.topGravacao.one("aparelho",idAparelho).one("tipo",0).getList();
         };
 
 		var solicitarAudio=function (idAparelho,duracao) {
@@ -42,7 +46,8 @@ define(['msAppJs'
 			solicitarAudio:solicitarAudio,
             recuperarAudios:recuperarAudios,
 			recuperarArquivo:recuperarGravacao,
-			apagar:apagar
+			apagar:apagar,
+            recuperarTopicos:recuperarTopicos
 		};
 
 	}]);

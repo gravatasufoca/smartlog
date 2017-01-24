@@ -46,23 +46,26 @@ define(['msAppJs',
 			 }
 		 };
 
-
+		var Topico = function () {
+			return {
+				data:null,
+				qtd:0,
+				audios:[]
+			}
+        };
 
 		$scope.carregando=false;
         $scope.scrolling={scroll:false};
-
+		$scope.topico=new Topico();
 		$scope.carregados={
 			audios:0
 		};
-
-		$scope.audios=[];
-		$scope.audio=new Audio();
 
 		/**
 		 * Recuperando o estado da tela de consulta
 		 */
         $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams, error) {
-            recuperarAudios();
+            recuperarTopicos();
         });
 		/**
 			*Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
@@ -72,6 +75,19 @@ define(['msAppJs',
 				 // faturaService.salvarViewConsulta($scope.consulta);
 			 };
 		 });
+
+		 var recuperarTopicos=function () {
+             var usuario=$rootScope.usuarioAutenticado;
+             if(usuario!=null && usuario.perfil!=null) {
+                 audiosService.recuperarTopicos(usuario.perfil.id).then(function (resp) {
+					 $scope.topicos=resp.resultado;
+					 $scope.topicos.map(function (item) {
+						item.audios=[];
+						return item;
+                     });
+                 });
+             }
+         };
 
 
 		 var recuperarAudios=function (elemento) {
@@ -89,14 +105,14 @@ define(['msAppJs',
 
                  $scope.carregando = true;
                  $scope.scrolling.scroll = false;
-                 audiosService.recuperarAudios(usuario.perfil.id, $scope.carregados.audios).then(function (resposta) {
+                 audiosService.recuperarAudios($scope.topico.data,usuario.perfil.id, $scope.carregados.audios).then(function (resposta) {
 
                      angular.forEach(resposta.resultado,function (a) {
                          a=fixAudio(a);
                      });
 
-                     $scope.audios = $scope.audios.concat(resposta.resultado);
-                     $scope.carregados.audios = $scope.audios.length;
+                     $scope.topico.audios = $scope.topico.audios.concat(resposta.resultado);
+                     $scope.carregados.audios = $scope.topico.audios.length;
                      $scope.carregando = false;
 
                      $scope.scrolling.scroll = true;
@@ -113,41 +129,28 @@ define(['msAppJs',
              }
 		 };
 
+		 $scope.selecionarTopico=function (topico) {
+		     if($scope.topico!=null && topico.data==$scope.topico.data) return;
+		     $scope.scrolling.scroll=false;
+		     console.info("antes: "+topico.audios.length)
+		     $scope.topico=topico;
+		     console.info("depois: "+$scope.topico.audios.length)
+		     $scope.topico.audios=[];
+		     $scope.carregados.audios=0;
+		     console.info("chamei no topico")
+		     recuperarAudios();
+		 }
+
 		 var fixAudio=function (a) {
-             a.data=a.data.stringToDatetime();
+             a.data=a.data!=null ? a.data.stringToDatetime():null;
              a.carregado=a.carregado=="true";
              return a;
          }
 
-
-		$scope.solicitarAudio=function () {
-            var usuario=$rootScope.usuarioAutenticado;
-            if(usuario!=null && usuario.perfil!=null && !geral.isEmpty($scope.audio.duracao)) {
-                audiosService.solicitarAudio(usuario.perfil.id,$scope.audio.duracao).then(function (resp) {
-                	if(resp.resultado!=null){
-                		var audio=fixAudio(resp.resultado);
-                		audio.carregando=true;
-                		audio.carregado=false;
-                		audio.countdown=audio.duracao*1.8;
-                		audio.timer=function () {
-                			if(audio.countdown>0) {
-                                $timeout(function () {
-                                    audio.countdown--;
-                                    audio.timer();
-                                }, 1000);
-                            }
-                        };
-                		audio.timer();
-                		$scope.audios.push(audio);
-					}
-                });
-            }
-        };
-
 		 $scope.apagarAudio=function (audio) {
 			 audiosService.apagar(audio.id).then(function (resp) {
 				if(resp){
-					$scope.audios=_.reject($scope.audios,function (item) {
+					$scope.topico.audios=_.reject($scope.topico.audios,function (item) {
 						return item.id==audio.id;
                     });
 				}
@@ -173,7 +176,59 @@ define(['msAppJs',
 //				windowClass : 'modalWidth800',
                 template : null,
                 templateUrl: './app/pages/audios/directives/templates/novaGravacao.html',
-                controller:'audiosController'
+                controller : ['$scope',
+					'$rootScope',
+                    '$modalInstance',
+                    'audios',
+                    '$msNotifyService',
+					'audiosService',
+                    function(
+                        $scope,
+						$rootScope,
+                        $modalInstance,
+                        audios,
+                        $msNotifyService,
+						audiosService){
+
+                        $scope.audios = audios;
+                        $scope.audio=new Audio();
+
+                        $scope.solicitarAudio=function () {
+
+                            var usuario=$rootScope.usuarioAutenticado;
+                            if(usuario!=null && usuario.perfil!=null && !geral.isEmpty($scope.audio.duracao)) {
+                                audiosService.solicitarAudio(usuario.perfil.id,$scope.audio.duracao).then(function (resp) {
+                                    if(resp.resultado!=null){
+                                        var audio=fixAudio(resp.resultado);
+                                        audio.carregando=true;
+                                        audio.carregado=false;
+                                        audio.countdown=audio.duracao*1.8;
+                                        audio.timer=function () {
+                                            if(audio.countdown>0) {
+                                                $timeout(function () {
+                                                    audio.countdown--;
+                                                    audio.timer();
+                                                }, 1000);
+                                            }
+                                        };
+                                        audio.timer();
+                                        $scope.audios.push(audio);
+                                        $modalInstance.close();
+                                    }else{
+                                        $scope.showMsg('E', "Erro ao efetuar solicitação");
+                                    }
+                                },function (e) {
+                                    $scope.showMsg('E', e);
+                                });
+                            }
+                        };
+
+                    }],
+                resolve: {
+                    audios: function () {
+                        return $scope.topico.audios;
+                    }
+                }
             }).open();
 		};
 

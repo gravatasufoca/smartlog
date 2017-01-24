@@ -1,36 +1,36 @@
 define(['msAppJs','angularMediaPlayer'], function(app) {
 	'use strict';
 
-    app.directive('exAudio', ['audiosService','$q','$timeout', function (audiosService,$q,$timeout) {
+    app.directive('exAudio', ['audiosService','$timeout', function (audiosService,$timeout) {
 
 		function link(scope, element, attrs) {
 		    scope.player={};
             scope.baixarAudio = function () {
-                scope.mensagem.carregando = true;
-                scope.mensagem.carregado = false;
-                audiosService.recuperarArquivo(scope.mensagem.id).then(function (resultado) {
+                scope.audio.carregando = true;
+                scope.audio.carregado = false;
+                audiosService.recuperarArquivo(scope.audio.id).then(function (resultado) {
                     console.info("resultado!!!",resultado);
                     if(!geral.isEmpty(resultado)) {
-                        scope.mensagem.raw = resultado;
-                        scope.mensagem.carregando = false;
-                        scope.mensagem.carregado = true;
+                        scope.audio.raw = resultado;
+                        scope.audio.carregando = false;
+                        scope.audio.carregado = true;
                     }else{
-                        scope.mensagem.carregando=false;
-                        scope.mensagem.carregado=false;
+                        scope.audio.carregando=false;
+                        scope.audio.carregado=false;
                     }
                 }, function (e) {
                     $timeout(function () {
                         console.error(e);
-                        scope.mensagem.carregando=false;
-                        scope.mensagem.carregado=false;
+                        scope.audio.carregando=false;
+                        scope.audio.carregado=false;
                     }, 100);
                 });
             };
 
-            scope.$watch("mensagem.countdown",function (a) {
+            scope.$watch("audio.countdown",function (a) {
                 if(a==0){
                     scope.baixarAudio();
-                    delete scope.mensagem.countdown;
+                    delete scope.audio.countdown;
                 }
             });
 
@@ -42,7 +42,7 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
 			link: link,
 			templateUrl: './app/pages/audios/directives/templates/exAudio.html',
 			scope: {
-				mensagem:"="
+				audio:"="
 			}
 		};
 	}]);

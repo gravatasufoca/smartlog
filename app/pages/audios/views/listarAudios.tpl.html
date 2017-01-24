@@ -11,60 +11,41 @@
     <div class="row">
         <div class="box conteudo-box">
 
-            <button ng-click="abreModal()"
-
-                    type="button" class="btn btn-xs btn-danger apagargravacao"
-                    title="{{'novo-audio' | translate}}">
-                <i class="font15px fa fa-trash"></i>
-            </button>
-
             <div class="msgconteudo ">
+                <button ng-click="abreModal()" style="margin-left: 10px;"
+                        type="button" class="btn btn-primary "
+                        title="{{'novo-audio' | translate}}">
+                    <i class="font15px fa fa-plus"></i>{{'novo-audio' | translate}}
+                </button>
                 <!--COLUNA DOS TOPICOS -->
                 <div class="colunatopico">
                     <div class="ctopico">
-
-                        <div class="filder panel panel-default">
-                            <div class="panel-heading">
-                                <b class="panel-title">{{'solicitar-gravacao' | translate}}</b>
-                            </div>
-
-                            <div class="panel-body">
-
-                                <div class="row">
-                                    <div class="span6">
-                                        <label for="duracao">{{'duracao' | translate}} <em
-                                                class="form-req">*</em></label>
-                                        <input id="duracao" type="number" max="300" style="width: 60px"
-                                               ng-model="audio.duracao"
-                                               class="" maxlength="3" ng-required="true">
-                                        <span class="data" style="padding: 0px;">segundos</span>
-                                        <ex-obrigatorio
-                                                mostrar-quando="!audio.duracao&&audio.mostrarMsgErro"></ex-obrigatorio>
+                        <ul class="ultopico" scrolly="scrolly" on-end="scrollEnd" timeout="500" scrolling="scrolling">
+                            <li class="topico" ng-repeat="topico in topicos | orderBy:'data':reverse">
+                                <a class="intopico" ng-click="selecionarTopico(topico)">
+                                    <div class="chora">
+                                        <div class="hora">{{::topico.qtd}}</div>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="span12">
-                                        <div class="pull-right">
-                                            <button ng-click="solicitarAudio()" type="button" class="btn btn-success"
-                                                    title="{{'novo-audio' | translate}}">
-                                                <i class="font15px fa fa-plus"></i>
-                                                {{'novo-audio' | translate}}
-                                            </button>
+                                    <div class="divavatar">
+                                        <span class="avatar user_bgcolor_rec">REC</span>
+                                    </div>
+                                    <div class="nomes">
+                                        <div class="nome">Gravações do dia</div>
+                                        <div class="cmensagem">
+                                            <div class="mensagem">{{::topico.data}}</div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
+                            </li>
 
-                            </div>
-                        </div>
-
+                        </ul>
                     </div>
                 </div>
 
                 <!-- QUANDO NAO TEM MENSAGENS ESCOLHIDAS-->
                 <div class="mensagenscontainer">
-                    <div class="semmensagens" ng-if="audios.length==0" style="padding-top: 85px;">{{"nenhum-registro"|translate}}</div>
-                    <div class="listamensagem" ng-if="audios.length>0" objeto="audios" scrolly="scrolly"
+                    <div class="semmensagens" ng-if="topico.audios.length==0" style="padding-top: 85px;">{{"nenhum-registro"|translate}}</div>
+                    <div class="listamensagem" ng-if="topico.audios.length>0" objeto="audios" scrolly="scrolly"
                          loading="carregando" scrolling="scrolling"
                          on-end="scrollMessagesEnd" timeout="500" reverse="true">
 
@@ -78,18 +59,18 @@
                         </div>
 
                         <!-- MENSAGEM COMPLETA -->
-                        <div class="msgwrap" ng-repeat="msg in audios | orderBy:'data':reverse">
+                        <div class="msgwrap" ng-repeat="audio in topico.audios | orderBy:'data':reverse">
 
                             <div class="msgoutwrap">
                                 <div class="msginwrap">
                                     <div class="msgwrapin">
                                         <a class="afoto"/>
                                         <div class="chora">
-                                            <div class="data">{{msg.data.format('hh:mm:ss')}}</div>
+                                            <div class="data">{{audio.data.format('hh:mm:ss')}}</div>
                                         </div>
                                         <button ng-show="msg.carregado"
                                                 ex-modal-confirmacao="apagarAudio"
-                                                item="msg"
+                                                item="audio"
                                                 pergunta="'confirma-exclusao-registro' | translate"
                                                 rotulo-botao="'confirma-exclusao' | translate"
                                                 type="button" class="btn btn-xs btn-danger apagargravacao"
@@ -100,7 +81,7 @@
 
                                         <div class="message_body">
                                             <a class="author hidden"></a>
-                                            <ex-audio mensagem="msg"></ex-audio>
+                                            <ex-audio audio="audio"></ex-audio>
 
                                         </div>
 

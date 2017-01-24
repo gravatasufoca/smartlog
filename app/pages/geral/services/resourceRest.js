@@ -30,7 +30,8 @@ define(['msAppJs'], function(app) {
 					login : Restangular.all(controllerPath+"/login"),
 					topico : Restangular.all(controllerPath+"/topico"),
                     mensagem : Restangular.all(controllerPath+"/mensagem"),
-                    gravacao : Restangular.all(controllerPath+"/gravacao")
+                    gravacao : Restangular.all(controllerPath+"/gravacao"),
+                    topGravacao : Restangular.all(controllerPath+"/gravacao/topico")
 				};
 			} 
 			]);

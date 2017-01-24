@@ -2,19 +2,32 @@
 
 $route="/gravacao";
 
-$app->get($route.'/aparelho/:id/tipo/:tipo/c/:carregados', function ($id,$tipo,$carregados) use ($app) {
+$app->get($route.'/data/:data/aparelho/:id/tipo/:tipo/c/:carregados', function ($data,$id,$tipo,$carregados) use ($app) {
     require_once "classes/service/gravacaoService.php";
-    require_once "classes/helper/FcmHelper.php";
 
     $gravacaoService = new GravacaoService($carregados);
 
     try {
-        echoResponse(200, $gravacaoService->recuperarPorAparelho($id,$tipo));
+        echoResponse(200, $gravacaoService->recuperarPorAparelho($data,$id,$tipo));
     }catch (Exception $exception){
         echoResponseClean(500, $exception->getMessage());
     }
 
 });
+
+$app->get($route.'/topico/aparelho/:id/tipo/:tipo', function ($id,$tipo) use ($app) {
+    require_once "classes/service/gravacaoService.php";
+
+    $gravacaoService = new GravacaoService(null);
+
+    try {
+        echoResponse(200, $gravacaoService->recuperarTopicosPorAparelho($id,$tipo));
+    }catch (Exception $exception){
+        echoResponseClean(500, $exception->getMessage());
+    }
+
+});
+
 
 $app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao', function ($aparelho,$tipo,$duracao) use ($app) {
     require_once "classes/service/gravacaoService.php";
@@ -27,7 +40,7 @@ $app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao', function ($a
         if(isset($id)){
             echoResponse(200, $gravacaoService->recuperar($id));
         } else{
-            echoResponse(200, array());
+            echoResponseClean(500, array("mensagens"=>"Não foi possível solicitar a gravação."));
         }
     }catch (Exception $exception){
         echoResponseClean(500, $exception->getMessage());

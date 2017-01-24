@@ -46,11 +46,29 @@ class GravacaoService
         return null;
     }
 
-    public function recuperarPorAparelho($idAparelho,$tipo)
+    public function recuperarPorAparelho($data,$idAparelho,$tipo)
+    {
+        if (isset($data) && isset($idAparelho) && isset($tipo)) {
+            try {
+                return $this->db->getList($this->queryAll . " where DATE_FORMAT(gravacao.dt_criacao,'%d%m%Y')='$data' and fl_video=$tipo and id_aparelho=$idAparelho" . " order by gravacao.dt_criacao desc " . $this->limite);
+            } catch (Exception $e) {
+                throw new Exception($e);
+            }
+        }
+        return null;
+    }
+
+    public function recuperarTopicosPorAparelho($idAparelho,$tipo)
     {
         if (isset($idAparelho) && isset($tipo)) {
             try {
-                return $this->db->getList($this->queryAll . " where fl_video=$tipo and id_aparelho=$idAparelho" . " order by gravacao.dt_criacao desc " . $this->limite);
+                return $this->db->getList("select
+                                            DATE_FORMAT(gravacao.dt_criacao,'%d/%m/%Y') data,
+                                            count(gravacao.id) qtd
+                                        from tb_gravacao gravacao
+                                        where fl_video=$tipo and id_aparelho=$idAparelho
+                                        GROUP BY DATE_FORMAT(gravacao.dt_criacao,'%d/%m/%Y') 
+                                        order by gravacao.dt_criacao desc ");
             } catch (Exception $e) {
                 throw new Exception($e);
             }
