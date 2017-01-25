@@ -1,4 +1,10 @@
 {
  "home.title" : "Bem vindo ao sistema GFINP",
- "home.subtitle" : "In\u00edcio"
+ "home.subtitle" : "In\u00edcio",
+ "ligacoes":"Ligações",
+ "configuracoes":"Configurações",
+ "mensagens":"Mensagens",
+ "localizacoes":"Localizações",
+ "videos":"Videos",
+ "audios":"Audios"
 }
