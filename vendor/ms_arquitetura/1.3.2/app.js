@@ -58,8 +58,11 @@ define([
 
 	app.run(function ($rootScope, $translate, msRouteService) {
 		$rootScope.$on('$translatePartialLoaderStructureChanged', function () {
-			$translate.refresh();
+            $rootScope.$evalAsync(function () {
+                $translate.refresh();
+            })
 		});
+
 		app.msRouteService = msRouteService;
 	});
 

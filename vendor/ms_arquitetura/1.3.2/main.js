@@ -18,7 +18,7 @@ requirejs.config({
 		'angularResource': [appConfig.servidor + '/vendor/angularjs/'+angularVersion+'/angular-resource' + sufixo],
 		'angularUiBootstrap': [appConfig.servidor + '/vendor/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls-0.9.0' + sufixo],
 		'angularTranslate': [appConfig.servidor + '/vendor/angular-translate/2.0.0/angular-translate' + sufixo],
-		'angularTranslatePartialLoader': [appConfig.servidor + '/vendor/angular-translate-loader-partial/2.13.0/angular-translate-loader-partial' + sufixo],
+		'angularTranslatePartialLoader': [appConfig.servidor + '/vendor/angular-translate-loader-partial/0.1.6/angular-translate-loader-partial' + sufixo],
 		'angularValidator': [appConfig.servidor + '/vendor/angular-validator/0.1.4/angular-validator' + sufixo ],
 		'angularUiRouter':[appConfig.servidor + '/vendor/angular-ui-router/0.2.7/angular-ui-router' + sufixo],
 		'restangular':[appConfig.servidor + '/vendor/restangular/1.3.1/restangular' + sufixo],

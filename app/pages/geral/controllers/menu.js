@@ -43,6 +43,14 @@ define([], function () {
             "text": "Audios",
             "menuUrl": "audios",
             "roles": ["ROLE_LOGADO"]
+        },
+        {
+            "module": "videos",
+            "view": "listarVideos",
+            "controller": "videosController",
+            "text": "Videos",
+            "menuUrl": "videos",
+            "roles": ["ROLE_LOGADO"]
         }
     ];
 

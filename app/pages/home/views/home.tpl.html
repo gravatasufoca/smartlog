@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container" ng-cloak>
 
 	<div class="row row-center">
 		<a class="span3 no-padding" ui-sref="sms">
 			<div class="box conteudo-box btn font19px">
-				{{"mensagens"|translate}}
+				{{'mensagens'|translate}}
 				<i class="fa fa-envelope"></i>
 			</div>
 		</a>
@@ -21,21 +21,21 @@
 				<i class="fa fa-microphone"></i>
 			</div>
 		</a>
-		<a class="span3 no-padding">
+		<a class="span3 no-padding" ui-sref="videos">
 			<div class="box conteudo-box btn font19px">
-				Vídeos
+				{{'videos' |  translate}}
 				<i class="fa fa-video-camera"></i>
 			</div>
 		</a>
 	</div>
-	<div class="row row-center">
+	<div class="row row-center" ui-sref="localizacoes">
 		<a class="span3 no-padding">
 			<div class="box conteudo-box btn font19px">
 				{{'localizacoes'|translate}}
 				<i class="fa fa-map-marker"></i>
 			</div>
 		</a>
-		<a class="span3 no-padding">
+		<a class="span3 no-padding" ui-sref="configuracoes">
 			<div class="box conteudo-box btn font19px">
 				{{'configuracoes'|translate}}
 				<i class="fa fa-cogs"></i>

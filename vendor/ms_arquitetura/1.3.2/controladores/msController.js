@@ -70,8 +70,8 @@ define([
                      */
                     $scope.editUsuario = function() {
                     }
-                    
-                    
+
+
                 }]);
             }
             catch(e) {

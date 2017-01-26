@@ -1,155 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-br" ng-controller="msController">
-  <head>
-  	<script defer="defer" data-main="app/main.js" src="vendor/requirejs/2.1.10/require.min.js"></script>
-  	<!-- 	<script async="async" aew="//barra.brasil.gov.br/barra.js" type="text/javascript"></script> -->
-  
+<head>
+    <script defer="defer" data-main="app/main.js" src="vendor/requirejs/2.1.10/require.min.js"></script>
+    <!-- 	<script async="async" aew="//barra.brasil.gov.br/barra.js" type="text/javascript"></script> -->
+
     <meta charset="utf-8">
     <title>Smartphone Inspector</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
-	
-    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/bootstrap-responsive.min.css" />
+
+    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/bootstrap-responsive.min.css"/>
     <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/datepicker.css"/>
     <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/menu.css"/>
-    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/contraste.css" />
-    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/content.css" />
-    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/template.css" />
-    <link type="text/css" rel="stylesheet" href="vendor/ng-table/0.3.1/ng-table.min.css" />
-    <link type="text/css" rel="stylesheet" href="assets/css/app.css" media="screen" />
-    <link type="text/css" rel="stylesheet" href="assets/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/contraste.css"/>
+    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/content.css"/>
+    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/template.css"/>
+    <link type="text/css" rel="stylesheet" href="vendor/ng-table/0.3.1/ng-table.min.css"/>
+    <link type="text/css" rel="stylesheet" href="assets/css/app.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="assets/css/font-awesome.css"/>
 
 
-    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/ico.css" />
+    <link type="text/css" rel="stylesheet" href="vendor/ms_assets/1.2.1/css/ico.css"/>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
+    <script src="js/html5shiv.js"></script>
     <![endif]-->
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="vendor/ms_assets/1.2.1/images/ico/favicon.ico">
 </head>
-<body id="content" class="nojs" >
-	<div id="wrapper" class="wrapper" ng-controller="mainController" >
-		<div id="topoAbsoluto">
-			<div ng-hide="carregado">Carregando...</div>
-		</div>
-		
-		<div ng-cloak class="ng-cloak>">	
-		
-			<div class="box-header">
-				<div class="header">
-	
-					<div id="topo_geral">
-						<div class="container">
-							<div class="row">
-								<div ng-cloak class="span9 ng-cloak">
-									<a ui-sref="login">
-										<div class="logo">
-											<h1>{{ app.nome }}</h1>
-										</div>
-										<div class="titulo_sistema">
-											<h1>{{ app.titulo }}</h1>
-											<h3>{{ app.subtitulo }}</h3>
-										</div>
-									</a>
-								</div>
-								<div class="span3">
+<body id="content" class="nojs">
+<div id="wrapper" class="wrapper" ng-controller="mainController">
+    <div id="topoAbsoluto">
+        <div ng-hide="carregado">Carregando...</div>
+    </div>
 
-									<div id="box_menu_top">
-										<ul>
-											<li class="contato">
-												<a ui-sref="ajuda">
-													<span class="icone fa fa-question"></span>Ajuda
-												</a>
-											</li>
-											
-											<li class="paginainicial">
-												<a ui-sref="login" ng-hide="isUsuarioAutenticado">
-													<span	class="icone fa fa-user"></span>Login
-												</a>
-											</li>
-											
-											<li class="sair">
-												<a ng-show="isUsuarioAutenticado"	ng-click="logout()">
-													<span class="icone fa fa-sign-out"></span>Sair
-												</a>
-											</li>
-										</ul>
-									</div>
-									
-									<div ng-cloak class="usuario ng-cloak">
-										<div ng-show="usuarioAutenticado && isUsuarioAutenticado">
-											<p class="usuarioLogado usarioLogadoInfo">
-												{{usuarioAutenticado.nome}} 
-											</p>
-											<p class="usuarioLogado usarioLogadoInfo">
-												<span ><strong>{{usuarioAutenticado.perfil.perfil.nome}}</strong></span>
-											</p>
-										</div>
-										<p class="usarioLogadoInfo">
-											<span class="version">Versão <strong>{{app.versao_app}}</strong></span>
-										</p>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id="BoxMenuPrincipal">
-						<div class="container">
-							<div class="row">
-								<div class="span9">
-									<div class="navbar nav" ui-view="Menu">
-										<div class="navbar nav">
-											<ms-nav-menu menu-data="menu"></ms-nav-menu>
-										</div>
-									</div>
-								</div>
-								
-								<div ng-show="isUsuarioAutenticado" id="box_info_usuario">
-									<div id="box_info_usuario_tempo">
-									Tempo restante:	<ms-contador limite="limite"></ms-contador> | {{dataAtual | date:'dd/MM/yyyy'}}
-									</div>
-								</div>
-								<div class="statusprojeto alert alert-warning ativo" ng-show="{{app.ambiente.exibir}}">
-			                  		<h3><span class="icones-de-desenvolvimento"></span>{{app.ambiente.nome}}</h3>
-				              	</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="container">
-					<div class="row">
-						<ms-alert></ms-alert>
-					</div>
-				</div>
-			</div>
-			<div ui-view class="section"></div>
-	  		<div class="push"></div>
-  		</div>
-	</div>
-		
-	<div class="footer ng-cloak" ng-cloak>
-		<div id="BoxRodapePrincipal">
-			<div class="container">
-				<div class="row">
-					<div class="span6">
-						<div id="BoxRodape_endereco">
-							<p>
-								Secretaria do Sistema<br /> Departamento/Coordenação do
-								Sistema<br /> Brasília-DF, Cep: 70.000-000
-							</p>
-						</div>
-					</div>
-					<div class="span6">
-						<div id="BoxRodape_LogoDatasus">Datasus</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div ng-cloak class="ng-cloak>">
+
+        <div class="box-header">
+            <div class="header">
+
+                <div id="topo_geral">
+                    <div class="container">
+                        <div class="row">
+                            <div ng-cloak class="span9 ng-cloak">
+                                <a ui-sref="login">
+                                    <div class="logo">
+                                        <h1>{{ app.nome }}</h1>
+                                    </div>
+                                    <div class="titulo_sistema">
+                                        <h1>{{ app.titulo }}</h1>
+                                        <h3>{{ app.subtitulo }}</h3>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="span3">
+
+                                <div id="box_menu_top">
+                                    <ul>
+                                        <li class="contato">
+                                            <a ui-sref="ajuda">
+                                                <span class="icone fa fa-question"></span>Ajuda
+                                            </a>
+                                        </li>
+
+                                        <li class="paginainicial">
+                                            <a ui-sref="login" ng-hide="isUsuarioAutenticado">
+                                                <span class="icone fa fa-user"></span>Login
+                                            </a>
+                                        </li>
+
+                                        <li class="sair">
+                                            <a ng-show="isUsuarioAutenticado" ng-click="logout()">
+                                                <span class="icone fa fa-sign-out"></span>Sair
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div ng-cloak class="usuario ng-cloak">
+                                    <div ng-show="usuarioAutenticado && isUsuarioAutenticado">
+                                        <p class="usuarioLogado usarioLogadoInfo">
+                                            {{usuarioAutenticado.nome}}
+                                        </p>
+                                        <p class="usuarioLogado usarioLogadoInfo">
+                                            <span><strong>{{usuarioAutenticado.perfil.perfil.nome}}</strong></span>
+                                        </p>
+                                    </div>
+                                    <p class="usarioLogadoInfo">
+                                        <span class="version">Versão <strong>{{app.versao_app}}</strong></span>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="BoxMenuPrincipal">
+                    <div class="container">
+                        <div class="row">
+                            <div class="span9">
+                                <div class="navbar nav" ui-view="Menu">
+                                    <div class="navbar nav">
+                                        <ms-nav-menu menu-data="menu"></ms-nav-menu>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="isUsuarioAutenticado" id="box_info_usuario">
+                                <div id="box_info_usuario_tempo">
+                                    Tempo restante:
+                                    <ms-contador limite="limite"></ms-contador>
+                                    | {{dataAtual | date:'dd/MM/yyyy'}}
+                                </div>
+                            </div>
+                            <div class="statusprojeto alert alert-warning ativo" ng-show="{{app.ambiente.exibir}}">
+                                <h3><span class="icones-de-desenvolvimento"></span>{{app.ambiente.nome}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <ms-alert></ms-alert>
+                </div>
+            </div>
+        </div>
+        <div ui-view class="section"></div>
+        <div class="push"></div>
+    </div>
+</div>
+
+<div class="footer ng-cloak" ng-cloak>
+    <div id="BoxRodapePrincipal">
+        <div class="container">
+            <div class="row">
+                <div class="span6">
+                    <div id="BoxRodape_endereco">
+                        <p>
+                            Secretaria do Sistema<br/> Departamento/Coordenação do
+                            Sistema<br/> Brasília-DF, Cep: 70.000-000
+                        </p>
+                    </div>
+                </div>
+                <div class="span6">
+                    <div id="BoxRodape_LogoDatasus">Datasus</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

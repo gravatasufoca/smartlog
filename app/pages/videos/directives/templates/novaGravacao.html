@@ -1,0 +1,35 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">{{ "solicitar-gravacao"|translate }}</h4>
+    </div>
+    <ms-alert></ms-alert>
+    <div class="modal-body">
+
+        <div class="filder panel panel-default" style="border: none;">
+
+                <div class="row">
+                    <div class="span6">
+                        <label for="duracao">{{'duracao' | translate}} <em
+                                class="form-req">*</em></label>
+                        <input id="duracao" type="number" max="300" style="width: 80px"
+                               ng-model="video.duracao"
+                               class="" maxlength="3" ng-required="true">
+                        <span class="data" style="padding: 0px;">segundos</span>
+                        <ex-obrigatorio
+                                mostrar-quando="!video.duracao&&video.mostrarMsgErro"></ex-obrigatorio>
+                    </div>
+                </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" ng-click="$close()"
+                data-dismiss="modal"><i class="font15px fa fa-times"></i> {{"fechar"|translate}}
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="solicitarVideo();">
+            <i class="font15px fa fa-check"></i> {{'novo-video'|translate}}
+        </button>
+    </div>
+</div>

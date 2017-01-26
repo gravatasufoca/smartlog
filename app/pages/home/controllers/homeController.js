@@ -1,10 +1,11 @@
 define(['msAppJs'], function(app) {
 	app.controller('homeController', ['$scope', 
-	                                  '$translatePartialLoader', 
+	                                  '$translatePartialLoader',
 	                                  function($scope, 
-	                                		  $translatePartialLoader){
-		$translatePartialLoader.addPart('home');  
-		
+	                                		  $translatePartialLoader
+											   ){
+		$translatePartialLoader.addPart('home');
+
 	}]);
 	return app;
 });
