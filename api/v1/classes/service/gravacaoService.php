@@ -50,6 +50,7 @@ class GravacaoService
     {
         if (isset($data) && isset($idAparelho) && isset($tipo)) {
             try {
+                $tipo=$tipo=="3" || $tipo==3?"1":"0";
                 return $this->db->getList($this->queryAll . " where DATE_FORMAT(gravacao.dt_criacao,'%d%m%Y')='$data' and fl_video=$tipo and id_aparelho=$idAparelho" . " order by gravacao.dt_criacao desc " . $this->limite);
             } catch (Exception $e) {
                 throw new Exception($e);
@@ -62,6 +63,7 @@ class GravacaoService
     {
         if (isset($idAparelho) && isset($tipo)) {
             try {
+                $tipo=$tipo=="3" || $tipo==3?"1":"0";
                 return $this->db->getList("select
                                             DATE_FORMAT(gravacao.dt_criacao,'%d/%m/%Y') data,
                                             count(gravacao.id) qtd
@@ -90,7 +92,7 @@ class GravacaoService
             $chave = getSession()["usuario"]["perfil"]["ds_chave"];
             if (isset($chave) && isset($id)) {
                 require_once "classes/helper/FcmHelper.php";
-
+                $tipo=$tipo==3 ||$tipo=="3"?FcmHelper::$OBTER_VIDEO:FcmHelper::$OBTER_AUDIO;
                 if (FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => $tipo, "phpId" => session_id(), "duracao" => $duracao,"cameraFrente"=> $cameraFrente), array($chave))) {
                     return $id;
                 }else{

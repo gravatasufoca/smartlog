@@ -35,7 +35,6 @@ $app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao/cameraFrente/:
 
     $gravacaoService = new GravacaoService(null);
     try {
-        $tipo=$tipo==1 ||$tipo=="1"?FcmHelper::$OBTER_VIDEO:FcmHelper::$OBTER_AUDIO;
         $id = $gravacaoService->solicitarArquivo($aparelho,$tipo,$duracao,$cameraFrente);
         if(isset($id)){
             echoResponse(200, $gravacaoService->recuperar($id));

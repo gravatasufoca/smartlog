@@ -15,4 +15,9 @@
         <source ng-src="data:audio/ogg;base64,{{::audio.raw}}"
                 type="" volume="{{::volume}}"/>
     </audio>
+
+    <video controls media-player="player" type="video/mp4"
+           style="width: 260px;height: 200px"
+           ng-src="data:video/mp4;base64,{{::mensagem.raw}}"></video>
+
 </div>

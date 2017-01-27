@@ -69,7 +69,7 @@ define(['msAppJs',
 		 */
         $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams, error) {
             if(toState!=null && toState.name=="videos"){
-                $scope.tipo=1;
+                $scope.tipo=3;
             }
             recuperarTopicos();
         });
@@ -185,7 +185,7 @@ define(['msAppJs',
                 controller : ['$scope',
 					'$rootScope',
                     '$modalInstance',
-                    'gravacoes',
+                    'topico',
                     'tipo',
                     '$msNotifyService',
 					'gravacoesService',
@@ -193,12 +193,12 @@ define(['msAppJs',
                         $scope,
 						$rootScope,
                         $modalInstance,
-                        gravacoes,
+                        topico,
                         tipo,
                         $msNotifyService,
 						gravacoesService){
 
-                        $scope.gravacoes = gravacoes;
+                        $scope.topico = topico;
                         $scope.tipo=tipo;
                         $scope.gravacao=new Gravacao();
 
@@ -221,8 +221,12 @@ define(['msAppJs',
                                             }
                                         };
                                         gravacao.timer();
-                                        $scope.gravacoes.push(gravacao);
-                                        $modalInstance.close();
+                                        if($scope.topico.gravacoes.length==0){
+                                            $scope.topico.data=gravacao.data.format("DD/MM/YYYY");
+                                            $scope.topico.qtd=1;
+                                        }
+                                        $scope.topico.gravacoes.push(gravacao);
+                                        $modalInstance.close($scope.topico);
                                     }else{
                                         $scope.showMsg('E', "Erro ao efetuar solicitação");
                                     }
@@ -234,13 +238,19 @@ define(['msAppJs',
 
                     }],
                 resolve: {
-                    gravacoes: function () {
-                        return $scope.topico.gravacoes;
+                    topico: function () {
+                        return $scope.topico;
                     },
                     tipo: function(){return $scope.tipo}
                 }
             }).open();
+
+            msModalService.modalInstance.result.then(function (resultado) {
+                $scope.topicos.push(resultado);
+            });
 		};
+
+
 
 
 	}]);
