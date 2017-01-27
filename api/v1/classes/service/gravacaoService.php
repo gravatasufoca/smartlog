@@ -83,7 +83,7 @@ class GravacaoService
         }
     }
 
-    public function solicitarArquivo($aparelho, $tipo, $duracao)
+    public function solicitarArquivo($aparelho, $tipo, $duracao,$cameraFrente)
     {
         if (isset($tipo) && isset($duracao) && isset($aparelho)) {
             $id=$this->inserirSolicitacao($aparelho,$duracao,$tipo);
@@ -91,7 +91,7 @@ class GravacaoService
             if (isset($chave) && isset($id)) {
                 require_once "classes/helper/FcmHelper.php";
 
-                if (FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => $tipo, "phpId" => session_id(), "duracao" => $duracao), array($chave))) {
+                if (FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => $tipo, "phpId" => session_id(), "duracao" => $duracao,"cameraFrente"=> $cameraFrente), array($chave))) {
                     return $id;
                 }else{
                     $this->deletar($id);

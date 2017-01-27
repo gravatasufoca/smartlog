@@ -14,8 +14,8 @@
             <div class="msgconteudo ">
                 <button ng-click="abreModal()" style="margin-left: 10px;"
                         type="button" class="btn btn-primary "
-                        title="{{'novo-video' | translate}}">
-                    <i class="font15px fa fa-plus"></i> {{'novo-video' | translate}}
+                        title="{{'novo-gravacao' | translate}}">
+                    <i class="font15px fa fa-plus"></i> {{'novo-gravacao' | translate}}
                 </button>
                 <!--COLUNA DOS TOPICOS -->
                 <div class="colunatopico">
@@ -44,8 +44,8 @@
 
                 <!-- QUANDO NAO TEM MENSAGENS ESCOLHIDAS-->
                 <div class="mensagenscontainer">
-                    <div class="semmensagens" ng-if="topico.videos.length==0" style="padding-top: 85px;">{{"nenhum-registro"|translate}}</div>
-                    <div class="listamensagem" ng-if="topico.videos.length>0" objeto="videos" scrolly="scrolly"
+                    <div class="semmensagens" ng-if="topico.gravacoes.length==0" style="padding-top: 85px;">{{"nenhum-registro"|translate}}</div>
+                    <div class="listamensagem" ng-if="topico.gravacoes.length>0" objeto="gravacoes" scrolly="scrolly"
                          loading="carregando" scrolling="scrolling"
                          on-end="scrollMessagesEnd" timeout="500" reverse="true">
 
@@ -59,29 +59,29 @@
                         </div>
 
                         <!-- MENSAGEM COMPLETA -->
-                        <div class="msgwrap" ng-repeat="video in topico.videos | orderBy:'data':reverse">
+                        <div class="msgwrap" ng-repeat="gravacao in topico.gravacoes | orderBy:'data':reverse">
 
                             <div class="msgoutwrap">
                                 <div class="msginwrap">
                                     <div class="msgwrapin">
                                         <a class="afoto"/>
                                         <div class="chora">
-                                            <div class="data">{{video.data.format('hh:mm:ss')}}</div>
+                                            <div class="data">{{gravacao.data.format('hh:mm:ss')}}</div>
                                         </div>
                                         <button ng-show="msg.carregado"
-                                                ex-modal-confirmacao="apagarVideo"
-                                                item="video"
+                                                ex-modal-confirmacao="apagarGravacao"
+                                                item="gravacao"
                                                 pergunta="'confirma-exclusao-registro' | translate"
                                                 rotulo-botao="'confirma-exclusao' | translate"
                                                 type="button" class="btn btn-xs btn-danger apagargravacao"
-                                                title="{{'novo-video' | translate}}">
+                                                title="{{'novo-gravacao' | translate}}">
                                             <i class="font15px fa fa-trash"></i>
                                         </button>
 
 
                                         <div class="message_body">
                                             <a class="author hidden"></a>
-                                            <ex-video video="video"></ex-video>
+                                            <ex-gravacao gravacao="gravacao"></ex-gravacao>
 
                                         </div>
 

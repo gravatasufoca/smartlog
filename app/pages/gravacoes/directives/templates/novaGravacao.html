@@ -13,13 +13,25 @@
                         <label for="duracao">{{'duracao' | translate}} <em
                                 class="form-req">*</em></label>
                         <input id="duracao" type="number" max="300" style="width: 80px"
-                               ng-model="video.duracao"
+                               ng-model="gravacao.duracao"
                                class="" maxlength="3" ng-required="true">
                         <span class="data" style="padding: 0px;">segundos</span>
                         <ex-obrigatorio
-                                mostrar-quando="!video.duracao&&video.mostrarMsgErro"></ex-obrigatorio>
+                                mostrar-quando="!gravacao.duracao&&gravacao.mostrarMsgErro"></ex-obrigatorio>
                     </div>
                 </div>
+
+            <div class="row" ng-if="tipo==1">
+                <div class="span6">
+                    <label for="front">{{'camera-frente' | translate}} <em
+                            class="form-req">*</em></label>
+                    <input id="front" type="checkbox" style="width: 80px"
+                           ng-model="gravacao.cameraFrente"
+                           class=""  ng-required="true">
+                    <ex-obrigatorio
+                            mostrar-quando="!gravacao.front&&gravacao.mostrarMsgErro"></ex-obrigatorio>
+                </div>
+            </div>
 
         </div>
 
@@ -28,8 +40,8 @@
         <button type="button" class="btn btn-warning" ng-click="$close()"
                 data-dismiss="modal"><i class="font15px fa fa-times"></i> {{"fechar"|translate}}
         </button>
-        <button type="button" class="btn btn-primary" ng-click="solicitarVideo();">
-            <i class="font15px fa fa-check"></i> {{'novo-video'|translate}}
+        <button type="button" class="btn btn-primary" ng-click="solicitarGravacao();">
+            <i class="font15px fa fa-check"></i> {{tipo==1?'novo-video':'novo-audio'|translate}}
         </button>
     </div>
 </div>

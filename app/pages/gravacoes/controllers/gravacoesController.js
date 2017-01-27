@@ -2,7 +2,7 @@ define(['msAppJs',
         'componentes/ms-modal/services/msModalService'], function(app) {
 	'use strict';
 
-	app.controller('audiosController', ['$scope',
+	app.controller('gravacoesController', ['$scope',
 	                                             '$msNotifyService',
 	                                             'msModalService',
 	                                             '$timeout',
@@ -10,7 +10,7 @@ define(['msAppJs',
 	                                             '$filter',
 	                                             '$state',
 	                                             '$stateParams',
-	                                             'audiosService',
+	                                             'gravacoesService',
 	                                             '$rootScope',
 	                                             function($scope,
 	                                            		 $msNotifyService,
@@ -20,10 +20,10 @@ define(['msAppJs',
 	                                            		 $filter,
 	                                            		 $state,
 	                                            		 $stateParams,
-                                                          audiosService,
+                                                          gravacoesService,
 														 $rootScope
 	                                            		 ){
-		$translatePartialLoader.addPart('audios');
+		$translatePartialLoader.addPart('gravacoes');
 
 		/**
 		 * Controla o nivel de acesso do usuario logado para a funcionalidade em questão
@@ -35,14 +35,17 @@ define(['msAppJs',
 			});
 		}, 100);*/
 
-		 var Audio = function () {
+        $scope.tipo=0;
+
+		 var Gravacao = function () {
 			 return {
 				 id: null,
 				 duracao: 10,
 				 data: null,
 				 carregado:false,
 				 raw: null,
-				 thumb: null
+				 thumb: null,
+                 cameraFrente:true
 			 }
 		 };
 
@@ -50,7 +53,7 @@ define(['msAppJs',
 			return {
 				data:null,
 				qtd:0,
-				audios:[]
+				gravacoes:[]
 			}
         };
 
@@ -58,20 +61,23 @@ define(['msAppJs',
         $scope.scrolling={scroll:false};
 		$scope.topico=new Topico();
 		$scope.carregados={
-			audios:0
+			gravacoes:0
 		};
 
 		/**
 		 * Recuperando o estado da tela de consulta
 		 */
         $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams, error) {
+            if(toState!=null && toState.name=="videos"){
+                $scope.tipo=1;
+            }
             recuperarTopicos();
         });
 		/**
 			*Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
 		  */
 		 $scope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams, error) {
-			 if(fromState.controller == 'audiosController'){
+			 if(fromState.controller == 'gravacoesController'){
 				 // faturaService.salvarViewConsulta($scope.consulta);
 			 };
 		 });
@@ -79,10 +85,10 @@ define(['msAppJs',
 		 var recuperarTopicos=function () {
              var usuario=$rootScope.usuarioAutenticado;
              if(usuario!=null && usuario.perfil!=null) {
-                 audiosService.recuperarTopicos(usuario.perfil.id).then(function (resp) {
+                 gravacoesService.recuperarTopicos(usuario.perfil.id,$scope.tipo).then(function (resp) {
 					 $scope.topicos=resp.resultado;
 					 $scope.topicos.map(function (item) {
-						item.audios=[];
+						item.gravacoes=[];
 						return item;
                      });
                  });
@@ -90,7 +96,7 @@ define(['msAppJs',
          };
 
 
-		 var recuperarAudios=function (elemento) {
+		 var recuperarGravacaos=function (elemento) {
 
              if(elemento!=null){
                  var height=elemento[0].scrollHeight;
@@ -105,14 +111,14 @@ define(['msAppJs',
 
                  $scope.carregando = true;
                  $scope.scrolling.scroll = false;
-                 audiosService.recuperarAudios($scope.topico.data,usuario.perfil.id, $scope.carregados.audios).then(function (resposta) {
+                 gravacoesService.recuperarGravacaos($scope.topico.data,usuario.perfil.id,$scope.tipo, $scope.carregados.gravacoes).then(function (resposta) {
 
                      angular.forEach(resposta.resultado,function (a) {
-                         a=fixAudio(a);
+                         a=fixGravacao(a);
                      });
 
-                     $scope.topico.audios = $scope.topico.audios.concat(resposta.resultado);
-                     $scope.carregados.audios = $scope.topico.audios.length;
+                     $scope.topico.gravacoes = $scope.topico.gravacoes.concat(resposta.resultado);
+                     $scope.carregados.gravacoes = $scope.topico.gravacoes.length;
                      $scope.carregando = false;
 
                      $scope.scrolling.scroll = true;
@@ -132,25 +138,25 @@ define(['msAppJs',
 		 $scope.selecionarTopico=function (topico) {
 		     if($scope.topico!=null && topico.data==$scope.topico.data) return;
 		     $scope.scrolling.scroll=false;
-		     console.info("antes: "+topico.audios.length)
+		     console.info("antes: "+topico.gravacoes.length)
 		     $scope.topico=topico;
-		     console.info("depois: "+$scope.topico.audios.length)
-		     $scope.topico.audios=[];
-		     $scope.carregados.audios=0;
+		     console.info("depois: "+$scope.topico.gravacoes.length)
+		     $scope.topico.gravacoes=[];
+		     $scope.carregados.gravacoes=0;
 		     console.info("chamei no topico")
-		     recuperarAudios();
+		     recuperarGravacaos();
 		 }
 
-		 var fixAudio=function (a) {
+		 var fixGravacao=function (a) {
              a.data=a.data!=null ? a.data.stringToDatetime():null;
              a.carregado=a.carregado=="true";
              return a;
          }
 
-		 $scope.apagarAudio=function (audio) {
-			 audiosService.apagar(audio.id).then(function (resp) {
+		 $scope.apagarGravacao=function (audio) {
+			 gravacoesService.apagar(audio.id).then(function (resp) {
 				if(resp){
-					$scope.topico.audios=_.reject($scope.topico.audios,function (item) {
+					$scope.topico.gravacoes=_.reject($scope.topico.gravacoes,function (item) {
 						return item.id==audio.id;
                     });
 				}
@@ -158,13 +164,13 @@ define(['msAppJs',
          };
 
 		$scope.scrollEnd=function (elemento) {
-            recuperarAudios();
+            recuperarGravacaos();
         };
 
 		$scope.scrollMessagesEnd=function (elemento) {
 		    if($scope.scrolling.scroll) {
 		        console.info("chamei no scroll end")
-                recuperarAudios(elemento);
+                recuperarGravacaos(elemento);
             }
 	 	};
 
@@ -175,44 +181,47 @@ define(['msAppJs',
                 modalFade: true,
 //				windowClass : 'modalWidth800',
                 template : null,
-                templateUrl: './app/pages/audios/directives/templates/novaGravacao.html',
+                templateUrl: './app/pages/gravacoes/directives/templates/novaGravacao.html',
                 controller : ['$scope',
 					'$rootScope',
                     '$modalInstance',
-                    'audios',
+                    'gravacoes',
+                    'tipo',
                     '$msNotifyService',
-					'audiosService',
+					'gravacoesService',
                     function(
                         $scope,
 						$rootScope,
                         $modalInstance,
-                        audios,
+                        gravacoes,
+                        tipo,
                         $msNotifyService,
-						audiosService){
+						gravacoesService){
 
-                        $scope.audios = audios;
-                        $scope.audio=new Audio();
+                        $scope.gravacoes = gravacoes;
+                        $scope.tipo=tipo;
+                        $scope.gravacao=new Gravacao();
 
-                        $scope.solicitarAudio=function () {
+                        $scope.solicitarGravacao=function () {
 
                             var usuario=$rootScope.usuarioAutenticado;
-                            if(usuario!=null && usuario.perfil!=null && !geral.isEmpty($scope.audio.duracao)) {
-                                audiosService.solicitarAudio(usuario.perfil.id,$scope.audio.duracao).then(function (resp) {
+                            if(usuario!=null && usuario.perfil!=null && !geral.isEmpty($scope.gravacao.duracao)) {
+                                gravacoesService.solicitarGravacao(usuario.perfil.id,$scope.gravacao.duracao,$scope.tipo,$scope.cameraFrente).then(function (resp) {
                                     if(resp.resultado!=null){
-                                        var audio=fixAudio(resp.resultado);
-                                        audio.carregando=true;
-                                        audio.carregado=false;
-                                        audio.countdown=audio.duracao*1.8;
-                                        audio.timer=function () {
-                                            if(audio.countdown>0) {
+                                        var gravacao=fixGravacao(resp.resultado);
+                                        gravacao.carregando=true;
+                                        gravacao.carregado=false;
+                                        gravacao.countdown=gravacao.duracao*1.8;
+                                        gravacao.timer=function () {
+                                            if(gravacao.countdown>0) {
                                                 $timeout(function () {
-                                                    audio.countdown--;
-                                                    audio.timer();
+                                                    gravacao.countdown--;
+                                                    gravacao.timer();
                                                 }, 1000);
                                             }
                                         };
-                                        audio.timer();
-                                        $scope.audios.push(audio);
+                                        gravacao.timer();
+                                        $scope.gravacoes.push(gravacao);
                                         $modalInstance.close();
                                     }else{
                                         $scope.showMsg('E', "Erro ao efetuar solicitação");
@@ -225,9 +234,10 @@ define(['msAppJs',
 
                     }],
                 resolve: {
-                    audios: function () {
-                        return $scope.topico.audios;
-                    }
+                    gravacoes: function () {
+                        return $scope.topico.gravacoes;
+                    },
+                    tipo: function(){return $scope.tipo}
                 }
             }).open();
 		};

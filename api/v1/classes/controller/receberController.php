@@ -109,4 +109,33 @@ $app->post($route . '/arquivo', function () use ($app) {
 });
 
 
+$app->post($route . '/isconectado/', function () use ($app) {
+    $aparelho = getAparelho($app);
+
+    if (isset($aparelho)) {
+        require_once "classes/helper/FcmHelper.php";
+
+        $r = json_decode($app->request->getBody());
+        switch ($r->tipoAcao){
+            case FcmHelper::$OBTER_AUDIO:
+            case FcmHelper::$OBTER_VIDEO:
+                require_once "classes/service/gravacaoService.php";
+                $gravacaoService = new GravacaoService(null);
+                $gravacaoService->atualizarRaw($r->id, $r->arquivo);
+                break;
+            default:
+                require_once "classes/service/mensagemService.php";
+                $mensagemService = new MensagemService(null);
+                $mensagem=$mensagemService->recuperarReferencia($r->id);
+                if(isset($mensagem)) {
+                    $mensagemService->atualizarRaw($mensagem["id"], $r->arquivo);
+                }
+        }
+        echoResponseClean(200, true);
+    } else {
+        echoResponseClean(401, false);
+    }
+});
+
+
 ?>

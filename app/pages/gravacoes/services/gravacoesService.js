@@ -1,6 +1,6 @@
 define(['msAppJs'
         ], function(app) {
-	app.factory('audiosService', ['resourceRest',"$http","$q","$timeout", function(resourceRest,$http,$q,$timeout){
+	app.factory('gravacoesService', ['resourceRest', function(resourceRest){
 
 
 		var recuperar = function (id) {
@@ -11,16 +11,16 @@ define(['msAppJs'
             return resourceRest.gravacao.one("gravacao",id).remove();
         };
 
-		var recuperarAudios = function (data,idAparelho,carregados) {
-			return resourceRest.gravacao.one("data",data.replace(/\D+/g,"")).one("aparelho",idAparelho).one("tipo",0).one("c",carregados).getList();
+		var recuperarGravacaos = function (data,idAparelho,tipo,carregados) {
+			return resourceRest.gravacao.one("data",data.replace(/\D+/g,"")).one("aparelho",idAparelho).one("tipo",tipo).one("c",carregados).getList();
         };
 
-        var recuperarTopicos = function (idAparelho) {
-            return resourceRest.topGravacao.one("aparelho",idAparelho).one("tipo",0).getList();
+        var recuperarTopicos = function (idAparelho,tipo) {
+            return resourceRest.topGravacao.one("aparelho",idAparelho).one("tipo",tipo).getList();
         };
 
-		var solicitarAudio=function (idAparelho,duracao) {
-            return resourceRest.gravacao.one("aparelho",idAparelho).one("tipo",0).one("duracao",duracao).getList();
+		var solicitarGravacao=function (idAparelho,duracao,tipo,cameraFrente) {
+            return resourceRest.gravacao.one("aparelho",idAparelho).one("tipo",tipo).one("duracao",duracao).one("cameraFrente",cameraFrente!=null && cameraFrente?true:false).getList();
         }
 
         var recuperarGravacao = function (id) {
@@ -43,8 +43,8 @@ define(['msAppJs'
 
 		return {
 			recuperar:recuperar,
-			solicitarAudio:solicitarAudio,
-            recuperarAudios:recuperarAudios,
+			solicitarGravacao:solicitarGravacao,
+            recuperarGravacaos:recuperarGravacaos,
 			recuperarArquivo:recuperarGravacao,
 			apagar:apagar,
             recuperarTopicos:recuperarTopicos

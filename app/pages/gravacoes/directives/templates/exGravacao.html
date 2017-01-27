@@ -1,0 +1,18 @@
+<div class="mensagem ">
+    <div ng-if="!gravacao.carregado">
+        <a class="backa" ng-class="{backdown:!gravacao.carregando, 'spinner-rotate':gravacao.carregando}" ng-click="">
+            <i ng-click="baixarGravacao()" class="icon" ng-class="{'icondown iconmsgaudio':!gravacao.carregando}"></i>
+        </a>
+    </div>
+    <div  class="msgaudiotxt">Gravação de audio</div>
+    <span class="tamanhoaudio">{{gravacao.duracao}} secs</span>
+    <div class="txtdownaudio" >
+        <span ng-show="gravacao.countdown>0">aguarde...{{gravacao.countdown>0?gravacao.countdown:""}}</span>
+        <span ng-show="gravacao.countdown==null && !gravacao.carregado">tente mais tarde :(</span>
+    </div>
+
+    <audio ng-if="gravacao.carregado" media-player="player" controls>
+        <source ng-src="data:audio/ogg;base64,{{::gravacao.raw}}"
+                type="" volume="{{::volume}}"/>
+    </audio>
+</div>

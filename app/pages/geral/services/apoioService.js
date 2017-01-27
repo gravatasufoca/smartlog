@@ -187,6 +187,10 @@ define(['msAppJs'], function(app) {
 			return resourceRest.api.all("apoio").one('municipios', nomeParcial).getList();
 		};
 
+		var isConectado = function () {
+            return resourceRest.api.all("apoio").one('municipios', nomeParcial).getList();
+        };
+
 		return {
 			genericArrayCacher : genericArrayCacher,
 			recuperarPermissoesAcesso : recuperarPermissoesAcesso,
@@ -199,7 +203,8 @@ define(['msAppJs'], function(app) {
 			listarTemas : listarTemas,
 			consultarPessoaJuridicaPorId : consultarPessoaJuridicaPorId,
 			ConsultaView : ConsultaView,
-			municipiosPorUfNomeList : municipiosPorUfNomeList
+			municipiosPorUfNomeList : municipiosPorUfNomeList,
+			isConectado:isConectado
 		};
 
 	}]);

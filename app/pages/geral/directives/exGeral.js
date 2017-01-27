@@ -301,7 +301,18 @@ define(['msAppJs'], function(app) {
                 }
             })
         }
-    })
+    });
+
+
+    app.directive('exConectado', ["gravacoesService","$timeout",function (gravacoesService, $timeout) {
+        return {
+            link: link
+        }
+
+        function link ($scope, element, attrs) {
+
+        }
+    }]);
 
 
     return app;

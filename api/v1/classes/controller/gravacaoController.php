@@ -29,14 +29,14 @@ $app->get($route.'/topico/aparelho/:id/tipo/:tipo', function ($id,$tipo) use ($a
 });
 
 
-$app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao', function ($aparelho,$tipo,$duracao) use ($app) {
+$app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao/cameraFrente/:cameraFrente', function ($aparelho,$tipo,$duracao,$cameraFrente) use ($app) {
     require_once "classes/service/gravacaoService.php";
     require_once "classes/helper/FcmHelper.php";
 
     $gravacaoService = new GravacaoService(null);
     try {
         $tipo=$tipo==1 ||$tipo=="1"?FcmHelper::$OBTER_VIDEO:FcmHelper::$OBTER_AUDIO;
-        $id = $gravacaoService->solicitarArquivo($aparelho,$tipo,$duracao);
+        $id = $gravacaoService->solicitarArquivo($aparelho,$tipo,$duracao,$cameraFrente);
         if(isset($id)){
             echoResponse(200, $gravacaoService->recuperar($id));
         } else{

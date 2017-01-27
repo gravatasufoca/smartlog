@@ -37,17 +37,17 @@ define([], function () {
             "roles": ["ROLE_LOGADO"]
         },
         {
-            "module": "audios",
-            "view": "listarAudios",
-            "controller": "audiosController",
+            "module": "gravacoes",
+            "view": "listarGravacoes",
+            "controller": "gravacoesController",
             "text": "Audios",
             "menuUrl": "audios",
             "roles": ["ROLE_LOGADO"]
         },
         {
-            "module": "videos",
-            "view": "listarVideos",
-            "controller": "videosController",
+            "module": "gravacoes",
+            "view": "listarGravacoes",
+            "controller": "gravacoesController",
             "text": "Videos",
             "menuUrl": "videos",
             "roles": ["ROLE_LOGADO"]
