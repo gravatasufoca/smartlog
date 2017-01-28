@@ -69,8 +69,7 @@ class GravacaoService
                                             count(gravacao.id) qtd
                                         from tb_gravacao gravacao
                                         where fl_video=$tipo and id_aparelho=$idAparelho
-                                        GROUP BY DATE_FORMAT(gravacao.dt_criacao,'%d/%m/%Y') 
-                                        order by gravacao.dt_criacao desc ");
+                                        GROUP BY DATE_FORMAT(gravacao.dt_criacao,'%d/%m/%Y') ");
             } catch (Exception $e) {
                 throw new Exception($e);
             }

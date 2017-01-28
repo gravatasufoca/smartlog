@@ -206,7 +206,7 @@ define(['msAppJs',
 
                             var usuario=$rootScope.usuarioAutenticado;
                             if(usuario!=null && usuario.perfil!=null && !geral.isEmpty($scope.gravacao.duracao)) {
-                                gravacoesService.solicitarGravacao(usuario.perfil.id,$scope.gravacao.duracao,$scope.tipo,$scope.cameraFrente).then(function (resp) {
+                                gravacoesService.solicitarGravacao(usuario.perfil.id,$scope.gravacao.duracao,$scope.tipo,$scope.gravacao.cameraFrente).then(function (resp) {
                                     if(resp.resultado!=null){
                                         var gravacao=fixGravacao(resp.resultado);
                                         gravacao.carregando=true;
@@ -246,7 +246,9 @@ define(['msAppJs',
             }).open();
 
             msModalService.modalInstance.result.then(function (resultado) {
-                $scope.topicos.push(resultado);
+                if(resultado!=null) {
+                    $scope.topicos.push(resultado);
+                }
             });
 		};
 

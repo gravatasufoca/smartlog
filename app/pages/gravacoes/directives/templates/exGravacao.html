@@ -10,9 +10,14 @@
         <span ng-show="gravacao.countdown>0">aguarde...{{gravacao.countdown>0?gravacao.countdown:""}}</span>
         <span ng-show="gravacao.countdown==null && !gravacao.carregado">tente mais tarde :(</span>
     </div>
+    <div ng-switch="gravacao.video">
+        <audio ng-switch-when="0" ng-if="gravacao.raw" media-player="player" controls>
+            <source ng-src="data:audio/ogg;base64,{{::gravacao.raw}}"
+                    type="" volume="{{::volume}}"/>
+        </audio>
 
-    <audio ng-if="gravacao.carregado" media-player="player" controls>
-        <source ng-src="data:audio/ogg;base64,{{::gravacao.raw}}"
-                type="" volume="{{::volume}}"/>
-    </audio>
+        <video ng-switch-when="1"  ng-if="gravacao.raw" controls media-player="player" type="video/mp4"
+               style="width: 260px;height: 200px"
+               ng-src="data:video/mp4;base64,{{::gravacao.raw}}"></video>
+    </div>
 </div>

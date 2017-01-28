@@ -68,7 +68,7 @@
                                         <div class="chora">
                                             <div class="data">{{gravacao.data.format('hh:mm:ss')}}</div>
                                         </div>
-                                        <button ng-show="msg.carregado"
+                                        <button ng-hide="msg.carregando"
                                                 ex-modal-confirmacao="apagarGravacao"
                                                 item="gravacao"
                                                 pergunta="'confirma-exclusao-registro' | translate"

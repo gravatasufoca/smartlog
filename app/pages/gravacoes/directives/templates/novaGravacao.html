@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-            <div class="row" ng-if="tipo==1">
+            <div class="row" ng-if="tipo==3">
                 <div class="span6">
                     <label for="front">{{'camera-frente' | translate}} <em
                             class="form-req">*</em></label>
@@ -41,7 +41,7 @@
                 data-dismiss="modal"><i class="font15px fa fa-times"></i> {{"fechar"|translate}}
         </button>
         <button type="button" class="btn btn-primary" ng-click="solicitarGravacao();">
-            <i class="font15px fa fa-check"></i> {{tipo==1?'novo-video':'novo-audio'|translate}}
+            <i class="font15px fa fa-check"></i> {{tipo==3?'novo-video':'novo-audio'|translate}}
         </button>
     </div>
 </div>
