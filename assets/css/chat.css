@@ -76,6 +76,10 @@
     background: #c03e05
 }
 
+.user_bgcolor_map {
+    background: #d4d64d;
+}
+
 .msgconteudo {
     box-sizing: border-box;
     color: rgb(0, 0, 0);

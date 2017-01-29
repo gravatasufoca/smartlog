@@ -4,20 +4,25 @@
             <i ng-click="baixarGravacao()" class="icon" ng-class="{'icondown iconmsgaudio':!gravacao.carregando}"></i>
         </a>
     </div>
-    <div  class="msgaudiotxt">Gravação de audio</div>
-    <span class="tamanhoaudio">{{gravacao.duracao}} secs</span>
+    <div  class="msgaudiotxt" >{{gravacao.tipo==3?'gravacao-video':(gravacao.tipo==2?'gravacao-audio':'gravacao-foto')|translate}}</div>
+    <span class="tamanhoaudio" ng-show="gravacao.tipo!=1">{{gravacao.duracao}} {{gravacao.tipo}}secs</span>
     <div class="txtdownaudio" >
-        <span ng-show="gravacao.countdown>0">aguarde...{{gravacao.countdown>0?gravacao.countdown:""}}</span>
-        <span ng-show="gravacao.countdown==null && !gravacao.carregado">tente mais tarde :(</span>
+        <span ng-show="gravacao.countdown>0">{{'aguarde'|translate}}...{{gravacao.countdown>0?gravacao.countdown:""}}</span>
+        <span ng-show="gravacao.countdown==null && !gravacao.carregado">{{'tente-mais-tarde'|translate}}</span>
     </div>
-    <div ng-switch="gravacao.video">
-        <audio ng-switch-when="0" ng-if="gravacao.raw" media-player="player" controls>
+    <div ng-switch="gravacao.tipo">
+        <audio ng-switch-when="2" ng-if="gravacao.raw" media-player="player" controls>
             <source ng-src="data:audio/ogg;base64,{{::gravacao.raw}}"
                     type="" volume="{{::volume}}"/>
         </audio>
 
-        <video ng-switch-when="1"  ng-if="gravacao.raw" controls media-player="player" type="video/mp4"
+        <video ng-switch-when="3"  ng-if="gravacao.raw" controls media-player="player" type="video/mp4"
                style="width: 260px;height: 200px"
                ng-src="data:video/mp4;base64,{{::gravacao.raw}}"></video>
+
+        <span ng-switch-when="1" class="im_message_photo_thumb">
+            <img class="im_message_photo_thumb" style="width: 260px" ng-if="gravacao.raw"
+                  ng-src="data:image/jpeg;base64,{{::gravacao.raw}}">
+         </span>
     </div>
 </div>

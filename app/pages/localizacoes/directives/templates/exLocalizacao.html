@@ -1,0 +1,28 @@
+<div class="mensagem ">
+    <div ng-if="!localizacao.carregado">
+        <a class="backa" ng-class="{backdown:!localizacao.carregando, 'spinner-rotate':localizacao.carregando}"
+           ng-click="">
+            <i ng-click="baixarGravacao()" class="icon"
+               ng-class="{'icondown iconmsgaudio':!localizacao.carregando}"></i>
+        </a>
+    </div>
+    <div class="msgaudiotxt">{{'localizacao-encontrada'|translate}}</div>
+    <div class="txtdownaudio">
+        <span ng-show="localizacao.countdown>0">{{'aguarde'|translate}}...{{localizacao.countdown>0?localizacao.countdown:""}}</span>
+        <span ng-show="localizacao.countdown==null && !localizacao.carregado">{{'tente-mais-tarde'|translate}}</span>
+    </div>
+    <a ng-click="abrirLocalicacao()">
+        <div class="msgtxt" style="float: left;">{{::localizacao.latitude}},{{::localizacao.longitude}}</div>
+    </a>
+
+    <button ng-hide="localizacao.carregando" style=" margin-right: 20px;float: right; margin-top: -15px;"
+            ex-modal-confirmacao="apagarLocalizacao"
+            item="localizacao"
+            pergunta="'confirma-exclusao-registro' | translate"
+            rotulo-botao="'confirma-exclusao' | translate"
+            type="button" class="btn btn-xs btn-danger apagarlocalizacao"
+            title="{{'novo-localizacao' | translate}}">
+        <i class="font15px fa fa-trash"></i>
+    </button>
+
+</div>

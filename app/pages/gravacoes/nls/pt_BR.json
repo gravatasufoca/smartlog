@@ -2,6 +2,11 @@
   "duracao": "Dura\u00E7\u00E3o",
   "novo-audio": "Novo audio",
   "novo-video": "Novo video",
+  "nova-foto": "Nova foto",
   "solicitar-gravacao": "Solicitar grava\u00E7\u00E3o",
-  "gravacao-dia": "Grava\u00E7\u00F5es do dia"
+  "gravacao-dia": "Grava\u00E7\u00F5es do dia",
+  "gravacao-audio": "Gravação de áudio",
+  "gravacao-video": "Gravação de vídeo",
+  "gravacao-foto": "Gravação de foto",
+  "foto-dia": "Fotos do dia"
 }

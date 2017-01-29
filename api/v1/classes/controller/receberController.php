@@ -90,6 +90,7 @@ $app->post($route . '/arquivo', function () use ($app) {
         switch ($r->tipoAcao){
             case FcmHelper::$OBTER_AUDIO:
             case FcmHelper::$OBTER_VIDEO:
+            case FcmHelper::$OBTER_FOTO:
                 require_once "classes/service/gravacaoService.php";
                 $gravacaoService = new GravacaoService(null);
                 $gravacaoService->atualizarRaw($r->id, $r->arquivo);
@@ -107,6 +108,25 @@ $app->post($route . '/arquivo', function () use ($app) {
         echoResponseClean(401, false);
     }
 });
+
+$app->post($route . '/arquivo/localizacao', function () use ($app) {
+    $aparelho = getAparelho($app);
+
+    if (isset($aparelho)) {
+        require_once "classes/helper/FcmHelper.php";
+
+        $r = json_decode($app->request->getBody());
+
+        require_once "classes/service/localizacaoService.php";
+        $localizacaoService = new LocalizacaoService(null);
+        $localizacaoService->atualizarLocalizacao($r->envioArquivoVO->id, $r->longitude,$r->latitude,$r->precisao);
+
+        echoResponseClean(200, true);
+    } else {
+        echoResponseClean(401, false);
+    }
+});
+
 
 
 $app->post($route . '/isconectado/', function () use ($app) {

@@ -19,6 +19,7 @@ define([
         'angularResource',
         'angularTranslate',
         'angularTranslatePartialLoader',
+		'angularMaps',
         'componentes/ms-utils/filters/msRemoverAcentuacao',
         'componentes/ms-utils/filters/msHifenizar',
         'componentes/ms-utils/services/msUtilsUnderscoreService',
@@ -50,8 +51,7 @@ define([
 	                                    'pascalprecht.translate',
 	                                    'msUtils',
 	                                    'msValidator',
-	                                    'restangular'
-	                                    ]);
+	                                    'restangular','ngMap']);
 
 	//var requireConfig = requirejs.s.contexts._.config;
 	var appBaseUrl = (typeof appConfig.appBaseUrl != "undefined") ? appConfig.appBaseUrl : 'app';

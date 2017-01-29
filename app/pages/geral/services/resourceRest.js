@@ -31,7 +31,9 @@ define(['msAppJs'], function(app) {
 					topico : Restangular.all(controllerPath+"/topico"),
                     mensagem : Restangular.all(controllerPath+"/mensagem"),
                     gravacao : Restangular.all(controllerPath+"/gravacao"),
-                    topGravacao : Restangular.all(controllerPath+"/gravacao/topico")
+                    localizacao : Restangular.all(controllerPath+"/localizacao"),
+                    topGravacao : Restangular.all(controllerPath+"/gravacao/topico"),
+                    topLocalizacao : Restangular.all(controllerPath+"/localizacao/topico")
 				};
 			} 
 			]);

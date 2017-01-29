@@ -7,7 +7,8 @@ define(['msAppJs',
         		menu,
         		homeRoute,
 				mensagensRoute,
-				gravacoesRoute) {
+				gravacoesRoute,
+				localizacoesRoute) {
 	'use strict';
 
 	/**
@@ -47,6 +48,7 @@ define(['msAppJs',
 		msRouteService.create(homeRoute);
 		msRouteService.create(mensagensRoute);
 		msRouteService.create(gravacoesRoute);
+		msRouteService.create(localizacoesRoute);
 
 		$scope.alterarMenu(menu.obterMenu());
 

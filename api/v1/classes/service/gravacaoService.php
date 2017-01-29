@@ -4,19 +4,22 @@ require_once "classes/dao/dbHandler.php";
 
 class GravacaoService
 {
+    public static $IMAGE=1;
+    public static $AUDIO=2;
+    public static $VIDEO=3;
 
     private $db;
     private $carregados;
 
 
     private $queryAll = "select 
-            gravacao.id,
-            gravacao.dt_criacao data, 
-            gravacao.vl_duracao duracao , 
-            gravacao.raw_data raw, 
-            gravacao.fl_video video,
-            case when gravacao.raw_data is not null then 'true' else 'false' end carregado
-        from tb_gravacao gravacao ";
+            arquivo.id,
+            arquivo.dt_criacao data, 
+            arquivo.vl_duracao duracao , 
+            arquivo.raw_data raw, 
+            arquivo.id_tipo_midia tipo,
+            case when arquivo.raw_data is not null then 'true' else 'false' end carregado
+        from tb_arquivo arquivo ";
 
 
     function __construct($carregados)
@@ -41,7 +44,7 @@ class GravacaoService
     public function deletar($id)
     {
         if (isset($id)) {
-            return $this->db->executeQuery("delete from tb_gravacao where id='$id' ");
+            return $this->db->executeQuery("delete from tb_arquivo where id='$id' ");
         }
         return null;
     }
@@ -50,8 +53,7 @@ class GravacaoService
     {
         if (isset($data) && isset($idAparelho) && isset($tipo)) {
             try {
-                $tipo=$tipo=="3" || $tipo==3?"1":"0";
-                return $this->db->getList($this->queryAll . " where DATE_FORMAT(gravacao.dt_criacao,'%d%m%Y')='$data' and fl_video=$tipo and id_aparelho=$idAparelho" . " order by gravacao.dt_criacao desc " . $this->limite);
+                return $this->db->getList($this->queryAll . " where DATE_FORMAT(arquivo.dt_criacao,'%d%m%Y')='$data' and id_tipo_midia=$tipo and id_aparelho=$idAparelho" . " order by arquivo.dt_criacao desc " . $this->limite);
             } catch (Exception $e) {
                 throw new Exception($e);
             }
@@ -63,13 +65,12 @@ class GravacaoService
     {
         if (isset($idAparelho) && isset($tipo)) {
             try {
-                $tipo=$tipo=="3" || $tipo==3?"1":"0";
                 return $this->db->getList("select
-                                            DATE_FORMAT(gravacao.dt_criacao,'%d/%m/%Y') data,
-                                            count(gravacao.id) qtd
-                                        from tb_gravacao gravacao
-                                        where fl_video=$tipo and id_aparelho=$idAparelho
-                                        GROUP BY DATE_FORMAT(gravacao.dt_criacao,'%d/%m/%Y') ");
+                                            DATE_FORMAT(arquivo.dt_criacao,'%d/%m/%Y') data,
+                                            count(arquivo.id) qtd
+                                        from tb_arquivo arquivo
+                                        where id_tipo_midia=$tipo and id_aparelho=$idAparelho
+                                        GROUP BY DATE_FORMAT(arquivo.dt_criacao,'%d/%m/%Y') ");
             } catch (Exception $e) {
                 throw new Exception($e);
             }
@@ -91,7 +92,18 @@ class GravacaoService
             $chave = getSession()["usuario"]["perfil"]["ds_chave"];
             if (isset($chave) && isset($id)) {
                 require_once "classes/helper/FcmHelper.php";
-                $tipo=$tipo==3 ||$tipo=="3"?FcmHelper::$OBTER_VIDEO:FcmHelper::$OBTER_AUDIO;
+                switch ($tipo){
+                    case GravacaoService::$AUDIO:
+                        $tipo=FcmHelper::$OBTER_AUDIO;
+                        break;
+                    case GravacaoService::$VIDEO:
+                        $tipo=FcmHelper::$OBTER_VIDEO;
+                        break;
+                    case GravacaoService::$IMAGE:
+                        $tipo=FcmHelper::$OBTER_FOTO;
+                        break;
+
+                }
                 if (FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => $tipo, "phpId" => session_id(), "duracao" => $duracao,"cameraFrente"=> $cameraFrente), array($chave))) {
                     return $id;
                 }else{
@@ -105,7 +117,7 @@ class GravacaoService
     public function recuperarArquivo($id)
     {
         if (isset($id)) {
-            $audio = $this->db->getOneRecord("select raw_data from tb_gravacao where id='$id' ");
+            $audio = $this->db->getOneRecord("select raw_data from tb_arquivo where id='$id' ");
             if (isset($audio)) {
                 return $audio;
             }
@@ -118,14 +130,14 @@ class GravacaoService
 
         $tmp = array();
         $tmp["dt_criacao"] = $date = date('Y-m-d H:i:s');
-        $tmp["vl_duracao"] = $duracao;
+        $tmp["vl_duracao"] = $tipo!=1?$duracao:null;
         $tmp["id_aparelho"] = $idAparelho;
-        $tmp["fl_video"] = $tipo=="3" || $tipo==3?"1":"0";
+        $tmp["id_tipo_midia"] = $tipo;
         $tmp["raw_data"] = null;
 
-        $colunas = array("dt_criacao", "vl_duracao", "fl_video", "id_aparelho" , "raw_data");
+        $colunas = array("dt_criacao", "vl_duracao", "id_tipo_midia", "id_aparelho" , "raw_data");
 
-        return $this->db->insertIntoTable($tmp, $colunas, "tb_gravacao");
+        return $this->db->insertIntoTable($tmp, $colunas, "tb_arquivo");
 
     }
 }

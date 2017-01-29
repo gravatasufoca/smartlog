@@ -21,6 +21,7 @@ requirejs.config({
 		'angularTranslatePartialLoader': [appConfig.servidor + '/vendor/angular-translate-loader-partial/0.1.6/angular-translate-loader-partial' + sufixo],
 		'angularValidator': [appConfig.servidor + '/vendor/angular-validator/0.1.4/angular-validator' + sufixo ],
 		'angularUiRouter':[appConfig.servidor + '/vendor/angular-ui-router/0.2.7/angular-ui-router' + sufixo],
+		'angularMaps':[appConfig.servidor + '/vendor/angular-maps/ng-map' + sufixo],
 		'restangular':[appConfig.servidor + '/vendor/restangular/1.3.1/restangular' + sufixo],
 		'angularBlocks':[appConfig.servidor + '/vendor/angular-blocks/0.1.8/angular-blocks' + sufixo],
 		'angularNgTable':[appConfig.servidor + '/vendor/ng-table/0.3.1/ng-table' + sufixo],
@@ -107,6 +108,10 @@ requirejs.config({
 			deps: ['angular'],
 			exports: 'angularBlocks'
 		},
+        'angularMaps': {
+            deps: ['angular'],
+            exports: 'angularMaps'
+        },
 		'restangular': {
 			deps: ['angular'],
 			exports: 'restangular'

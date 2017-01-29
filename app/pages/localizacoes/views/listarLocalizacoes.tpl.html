@@ -1,4 +1,9 @@
 <div class="container">
+    <style>
+        .modal {
+            width: 900px;
+        }
+    </style>
 
     <link type="text/css" rel="stylesheet" href="assets/css/chat.css" media="screen"/>
 
@@ -12,9 +17,9 @@
         <div class="box conteudo-box">
 
             <div class="msgconteudo ">
-                <button ng-click="abreModal()" style="margin-left: 10px;"
+                <button ng-click="solicitarLocalizacao()" style="margin-left: 10px;"
                         type="button" class="btn btn-primary "
-                        title="{{tipo==3?'novo-video':(tipo==2?'novo-audio':'nova-foto')|translate}}">
+                        title="{{'nova-localizacao'|translate}}">
                     <i class="font15px fa fa-plus"></i> {{tipo==3?'novo-video':(tipo==2?'novo-audio':'nova-foto')|translate}}
                 </button>
                 <!--COLUNA DOS TOPICOS -->
@@ -27,10 +32,10 @@
                                         <div class="hora">{{::topico.qtd}}</div>
                                     </div>
                                     <div class="divavatar">
-                                        <span class="avatar user_bgcolor_rec">{{tipo!=1?"REC":"PIC"}}</span>
+                                        <span class="avatar user_bgcolor_map">MAP</span>
                                     </div>
                                     <div class="nomes">
-                                        <div class="nome">{{tipo!=1?'gravacao-dia':'foto-dia'|translate}}</div>
+                                        <div class="nome">{{tipo!=1?'localizacao-dia':'foto-dia'|translate}}</div>
                                         <div class="cmensagem">
                                             <div class="mensagem">{{::topico.data}}</div>
                                         </div>
@@ -44,8 +49,8 @@
 
                 <!-- QUANDO NAO TEM MENSAGENS ESCOLHIDAS-->
                 <div class="mensagenscontainer">
-                    <div class="semmensagens" ng-if="topico.gravacoes.length==0" style="padding-top: 85px;">{{"nenhum-registro"|translate}}</div>
-                    <div class="listamensagem" ng-if="topico.gravacoes.length>0" objeto="gravacoes" scrolly="scrolly"
+                    <div class="semmensagens" ng-if="topico.localizacoes.length==0" style="padding-top: 85px;">{{"nenhum-registro"|translate}}</div>
+                    <div class="listamensagem" ng-if="topico.localizacoes.length>0" objeto="localizacoes" scrolly="scrolly"
                          loading="carregando" scrolling="scrolling"
                          on-end="scrollMessagesEnd" timeout="500" reverse="true">
 
@@ -59,29 +64,19 @@
                         </div>
 
                         <!-- MENSAGEM COMPLETA -->
-                        <div class="msgwrap" ng-repeat="gravacao in topico.gravacoes | orderBy:'data':reverse">
+                        <div class="msgwrap" ng-repeat="localizacao in topico.localizacoes | orderBy:'data':reverse">
 
                             <div class="msgoutwrap">
                                 <div class="msginwrap">
                                     <div class="msgwrapin">
                                         <a class="afoto"/>
                                         <div class="chora">
-                                            <div class="data">{{gravacao.data.format('hh:mm:ss')}}</div>
+                                            <div class="data">{{localizacao.data.format('hh:mm:ss')}}</div>
                                         </div>
-                                        <button ng-hide="msg.carregando"
-                                                ex-modal-confirmacao="apagarGravacao"
-                                                item="gravacao"
-                                                pergunta="'confirma-exclusao-registro' | translate"
-                                                rotulo-botao="'confirma-exclusao' | translate"
-                                                type="button" class="btn btn-xs btn-danger apagargravacao"
-                                                title="{{'novo-gravacao' | translate}}">
-                                            <i class="font15px fa fa-trash"></i>
-                                        </button>
-
 
                                         <div class="message_body">
                                             <a class="author hidden"></a>
-                                            <ex-gravacao gravacao="gravacao"></ex-gravacao>
+                                            <ex-localizacao localizacao="localizacao"></ex-localizacao>
 
                                         </div>
 
@@ -99,8 +94,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/ng-template" id="novaGravacao" >
-    blalasldk
-
-</script>

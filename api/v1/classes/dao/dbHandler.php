@@ -154,9 +154,7 @@ class DbHandler
 
     public function atualizaRawGravacao($raw,$id){
 
-//        $this->conn->query( 'SET @@global.max_allowed_packet = ' . strlen( $raw ) + 1024 );
-
-        $query="update tb_gravacao set raw_data=? where id=? ";
+        $query="update tb_arquivo set raw_data=? where id=? ";
         $stmt= $this->conn->prepare($query);
         $stmt->bind_param("si", $raw, $id);
         if($stmt->execute()){
@@ -167,6 +165,27 @@ class DbHandler
             $stmt->close();
             return false;
         }
+    }
+
+    public function atualizarLocalizacao($id, $longitude,$latitude,$precisao){
+
+        $query="update tb_localizacoes set vl_latitude=?, vl_longitude=?,vl_precisao=? where id=? ";
+        //$query="update tb_localizacoes set vl_latitude=?,vl_longitude=?,vl_precisao=? where id=? ";
+        $stmt= $this->conn->prepare($query);
+        if($stmt) {
+            $lat = $latitude . "";
+            $lon = $longitude . "";
+            $stmt->bind_param("ssdi",$latitude,$longitude,$precisao, $id);
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                $stmt->error;
+                $stmt->close();
+                return false;
+            }
+        }
+
     }
 
 }

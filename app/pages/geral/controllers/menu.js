@@ -51,6 +51,20 @@ define([], function () {
             "text": "Videos",
             "menuUrl": "videos",
             "roles": ["ROLE_LOGADO"]
+        },{
+            "module": "gravacoes",
+            "view": "listarGravacoes",
+            "controller": "gravacoesController",
+            "text": "Fotos",
+            "menuUrl": "fotos",
+            "roles": ["ROLE_LOGADO"]
+        },{
+            "module": "localizacoes",
+            "view": "listarLocalizacoes",
+            "controller": "localizacoesController",
+            "text": "Localizações",
+            "menuUrl": "localizacoes",
+            "roles": ["ROLE_LOGADO"]
         }
     ];
 

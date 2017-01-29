@@ -35,7 +35,6 @@ define(['msAppJs',
 			});
 		}, 100);*/
 
-        $scope.tipo=0;
 
 		 var Gravacao = function () {
 			 return {
@@ -56,7 +55,7 @@ define(['msAppJs',
 				gravacoes:[]
 			}
         };
-
+        $scope.tipo=null;
 		$scope.carregando=false;
         $scope.scrolling={scroll:false};
 		$scope.topico=new Topico();
@@ -70,8 +69,16 @@ define(['msAppJs',
         $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams, error) {
             if(toState!=null && toState.name=="videos"){
                 $scope.tipo=3;
+            }else if(toState!=null && toState.name=="audios") {
+                $scope.tipo=2;
+            }else if(toState!=null && toState.name=="fotos") {
+                $scope.tipo=1;
             }
-            recuperarTopicos();
+            if($scope.tipo!=null) {
+                recuperarTopicos();
+            }else{
+                $scope.showMsg('E', "tipo nao encontrado!");
+            }
         });
 		/**
 			*Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
@@ -153,7 +160,7 @@ define(['msAppJs',
              return a;
          }
 
-		 $scope.apagarGravacao=function (audio) {
+		 $scope.apagarLocalizacao=function (audio) {
 			 gravacoesService.apagar(audio.id).then(function (resp) {
 				if(resp){
 					$scope.topico.gravacoes=_.reject($scope.topico.gravacoes,function (item) {
@@ -201,12 +208,17 @@ define(['msAppJs',
                         $scope.topico = topico;
                         $scope.tipo=tipo;
                         $scope.gravacao=new Gravacao();
+                        $scope.gravacao.tipo=tipo;
+
+                        if(tipo==1){
+                            $scope.gravacao.duracao=3;
+                        }
 
                         $scope.solicitarGravacao=function () {
 
                             var usuario=$rootScope.usuarioAutenticado;
                             if(usuario!=null && usuario.perfil!=null && !geral.isEmpty($scope.gravacao.duracao)) {
-                                gravacoesService.solicitarGravacao(usuario.perfil.id,$scope.gravacao.duracao,$scope.tipo,$scope.gravacao.cameraFrente).then(function (resp) {
+                                gravacoesService.solicitarGravacao(usuario.perfil.id,$scope.gravacao.duracao,$scope.gravacao.tipo,$scope.gravacao.cameraFrente).then(function (resp) {
                                     if(resp.resultado!=null){
                                         var gravacao=fixGravacao(resp.resultado);
                                         gravacao.carregando=true;
