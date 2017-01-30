@@ -1,9 +1,9 @@
 <div class="container">
-    <style>
+<!--    <style>
         .modal {
             width: 900px;
         }
-    </style>
+    </style>-->
 
     <link type="text/css" rel="stylesheet" href="assets/css/chat.css" media="screen"/>
 
@@ -17,7 +17,7 @@
         <div class="box conteudo-box">
 
             <div class="msgconteudo ">
-                <button ng-click="solicitarLocalizacao()" style="margin-left: 10px;"
+                <button ng-click="abreModal()" style="margin-left: 10px;"
                         type="button" class="btn btn-primary "
                         title="{{'nova-localizacao'|translate}}">
                     <i class="font15px fa fa-plus"></i> {{tipo==3?'novo-video':(tipo==2?'novo-audio':'nova-foto')|translate}}
@@ -76,7 +76,7 @@
 
                                         <div class="message_body">
                                             <a class="author hidden"></a>
-                                            <ex-localizacao localizacao="localizacao"></ex-localizacao>
+                                            <ex-localizacao localizacao="localizacao" apagar-fn="apagarLocalizacao"></ex-localizacao>
 
                                         </div>
 

@@ -19,8 +19,8 @@ define(['msAppJs'
             return resourceRest.topLocalizacao.one("aparelho",idAparelho).getList();
         };
 
-		var solicitarLocalizacao=function (idAparelho) {
-            return resourceRest.localizacao.one("aparelho",idAparelho).getList();
+		var solicitarLocalizacao=function (idAparelho,wait) {
+            return resourceRest.localizacao.one("aparelho",idAparelho).one("wait",wait?15:5).getList();
         }
 
         var recuperarLocalizacao = function (id) {

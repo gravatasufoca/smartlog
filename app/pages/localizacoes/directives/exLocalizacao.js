@@ -38,6 +38,11 @@ define(['msAppJs','angularMaps'], function(app) {
             });
 
 
+            if(scope.apagarFn!=null){
+                scope.apagarLocalizacao=scope.apagarFn;
+            }else{
+                scope.apagarLocalizacao=angular.noop;
+            }
 
             scope.abrirLocalicacao=function () {
                 msModalService.setConfig({
@@ -79,7 +84,8 @@ define(['msAppJs','angularMaps'], function(app) {
 			link: link,
 			templateUrl: './app/pages/localizacoes/directives/templates/exLocalizacao.html',
 			scope: {
-				localizacao:"="
+				localizacao:"=",
+                apagarFn:"="
 			}
 		};
 	}]);

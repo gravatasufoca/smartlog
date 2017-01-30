@@ -56,6 +56,7 @@ define(['msAppJs',
         };
 		$scope.carregando=false;
         $scope.scrolling={scroll:false};
+		$scope.topicos=[];
 		$scope.topico=new Topico();
 		$scope.carregados={
 			localizacoes:0
@@ -154,6 +155,12 @@ define(['msAppJs',
 					$scope.topico.localizacoes=_.reject($scope.topico.localizacoes,function (item) {
 						return item.id==localizacao.id;
                     });
+                    if($scope.topico.localizacoes.length==0) {
+                        $scope.topicos = _.reject($scope.topicos, function (item) {
+                            return $scope.topico.data = item.data;
+                        });
+                    }
+
 				}
              });
          };
@@ -169,39 +176,83 @@ define(['msAppJs',
             }
 	 	};
 
-     $scope.solicitarLocalizacao=function () {
 
-         var usuario=$rootScope.usuarioAutenticado;
-         if(usuario!=null && usuario.perfil!=null) {
-             localizacoesService.solicitarLocalizacao(usuario.perfil.id).then(function (resp) {
-                 if(resp.resultado!=null){
-                     var localizacao=fixLocalizacao(resp.resultado);
-                     localizacao.carregando=true;
-                     localizacao.carregado=false;
-                     localizacao.countdown=10;
-                     localizacao.timer=function () {
-                         if(localizacao.countdown>0) {
-                             $timeout(function () {
-                                 localizacao.countdown--;
-                                 localizacao.timer();
-                             }, 1000);
+	 $scope.abreModal=function () {
+		 msModalService.setConfig({
+			 backdrop: true,
+			 keyboard: false,
+			 modalFade: true,
+//				windowClass : 'modalWidth800',
+			 template : null,
+			 templateUrl: './app/pages/localizacoes/directives/templates/novaLocalizacao.html',
+			 controller : ['$scope',
+				 '$rootScope',
+				 '$modalInstance',
+				 'topico',
+				 '$msNotifyService',
+				 'localizacoesService',
+				 function(
+					 $scope,
+					 $rootScope,
+					 $modalInstance,
+					 topico,
+					 $msNotifyService,
+                     localizacoesService){
+
+					 $scope.topico = topico;
+
+					 $scope.localizacao={
+					 	wait:false
+					 }
+
+                     $scope.solicitarLocalizacao=function () {
+
+                         var usuario=$rootScope.usuarioAutenticado;
+                         if(usuario!=null && usuario.perfil!=null) {
+                             localizacoesService.solicitarLocalizacao(usuario.perfil.id,$scope.localizacao.wait).then(function (resp) {
+                                 if(resp.resultado!=null){
+                                     var localizacao=fixLocalizacao(resp.resultado);
+                                     localizacao.carregando=true;
+                                     localizacao.carregado=false;
+                                     localizacao.countdown=$scope.localizacao.wait?20:10;
+                                     localizacao.timer=function () {
+                                         if(localizacao.countdown>0) {
+                                             $timeout(function () {
+                                                 localizacao.countdown--;
+                                                 localizacao.timer();
+                                             }, 1000);
+                                         }
+                                     };
+                                     localizacao.timer();
+                                     if($scope.topico.localizacoes.length==0){
+                                         $scope.topico.data=localizacao.data.format("DD/MM/YYYY");
+                                         $scope.topico.qtd=1;
+                                     }
+                                     $scope.topico.localizacoes.push(localizacao);
+
+                                     $modalInstance.close($scope.topico);
+                                 }
+                             },function (e) {
+                                 $scope.showMsg('E', e);
+                             });
                          }
                      };
-                     localizacao.timer();
-                     if($scope.topico.localizacoes.length==0){
-                         $scope.topico.data=localizacao.data.format("DD/MM/YYYY");
-                         $scope.topico.qtd=1;
-                     }
-                     $scope.topico.localizacoes.push(localizacao);
-                     if($scope.topicos.length==0){
-                     	$scope.topicos.push($scope.topico);
-					 }
-                 }
-             },function (e) {
-                 $scope.showMsg('E', e);
-             });
-         }
-     };
+
+				 }],
+			 resolve: {
+				 topico: function () {
+					 return $scope.topico;
+				 }
+			 }
+		 }).open();
+
+		 msModalService.modalInstance.result.then(function (resultado) {
+			 if(resultado!=null) {
+				 $scope.topicos.push(resultado);
+			 }
+		 });
+	 };
+
 
 		}]);
 

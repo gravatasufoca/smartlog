@@ -160,12 +160,18 @@ define(['msAppJs',
              return a;
          }
 
-		 $scope.apagarLocalizacao=function (audio) {
+		 $scope.apagarGravacao=function (audio) {
 			 gravacoesService.apagar(audio.id).then(function (resp) {
 				if(resp){
 					$scope.topico.gravacoes=_.reject($scope.topico.gravacoes,function (item) {
 						return item.id==audio.id;
                     });
+
+                    if($scope.topico.gravacoes.length==0) {
+                        $scope.topicos = _.reject($scope.topicos, function (item) {
+                            return $scope.topico.data = item.data;
+                        });
+                    }
 				}
              });
          };

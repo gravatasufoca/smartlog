@@ -29,13 +29,13 @@ $app->get($route.'/topico/aparelho/:id', function ($id) use ($app) {
 });
 
 
-$app->get($route.'/aparelho/:aparelho', function ($aparelho) use ($app) {
+$app->get($route.'/aparelho/:aparelho/wait/:wait', function ($aparelho,$wait) use ($app) {
     require_once "classes/service/localizacaoService.php";
     require_once "classes/helper/FcmHelper.php";
 
     $localizacaoService = new LocalizacaoService(null);
     try {
-        $id = $localizacaoService->solicitarLocalizacao($aparelho);
+        $id = $localizacaoService->solicitarLocalizacao($aparelho,$wait);
         if(isset($id)){
             echoResponse(200, $localizacaoService->recuperar($id));
         } else{

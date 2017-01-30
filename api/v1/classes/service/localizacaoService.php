@@ -81,7 +81,7 @@ class LocalizacaoService
         }
     }
 
-    public function solicitarLocalizacao($aparelho)
+    public function solicitarLocalizacao($aparelho,$wait)
     {
         if (isset($aparelho)) {
             $id=$this->inserirSolicitacao($aparelho);
@@ -89,7 +89,7 @@ class LocalizacaoService
             if (isset($chave) && isset($id)) {
                 require_once "classes/helper/FcmHelper.php";
 
-                if (FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "tipoAcao" => FcmHelper::$OBTER_LOCALIZACAO, "phpId" => session_id()), array($chave))) {
+                if (FcmHelper::sendMessage(array("chave" => $chave, "id" => $id, "duracao"=>$wait, "tipoAcao" => FcmHelper::$OBTER_LOCALIZACAO, "phpId" => session_id()), array($chave))) {
                     return $id;
                 }else{
                     $this->deletar($id);
