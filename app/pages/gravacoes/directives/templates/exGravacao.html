@@ -5,7 +5,7 @@
         </a>
     </div>
     <div  class="msgaudiotxt" >{{gravacao.tipo==3?'gravacao-video':(gravacao.tipo==2?'gravacao-audio':'gravacao-foto')|translate}}</div>
-    <span class="tamanhoaudio" ng-show="gravacao.tipo!=1">{{gravacao.duracao}} {{gravacao.tipo}}secs</span>
+    <span class="tamanhoaudio" ng-show="gravacao.tipo!=1">{{gravacao.duracao}}secs</span>
     <div class="txtdownaudio" >
         <span ng-show="gravacao.countdown>0">{{'aguarde'|translate}}...{{gravacao.countdown>0?gravacao.countdown:""}}</span>
         <span ng-show="gravacao.countdown==null && !gravacao.carregado">{{'tente-mais-tarde'|translate}}</span>
