@@ -65,6 +65,13 @@ define([], function () {
             "text": "Localizações",
             "menuUrl": "localizacoes",
             "roles": ["ROLE_LOGADO"]
+        },{
+            "module": "configuracoes",
+            "view": "manterConfiguracao",
+            "controller": "configuracoesController",
+            "text": "Configurações",
+            "menuUrl": "configuracoes",
+            "roles": ["ROLE_LOGADO"]
         }
     ];
 

@@ -2,13 +2,15 @@ define(['msAppJs',
         './menu',
         'pages/home/routes/homeRoute',
         '../../mensagens/routes/mensagensRoute',
-        '../../gravacoes/routes/gravacoesRoute'
+        '../../gravacoes/routes/gravacoesRoute',
+        '../../configuracoes/routes/configuracoesRoute'
         ], function(app,
         		menu,
         		homeRoute,
 				mensagensRoute,
 				gravacoesRoute,
-				localizacoesRoute) {
+				localizacoesRoute,
+				configuracoesRoute) {
 	'use strict';
 
 	/**
@@ -49,6 +51,7 @@ define(['msAppJs',
 		msRouteService.create(mensagensRoute);
 		msRouteService.create(gravacoesRoute);
 		msRouteService.create(localizacoesRoute);
+		msRouteService.create(configuracoesRoute);
 
 		$scope.alterarMenu(menu.obterMenu());
 

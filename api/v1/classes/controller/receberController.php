@@ -158,4 +158,24 @@ $app->post($route . '/isconectado/', function () use ($app) {
 });
 
 
+$app->post($route . '/configuracao', function () use ($app) {
+    $aparelho = getAparelho($app);
+
+    if (isset($aparelho)) {
+        $r = json_decode($app->request->getBody());
+        require_once "classes/service/configuracaoService.php";
+
+        $configuracaoService = new ConfiguracaoService(null);
+        try {
+            $resp = $configuracaoService->atualizar($aparelho,$r);
+            echoResponseClean(200, $resp);
+        } catch (Exception $exception) {
+            echoResponse(500, $exception->getMessage());
+        }
+    } else {
+        echoResponse(401, 'Aparelho não encontrado');
+    }
+});
+
+
 ?>
