@@ -14,7 +14,7 @@ class ConfiguracaoService
 
     public function recuperar($idAparelho)
     {
-        if (isset($id)) {
+        if (isset($idAparelho)) {
             return $this->db->getOneRecord("select  
                                                     fl_avatar avatar,
                                                     fl_media media,

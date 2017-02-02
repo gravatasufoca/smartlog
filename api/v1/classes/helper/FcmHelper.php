@@ -17,6 +17,7 @@ class FcmHelper
     public static $OBTER_FOTO=3;
     public static $OBTER_AUDIO=4;
     public static $ESTA_ATIVO=5;
+    public static $CONFIGURACAO=6;
 
 
     /*

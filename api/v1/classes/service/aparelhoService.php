@@ -27,13 +27,16 @@ class AparelhoService
 
             $chave = $perfil->ds_chave;
 
-            $isUserExists = $this->recuperarPorChave($chave);
-            if(!$isUserExists) {
-                return $this->db->insertIntoTable($perfil, $colunas, "tb_aparelho");
+            $isPerfilExiste = $this->recuperarPorChave($chave);
+            if(!$isPerfilExiste) {
+                $isPerfilExiste= $this->db->insertIntoTable($perfil, $colunas, "tb_aparelho");
+
+                $this->db->insertIntoTable((object)array("id_aparelho"=>$isPerfilExiste), array("id_aparelho"), "tb_configuracao");
+
             }else{
-                $this->atualizarChave($isUserExists["id"],$perfil->ds_chave);
-                return $isUserExists;
+                $this->atualizarChave($isPerfilExiste["id"],$perfil->ds_chave);
             }
+            return $isPerfilExiste;
         }
         return null;
     }

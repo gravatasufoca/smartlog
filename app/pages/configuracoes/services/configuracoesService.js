@@ -7,8 +7,8 @@ define(['msAppJs'],
 	                            		 $rootScope, 
 	                            		 $translatePartialLoader){
 
-		var recuperarConfiguracao = function(idPerfil) {
-			return resourceRest.configuracoes.get(idPerfil);
+		var recuperarConfiguracao = function() {
+			return resourceRest.configuracoes.getList();
 		};
 
 		return {

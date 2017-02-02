@@ -13,17 +13,55 @@
                     <div class="span12">
                         <div class="filder panel panel-default">
                             <div class="panel-heading">
-                                <b class="panel-title">{{'dados-criadouro' | translate}}</b>
+                                <b class="panel-title">{{'dados-configuracao' | translate}}</b>
                             </div>
 
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="span2" ng-show="criadouro.id != null">
-                                        <label for="numero">{{'codigo-criadouro' | translate}}</label>
-                                        <input id="numero" type="text" class="right"
-                                               ng-model="criadouro.numero"
-                                               ng-disabled="criadouro.id != null"/>
+                                    <div class="span2">
+                                        <label for="whats">{{'whatsapp' | translate}}</label>
+                                        <input id="whats" type="checkbox" class="right"
+                                               ng-model="configuracao.whatsapp"/>
                                     </div>
+
+                                    <div class="span2">
+                                        <label for="messenger">{{'messenger' | translate}}</label>
+                                        <input id="messenger" type="checkbox" class="right"
+                                               ng-model="configuracao.messenger"/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="span2">
+                                        <label for="media">{{'media' | translate}}</label>
+                                        <input id="media" type="checkbox" class="right"
+                                               ng-model="configuracao.media"/>
+                                    </div>
+
+                                    <div class="span2">
+                                        <label for="avatar">{{'avatar' | translate}}</label>
+                                        <input id="avatar" type="checkbox" class="right"
+                                               ng-model="configuracao.avatar"/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="span2">
+                                        <label for="wifi">{{'wifi' | translate}}</label>
+                                        <input id="wifi" type="checkbox" class="right"
+                                               ng-model="configuracao.wifi"/>
+                                    </div>
+
+                                    <div class="span2">
+                                        <label for="intervalo">{{'intervalo' | translate}}</label>
+                                        <input id="intervalo" type="number" class="right"
+                                               ng-model="configuracao.intervalo"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+
                                 </div>
 
 

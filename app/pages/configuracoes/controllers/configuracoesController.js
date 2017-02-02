@@ -26,7 +26,7 @@ define(['msAppJs'], function (app) {
                 var usuario=$rootScope.usuarioAutenticado;
                 if(usuario!=null && usuario.perfil!=null){
                     configuracoesService.recuperarConfiguracao(usuario.perfil.id).then(function (resp) {
-                        $scope.configuracao=resp;
+                        $scope.configuracao=resp.resultado;
                     },function (e) {
                         $scope.showMsg('E', e);
                     });
