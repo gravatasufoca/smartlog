@@ -20,7 +20,7 @@
                 <button ng-click="abreModal()" style="margin-left: 10px;"
                         type="button" class="btn btn-primary "
                         title="{{'nova-localizacao'|translate}}">
-                    <i class="font15px fa fa-plus"></i> {{tipo==3?'novo-video':(tipo==2?'novo-audio':'nova-foto')|translate}}
+                    <i class="font15px fa fa-plus"></i> {{'nova-localizacao'|translate}}
                 </button>
                 <!--COLUNA DOS TOPICOS -->
                 <div class="colunatopico">
@@ -35,7 +35,7 @@
                                         <span class="avatar user_bgcolor_map">MAP</span>
                                     </div>
                                     <div class="nomes">
-                                        <div class="nome">{{tipo!=1?'localizacao-dia':'foto-dia'|translate}}</div>
+                                        <div class="nome">{{'localizacao-dia' |translate}}</div>
                                         <div class="cmensagem">
                                             <div class="mensagem">{{::topico.data}}</div>
                                         </div>

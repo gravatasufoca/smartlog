@@ -31,7 +31,16 @@ class ConfiguracaoService
 
     public function salvar($configuracao){
         if(isset($configuracao)){
-           return $this->db->atualizarConfiguracao($configuracao);
+           if($this->db->atualizarConfiguracao($configuracao)){
+               require_once "classes/helper/FcmHelper.php";
+
+               $chave = getSession()["usuario"]["perfil"]["ds_chave"];
+
+               if (FcmHelper::sendMessage(array("chave" => $chave, "tipoAcao" => FcmHelper::$CONFIGURACAO, "phpId" => session_id(), "configuracao" => $configuracao), array($chave))) {
+                    return true;
+               }
+           }
+           return false;
         }
     }
 
