@@ -29,6 +29,12 @@ class ConfiguracaoService
         return null;
     }
 
+    public function salvar($configuracao){
+        if(isset($configuracao)){
+           return $this->db->atualizarConfiguracao($configuracao);
+        }
+    }
+
 
     public static function converterConfiguracao($msg)
     {

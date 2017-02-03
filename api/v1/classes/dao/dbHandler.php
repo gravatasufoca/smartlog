@@ -188,6 +188,22 @@ class DbHandler
 
     }
 
+
+    public function atualizarConfiguracao($configuracao){
+
+        $query="update tb_configuracao set  fl_avatar=?, fl_media=?, fl_whatsapp=?, fl_messenger=?, fl_wifi=?, vl_intervalo=?, sms_blacklist=?,calls_blacklist=?  where id_aparelho=? ";
+        $stmt= $this->conn->prepare($query);
+        $stmt->bind_param("iiiiiissi", $configuracao->avatar,$configuracao->media,$configuracao->whatsapp,$configuracao->messenger,$configuracao->wifi,$configuracao->intervalo,$configuracao->smsBlacklist,$configuracao->callsBlacklist,$configuracao->id_aparelho);
+        if($stmt->execute()){
+            $stmt->close();
+            return true;
+        }else{
+            $stmt->error;
+            $stmt->close();
+            return false;
+        }
+    }
+
 }
 
 ?>

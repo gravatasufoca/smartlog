@@ -27,6 +27,17 @@ define(['msAppJs'], function (app) {
                 if(usuario!=null && usuario.perfil!=null){
                     configuracoesService.recuperarConfiguracao(usuario.perfil.id).then(function (resp) {
                         $scope.configuracao=resp.resultado;
+
+                        $scope.configuracao.wifi=$scope.configuracao.wifi=="1";
+                        $scope.configuracao.avatar=$scope.configuracao.avatar=="1";
+                        $scope.configuracao.whatsapp=$scope.configuracao.whatsapp=="1";
+                        $scope.configuracao.messenger=$scope.configuracao.messenger=="1";
+                        $scope.configuracao.media=$scope.configuracao.media=="1";
+                        $scope.configuracao.intervalo=parseInt($scope.configuracao.intervalo);
+
+                        $scope.configuracao.smsBlacklist=$scope.configuracao.smsBlacklist.split("#");
+                        $scope.configuracao.callBlacklist=$scope.configuracao.callBlacklist.split("#");
+
                     },function (e) {
                         $scope.showMsg('E', e);
                     });
@@ -45,7 +56,7 @@ define(['msAppJs'], function (app) {
                     media:null,
                     whatsapp:null,
                     messenger:null,
-                    smsblacklist:null,
+                    smsBlacklist:null,
                     callBlacklist:null,
                     wifi:null,
                     intervalo:null

@@ -11,8 +11,13 @@ define(['msAppJs'],
 			return resourceRest.configuracoes.getList();
 		};
 
+		var salvar=function (configuracao) {
+			return resourceRest.configuracoes.post(configuracao);
+        };
+
 		return {
-            recuperarConfiguracao : recuperarConfiguracao
+            recuperarConfiguracao : recuperarConfiguracao,
+			salvar:salvar
 		};
 
 	}]);
