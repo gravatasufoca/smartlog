@@ -58,15 +58,100 @@
                                                ng-model="configuracao.intervalo"/>
                                     </div>
                                 </div>
-
-
-                                <div class="row">
-
-                                </div>
-
-
                             </div>
                         </div>
+
+
+                        <div class="filder panel panel-default">
+                            <div class="panel-heading">
+                                <b class="panel-title">{{'sms-blacklist' | translate}}</b>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="span3">
+                                        <label for="smsBlack">{{'numero' | translate}}</label>
+                                        <input id="smsBlack" type="text" ng-model="smsBlack.numero"/>
+                                        <ex-obrigatorio mostrar-quando="smsBlack.mostrarMsgErro"></ex-obrigatorio>
+                                    </div>
+                                    <div class="span2">
+                                        <label>&nbsp;</label>
+                                        <button type="button" class="btn-small btn-primary" ng-click="adicionarSms()"
+                                                title="{{'adicionar'|translate}}">
+                                            <i class="font15px fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="span12">
+                                        <ul class="list-group">
+                                            <li style="float:left" class="list-group-item" ng-repeat="item in configuracao.smsBlacklist">
+                                                <span class="badge" style="float: right;background: none" >
+
+                                                     <a ex-modal-confirmacao="removerSms"
+                                                        item="item"
+                                                        pergunta="'confirma-exclusao-registro' | translate"
+                                                        rotulo-botao="'confirma-exclusao' | translate"
+                                                        class="btn-xs btn-danger"
+                                                        title="{{'remover' | translate}}">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+
+                                                </span>
+                                                {{item.numero}}
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="filder panel panel-default">
+                            <div class="panel-heading">
+                                <b class="panel-title">{{'call-blacklist' | translate}}</b>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="span3">
+                                        <label for="callBlack">{{'numero' | translate}}</label>
+                                        <input id="callBlack" type="text" ng-model="callBlack.numero"/>
+                                        <ex-obrigatorio mostrar-quando="callBlack.mostrarMsgErro"></ex-obrigatorio>
+                                    </div>
+                                    <div class="span2">
+                                        <label>&nbsp;</label>
+                                        <button type="button" class="btn-small btn-primary" ng-click="adicionarCall()"
+                                                title="{{'adicionar'|translate}}">
+                                            <i class="font15px fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="span12">
+                                        <ul class="list-group">
+                                            <li style="float:left" class="list-group-item" ng-repeat="item in configuracao.callBlacklist">
+                                                <span class="badge" style="float: right;background: none" >
+
+                                                     <a ex-modal-confirmacao="removerCall"
+                                                        item="item"
+                                                        pergunta="'confirma-exclusao-registro' | translate"
+                                                        rotulo-botao="'confirma-exclusao' | translate"
+                                                        class="btn-xs btn-danger"
+                                                        title="{{'remover' | translate}}">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+
+                                                </span>
+                                                {{item.numero}}
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
 
                     <div class="row">

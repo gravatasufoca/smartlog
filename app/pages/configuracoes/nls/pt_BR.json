@@ -3,5 +3,8 @@
 	"nome-perfil" : "Nome do perfil",
 	"sigla-perfil" : "Sigla do perfil",
 	"usar-perfil" : "Usar perfil",
-	"necessario-informar-campos-obrigatorios-login" : "Informe os campos necessarios para efetuar o login"
+	"necessario-informar-campos-obrigatorios-login" : "Informe os campos necess\u00E1rios para efetuar o login",
+	"numero-ja-adicionado":"Esse n\u00FAmero j\u00E1 foi adicionado!",
+	"sms-blacklist":"SMS blacklist",
+	"call-blacklist":"Chamadas blacklist"
 }

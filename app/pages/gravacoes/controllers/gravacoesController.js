@@ -217,7 +217,7 @@ define(['msAppJs',
                         $scope.gravacao.tipo=tipo;
 
                         if(tipo==1){
-                            $scope.gravacao.duracao=3;
+                            $scope.gravacao.duracao=5;
                         }
 
                         $scope.solicitarGravacao=function () {

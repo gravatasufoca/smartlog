@@ -35,8 +35,8 @@ define(['msAppJs'], function (app) {
                         $scope.configuracao.media=$scope.configuracao.media=="1";
                         $scope.configuracao.intervalo=parseInt($scope.configuracao.intervalo);
 
-                        $scope.configuracao.smsBlacklist=$scope.configuracao.smsBlacklist.split("#");
-                        $scope.configuracao.callBlacklist=$scope.configuracao.callBlacklist.split("#");
+                        $scope.configuracao.smsBlacklist=$scope.configuracao.smsBlacklist!=null?$scope.configuracao.smsBlacklist.split("#"):[];
+                        $scope.configuracao.callBlacklist=$scope.configuracao.callBlacklist!=null ?$scope.configuracao.callBlacklist.split("#"):[];
 
                     },function (e) {
                         $scope.showMsg('E', e);
@@ -64,6 +64,8 @@ define(['msAppJs'], function (app) {
             };
 
             $scope.configuracao={};
+            $scope.smsBlack={};
+            $scope.callBlack={};
 
             /**
              * Método que aciona o botão voltar
@@ -100,12 +102,66 @@ define(['msAppJs'], function (app) {
             var isCadastroValido = function () {
                 if (window.geral.isEmpty($scope.configuracao.intervalo)) {
 
-                    $scope.criadouro.mostrarMsgErro = true;
+                    $scope.configuracao.mostrarMsgErro = true;
                     $scope.showMsg('E', "necessario-informar-campos-obrigatorios");
                     return false;
                 }
                 return true;
             };
+
+            $scope.removerSms=function (smsBlack) {
+                $scope.configuracao.smsBlacklist=  _.reject($scope.configuracao.smsBlacklist, function (item) {
+                        return item.numero == smsBlack.numero;
+                }) ;
+            };
+
+            $scope.adicionarSms = function () {
+                if (window.geral.isEmpty($scope.smsBlack) || window.geral.isEmpty($scope.smsBlack.numero)) {
+                    $scope.smsBlack.mostrarMsgErro = true;
+                    $scope.showMsg('E', "necessario-informar-campos-obrigatorios");
+                }else{
+                    if($scope.configuracao.smsBlacklist==null){
+                        $scope.configuracao.smsBlacklist=[];
+                    }
+                    if(_.find($scope.configuracao.smsBlacklist,function (item) {
+                            return item.numero==$scope.smsBlack.numero;
+                        })==null) {
+                        $scope.configuracao.smsBlacklist.push({numero:$scope.smsBlack.numero});
+                        $scope.smsBlack = {};
+                    }else{
+                        $scope.smsBlack.mostrarMsgErro = true;
+                        $scope.showMsg('E', "numero-ja-adicionado");
+                    }
+                }
+            }
+
+
+
+            $scope.removerCall=function (callBlack) {
+                $scope.configuracao.callBlacklist=  _.reject($scope.configuracao.callBlacklist, function (item) {
+                    return item.numero == callBlack.numero;
+                }) ;
+            };
+
+            $scope.adicionarCall = function () {
+                if (window.geral.isEmpty($scope.callBlack) || window.geral.isEmpty($scope.callBlack.numero)) {
+                    $scope.callBlack.mostrarMsgErro = true;
+                    $scope.showMsg('E', "necessario-informar-campos-obrigatorios");
+                }else{
+                    if($scope.configuracao.callBlacklist==null){
+                        $scope.configuracao.callBlacklist=[];
+                    }
+                    if(_.find($scope.configuracao.callBlacklist,function (item) {
+                            return item.numero==$scope.callBlack.numero;
+                        })==null) {
+                        $scope.configuracao.callBlacklist.push({numero:$scope.callBlack.numero});
+                        $scope.callBlack = {};
+                    }else{
+                        $scope.callBlack.mostrarMsgErro = true;
+                        $scope.showMsg('E', "numero-ja-adicionado");
+                    }
+                }
+            }
         }]);
 
     return app;
