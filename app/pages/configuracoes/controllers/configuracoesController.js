@@ -73,6 +73,7 @@ define(['msAppJs'], function (app) {
             $scope.configuracao={};
             $scope.smsBlack={};
             $scope.callBlack={};
+            $scope.status={isopen:false};
 
             /**
              * Método que aciona o botão voltar
@@ -181,6 +182,39 @@ define(['msAppJs'], function (app) {
                     }
                 }
             }
+
+
+            $scope.solicitarReenvio=function () {
+                $msNotifyService.loading();
+                configuracoesService.solicitarReenvio().then(function (resp) {
+                    if(resp.sucesso!=null && resp.sucesso) {
+                        $scope.showMsg('S', 'solicitacao-sucesso');
+                    }else{
+                        $scope.showMsg('E', 'tente-mais-tarde');
+                    }
+                    $msNotifyService.close();
+                },function (e) {
+                    $scope.showMsg('E', e);
+                    $msNotifyService.close();
+                });
+
+            };
+
+            $scope.limparBase=function () {
+                $msNotifyService.loading();
+                configuracoesService.limparBase().then(function (resp) {
+                    if(resp.sucesso!=null && resp.sucesso) {
+                        $scope.showMsg('S', 'limpeza-sucesso');
+                    }else{
+                        $scope.showMsg('E', 'tente-mais-tarde');
+                    }
+                    $msNotifyService.close();
+                },function (e) {
+                    $scope.showMsg('E', e);
+                    $msNotifyService.close();
+                });
+            };
+
         }]);
 
     return app;

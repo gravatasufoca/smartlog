@@ -44,6 +44,37 @@ class ConfiguracaoService
         }
     }
 
+    public function solicitarFcm($tipoAcao)
+    {
+        if(getSession()!=null) {
+            $perfil = getSession()["usuario"]["perfil"];
+            if (isset($perfil)) {
+                $chave = $perfil["ds_chave"];
+                if (isset($chave)) {
+                    require_once "classes/helper/FcmHelper.php";
+
+                    if(FcmHelper::sendMessage(array("chave" => $chave, "tipoAcao" => $tipoAcao, "phpId" => session_id()), array($chave))) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    public function limparMensagens()
+    {
+        if(getSession()!=null) {
+            $perfil = getSession()["usuario"]["perfil"];
+            if (isset($perfil)) {
+                $id = $perfil["id"];
+                if (isset($id)) {
+                    return $this->db->limparMensagens($id);
+                }
+            }
+        }
+        return false;
+    }
+
 
     public static function converterConfiguracao($msg)
     {

@@ -18,6 +18,8 @@ class FcmHelper
     public static $OBTER_AUDIO=4;
     public static $ESTA_ATIVO=5;
     public static $CONFIGURACAO=6;
+    public static $SOLICITAR_REENVIO=7;
+    public static $LIMPAR=8;
 
 
     /*
@@ -56,8 +58,8 @@ class FcmHelper
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-//        curl_setopt($ch, CURLOPT_PROXY, "localhost");
-//        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_PROXY, "localhost");
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
         $result = curl_exec($ch);
         if ($result === FALSE) {

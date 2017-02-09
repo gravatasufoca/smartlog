@@ -180,7 +180,6 @@ class DbHandler
                 $stmt->close();
                 return true;
             } else {
-                $stmt->error;
                 $stmt->close();
                 return false;
             }
@@ -198,10 +197,24 @@ class DbHandler
             $stmt->close();
             return true;
         }else{
-            $stmt->error;
             $stmt->close();
             return false;
         }
+    }
+
+    public function limparMensagens($id){
+
+        $this->conn->query("START TRANSACTION");
+        $resp=false;
+        if($this->conn->query("delete from tb_mensagem where id_topico in(select id from tb_topico where id_aparelho=$id) ")) {
+            if($this->conn->query("delete from tb_topico where id_aparelho=$id ")){
+                $resp=true;
+            }
+        }
+
+        $this->conn->query("COMMIT");
+
+        return $resp;
     }
 
 }

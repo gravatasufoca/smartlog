@@ -6,5 +6,16 @@
 	"necessario-informar-campos-obrigatorios-login" : "Informe os campos necess\u00E1rios para efetuar o login",
 	"numero-ja-adicionado":"Esse n\u00FAmero j\u00E1 foi adicionado!",
 	"sms-blacklist":"SMS blacklist",
-	"call-blacklist":"Chamadas blacklist"
+	"call-blacklist":"Chamadas blacklist",
+	"ferramentas":"Ferramentas",
+	"limpar-aparelho":"Limpar aparelho",
+	"limpar-aparelho-tip":"Limpar todas as mensagens armazenadas no aparelho",
+	"limpar-base":"Limpar base",
+	"limpar-base-tip":"Limpar todas as mensagens recebidas",
+	"reenviar-mensagens":"Receber mensagens",
+	"reenviar-mensagens-tip":"Receber novamente todas as mensagens do aparelho",
+	"confirmar-reenvio":"Todas as mensagens atuais serão apagadas!!!\nSerá solicitado todas as mensagens armazenadas no aparelho.",
+	"confirmar-limpar-base":"Todas as mensagens atuais serão apagadas!!!\nConfirma a limpeza?"
+	"solicitacao-sucesso":"Solicitação enviada com sucesso!",
+	"limpeza-sucesso":"Limpeza efetuada com sucesso!"
 }

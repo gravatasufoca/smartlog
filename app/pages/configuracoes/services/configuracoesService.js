@@ -15,9 +15,19 @@ define(['msAppJs'],
 			return resourceRest.configuracoes.post(configuracao);
         };
 
+		 var solicitarReenvio = function() {
+			 return resourceRest.configuracoes.one("reenviar").get();
+		 };
+
+		 var limparBase = function() {
+             return resourceRest.configuracoes.one("limpar").get()
+		 };
+
 		return {
             recuperarConfiguracao : recuperarConfiguracao,
-			salvar:salvar
+			salvar:salvar,
+			limparBase:limparBase,
+			solicitarReenvio:solicitarReenvio
 		};
 
 	}]);
