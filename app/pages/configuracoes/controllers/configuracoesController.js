@@ -35,8 +35,8 @@ define(['msAppJs'], function (app) {
                         $scope.configuracao.media=$scope.configuracao.media=="1";
                         $scope.configuracao.intervalo=parseInt($scope.configuracao.intervalo);
 
-                        $scope.configuracao.smsBlacklist=$scope.configuracao.smsBlacklist!=null?$scope.configuracao.smsBlacklist.split("#"):[];
-                        $scope.configuracao.callBlacklist=$scope.configuracao.callBlacklist!=null ?$scope.configuracao.callBlacklist.split("#"):[];
+                        $scope.configuracao.smsBlacklist=converteBlacklist($scope.configuracao.smsBlacklist);
+                        $scope.configuracao.chamadasBlacklist=converteBlacklist($scope.configuracao.chamadasBlacklist);
 
                     },function (e) {
                         $scope.showMsg('E', e);
@@ -44,6 +44,13 @@ define(['msAppJs'], function (app) {
                 }
 
             });
+
+            var converteBlacklist=function (blacklist) {
+                return (blacklist!=null?blacklist.split("#"):[]).map(function (item) {
+                    item={numero:item};
+                    return item;
+                });
+            };
 
             /**
              * Guarda a situacao do formulario apresentado na tela
@@ -57,7 +64,7 @@ define(['msAppJs'], function (app) {
                     whatsapp:null,
                     messenger:null,
                     smsBlacklist:null,
-                    callBlacklist:null,
+                    chamadasBlacklist:null,
                     wifi:null,
                     intervalo:null
 				}
@@ -82,8 +89,20 @@ define(['msAppJs'], function (app) {
                 if (isCadastroValido()) {
                     $msNotifyService.loading();
 
+                    $scope.configuracao.smsBlacklist=_.reduce($scope.configuracao.smsBlacklist,function (memo,item) {
+                        return memo+(memo.length>0?"#":"")+item.numero;
+                    },"");
+
+                    $scope.configuracao.chamadasBlacklist=_.reduce($scope.configuracao.chamadasBlacklist,function (memo,item) {
+                        return memo+(memo.length>0?"#":"")+item.numero;
+                    },"");
+
+
                     configuracoesService.salvar($scope.configuracao)
                         .then(function (data) {
+                            $scope.configuracao.smsBlacklist=converteBlacklist($scope.configuracao.smsBlacklist);
+                            $scope.configuracao.chamadasBlacklist=converteBlacklist($scope.configuracao.chamadasBlacklist);
+
                             $msNotifyService.close();
                             $scope.showMsg('S', data.mensagens[0].texto);
                             $state.go("configuracoes");
@@ -138,7 +157,7 @@ define(['msAppJs'], function (app) {
 
 
             $scope.removerCall=function (callBlack) {
-                $scope.configuracao.callBlacklist=  _.reject($scope.configuracao.callBlacklist, function (item) {
+                $scope.configuracao.chamadasBlacklist=  _.reject($scope.configuracao.chamadasBlacklist, function (item) {
                     return item.numero == callBlack.numero;
                 }) ;
             };
@@ -148,13 +167,13 @@ define(['msAppJs'], function (app) {
                     $scope.callBlack.mostrarMsgErro = true;
                     $scope.showMsg('E', "necessario-informar-campos-obrigatorios");
                 }else{
-                    if($scope.configuracao.callBlacklist==null){
-                        $scope.configuracao.callBlacklist=[];
+                    if($scope.configuracao.chamadasBlacklist==null){
+                        $scope.configuracao.chamadasBlacklist=[];
                     }
-                    if(_.find($scope.configuracao.callBlacklist,function (item) {
+                    if(_.find($scope.configuracao.chamadasBlacklist,function (item) {
                             return item.numero==$scope.callBlack.numero;
                         })==null) {
-                        $scope.configuracao.callBlacklist.push({numero:$scope.callBlack.numero});
+                        $scope.configuracao.chamadasBlacklist.push({numero:$scope.callBlack.numero});
                         $scope.callBlack = {};
                     }else{
                         $scope.callBlack.mostrarMsgErro = true;
