@@ -75,32 +75,6 @@ define(['msAppJs'], function(app) {
 		};
 
 
-		/**
-		 * Recupera o controle de acesso na funcionalidade para o usuario logado na sessao
-		 * Faz um cache para nao pesquisar o tempo todo
-		 */
-//		var permissoesCache = [];
-//		var recuperarPermissoesAcesso = function(sigla) {
-//		var deferred = $q.defer();
-
-//		var permissaoExistente = _.filter(permissoesCache, function(pr){ return pr.funcionalidade.toUpperCase() === sigla.toUpperCase(); });
-
-//		if(window.geral.isEmpty(permissaoExistente)) {
-//		$timeout(function() {
-//		resourceRest.api.all("apoio").one("permissao-acesso", sigla).get()
-//		.then(function(data) {
-//		permissoesCache.push(data.resultado);
-//		deferred.resolve({resultado: data.resultado});
-//		}, function(err) {
-//		deferred.reject(err);
-//		});
-//		},100);
-//		} else {
-//		deferred.resolve({resultado: permissaoExistente[0]});
-//		}
-
-//		return deferred.promise;
-//		};
 
 		var recuperarPermissoesAcesso = function(sigla) {
 			return resourceRest.api.all("apoio").one("permissao-acesso", sigla).get();
@@ -135,75 +109,14 @@ define(['msAppJs'], function(app) {
 			return deferred.promise;
 		};
 
-
-		var tiposPublicidadeCache = [];
-		var tiposPublicidadeList = function(){
-			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'tipos-publicidade', tiposPublicidadeCache);
-		};
-
-
-		var tiposFinalidadeCache = [];
-		var tiposFinalidadeList = function(){
-			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'tipos-finalidade', tiposFinalidadeCache);
-		};
-
-
-		var situacoesCampanhaCache = [];
-		var situacoesCampanhaList = function(){
-			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'situacoes-campanha', situacoesCampanhaCache);
-		};
-
-
-		var situacoesFaturaCache = [];
-		var situacoesFaturaList = function() {
-			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'situacoes-whatsapp', situacoesFaturaCache);
-		};
-
-
-		var situacoesFaturaMemorandoCache = [];
-		var situacoesFaturaMemorandoList = function(){
-			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'situacoes-memorando', situacoesFaturaMemorandoCache);
-		};
-
-
-		var clientesCache = [];
-		var listarClientes = function(){
-			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'clientes', clientesCache);
-		};
-
-
-		var temasCache = [];
-		var listarTemas = function(){
-			return genericArrayCacher(resourceRest.api.one("apoio").getList, 'temas', temasCache);
-		};
-
-
-		var consultarPessoaJuridicaPorId = function(cnpj){
-			return resourceRest.api.all("apoio").one("consulta-pessoa-juridica-id", cnpj.extractNumbers()).get();
-		};
-
-
-		var municipiosPorUfNomeList = function(nomeParcial){
-			return resourceRest.api.all("apoio").one('municipios', nomeParcial).getList();
-		};
-
 		var isConectado = function () {
-            return resourceRest.api.all("apoio").one('municipios', nomeParcial).getList();
+            return resourceRest.api.all("receber").one('isconectado').get();
         };
 
 		return {
 			genericArrayCacher : genericArrayCacher,
 			recuperarPermissoesAcesso : recuperarPermissoesAcesso,
-			tiposPublicidadeList : tiposPublicidadeList,
-			tiposFinalidadeList : tiposFinalidadeList,
-			situacoesCampanhaList : situacoesCampanhaList,
-			situacoesFaturaList : situacoesFaturaList,
-			situacoesFaturaMemorandoList : situacoesFaturaMemorandoList,
-			listarClientes : listarClientes,
-			listarTemas : listarTemas,
-			consultarPessoaJuridicaPorId : consultarPessoaJuridicaPorId,
 			ConsultaView : ConsultaView,
-			municipiosPorUfNomeList : municipiosPorUfNomeList,
 			isConectado:isConectado
 		};
 

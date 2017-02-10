@@ -20,7 +20,7 @@ define(['msAppJs'
         };
 
 		var solicitarLocalizacao=function (idAparelho,wait) {
-            return resourceRest.localizacao.one("aparelho",idAparelho).one("wait",wait?15:5).getList();
+            return resourceRest.localizacao.one("receber",idAparelho).one("wait",wait?15:5).getList();
         }
 
         var recuperarLocalizacao = function (id) {

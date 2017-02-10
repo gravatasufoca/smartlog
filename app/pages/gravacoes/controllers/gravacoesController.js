@@ -219,7 +219,15 @@ define(['msAppJs',
                         if(tipo==1){
                             $scope.gravacao.duracao=5;
                         }
-
+gravacao.timer=function () {
+                                            if(gravacao.countdown>0) {
+                                                $timeout(function () {
+                                                    gravacao.countdown--;
+                                                    gravacao.timer();
+                                                }, 1000);
+                                            }
+                                        };
+                                        gravacao.timer();
                         $scope.solicitarGravacao=function () {
 
                             var usuario=$rootScope.usuarioAutenticado;

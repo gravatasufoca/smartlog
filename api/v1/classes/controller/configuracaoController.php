@@ -47,7 +47,10 @@ $app->get($route."/reenviar" , function () use ($app) {
     try {
         require_once "classes/helper/FcmHelper.php";
 
-        $resp = $configuracaoService->solicitarFcm(FcmHelper::$SOLICITAR_REENVIO);
+        $resp =$configuracaoService->limparMensagens();
+        if($resp){
+            $resp =$configuracaoService->solicitarFcm(FcmHelper::$SOLICITAR_REENVIO);
+        }
         echoResponseClean(200, array("sucesso"=>$resp));
     } catch (Exception $exception) {
         echoResponse(500, $exception->getMessage());

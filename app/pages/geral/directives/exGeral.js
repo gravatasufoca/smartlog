@@ -304,14 +304,25 @@ define(['msAppJs'], function(app) {
     });
 
 
-    app.directive('exConectado', ["gravacoesService","$timeout",function (gravacoesService, $timeout) {
-        return {
-            link: link
-        }
-
-        function link ($scope, element, attrs) {
-
-        }
+    app.directive('exConectado',["$timeout","$rootScope", function($timeout,$rootScope) {
+        var intervalo=60;
+    	return {
+            restrict: 'E',
+            replace: true,
+            link : function(scope, e, a) {
+                var timer=function () {
+                    $timeout(function () {
+//todo: fazer a verificação da conecção
+                    }, intervalo);
+                };
+                timer();
+            },
+            template: function(element, a) {
+                var template =
+                    '<div class="alert alert-danger"></div>';
+                return template;
+            }
+        };
     }]);
 
 

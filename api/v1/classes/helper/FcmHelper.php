@@ -20,7 +20,7 @@ class FcmHelper
     public static $CONFIGURACAO=6;
     public static $SOLICITAR_REENVIO=7;
     public static $LIMPAR=8;
-
+    public static $LIMPAR_REENVIAR=9;
 
     /*
     Parameter Example
