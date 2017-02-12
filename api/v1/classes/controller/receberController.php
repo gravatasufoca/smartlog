@@ -79,6 +79,25 @@ $app->post($route . '/mensagens', function () use ($app) {
     }
 });
 
+$app->post($route . '/ligacoes', function () use ($app) {
+    $aparelho = getAparelho($app);
+
+    if (isset($aparelho)) {
+        $r = json_decode($app->request->getBody());
+        require_once "classes/service/ligacaoService.php";
+
+        $ligacaoService = new LigacaoService(null);
+        try {
+            $resp = $ligacaoService->inserirLigacoes($aparelho,$r);
+            echoResponseClean(200, $resp);
+        } catch (Exception $exception) {
+            echoResponse(500, $exception->getMessage());
+        }
+    } else {
+        echoResponse(401, 'Aparelho não encontrado');
+    }
+});
+
 
 $app->post($route . '/arquivo', function () use ($app) {
     $aparelho = getAparelho($app);
