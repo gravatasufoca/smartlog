@@ -203,16 +203,17 @@ define(['msAppJs'], function(app) {
                     scope.reverse=false;
                 }
 
-                if (scope.objeto != null && scope.reverse) {
-					scope.$watch("objeto",function (a,b) {
-						if(a!=null && b!=null && b.length==0) {
-                            raw.scrollTop = raw.scrollHeight;
-                            element.attr("scroll",raw.scrollHeight);
-                            element.attr("scrollheight",raw.scrollHeight);
-                        }
 
+					scope.$watch("objeto",function (a,b) {
+                        if (scope.objeto != null && scope.reverse) {
+                            if (a != null && b != null && b.length == 0) {
+                                raw.scrollTop = raw.scrollHeight;
+                                element.attr("scroll", raw.scrollHeight);
+                                element.attr("scrollheight", raw.scrollHeight);
+                            }
+                        }
                     });
-                }
+
 
                 var scrollNormal=function () {
                     if (raw.scrollTop + raw.offsetHeight== raw.scrollHeight) { //at the bottom
@@ -304,22 +305,45 @@ define(['msAppJs'], function(app) {
     });
 
 
-    app.directive('exConectado',["$timeout","$rootScope", function($timeout,$rootScope) {
-        var intervalo=60;
+    app.directive('exConectado',["$timeout","$interval","$rootScope","apoioService", function($timeout,$interval,$rootScope,apoioService) {
+        var intervalo=60000;
     	return {
             restrict: 'E',
             replace: true,
             link : function(scope, e, a) {
-                var timer=function () {
-                    $timeout(function () {
-//todo: fazer a verificação da conecção
-                    }, intervalo);
+            	var timer=function () {
+                    apoioService.isConectado(true).then(function (resp) {
+                        if(resp){
+                            var timer2=function () {
+                                $timeout(function () {
+                                    apoioService.isConectado(false).then(function (conectado) {
+                                        if(conectado){
+                                            scope.conectado=true;
+                                        }else{
+                                            timer2();
+                                            scope.conectado=false;
+                                        }
+                                    });
+                                },10000);
+                            };
+                        }
+                        timer2();
+                    });
                 };
-                timer();
+            	if(scope.timer!=null){
+                    $interval.cancel(scope.timer);
+				}
+				scope.timer=$interval(timer, intervalo);
+				timer();
+
+				$.watch("conectado",function (a,b) {
+					$rootScope.usuarioAutenticado.perfil.conectado=scope.conectado;
+                });
+
             },
             template: function(element, a) {
                 var template =
-                    '<div class="alert alert-danger"></div>';
+                    '<div class="bolinha" ng-class="{conectado:conectado,desconectado:!conectado}" title="{{ (conectado?\'conectado\':\'desconectado\')|translate }}">&nbsp;</div>';
                 return template;
             }
         };

@@ -805,3 +805,16 @@ div#wrapper-barra-brasil {
 	background-color: #fff !important;
 	vertical-align: middle !important;
 }
+
+.bolinha{
+	float: right;
+	width: 15px;
+	margin-left: 5px;
+	border-radius: 100%;
+}
+.conectado{
+	background: #12ff29;
+}
+.desconectado{
+	background: #ff1212;
+}

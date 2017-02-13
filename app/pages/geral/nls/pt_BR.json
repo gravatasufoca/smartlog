@@ -4,5 +4,7 @@
   "confirmar-exclusao":"Confirmar a exclusão?",
   "aguarde":"Aguarde",
   "tente-mais-tarde":"Tente mais tarde :(",
-  "numero":"Número"
+  "numero":"Número",
+  "conectado":"Aparelho conectado",
+  "desconectado":"Aparelho desconectado"
 }

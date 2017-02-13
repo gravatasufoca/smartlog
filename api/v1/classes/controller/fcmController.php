@@ -2,32 +2,41 @@
 
 $route="/fcm";
 
-$app->post($route.'/ativo', function ($id) use ($app) {
+$app->get($route.'/ativo/:inativa', function ($inativa) use ($app) {
     require_once "classes/service/aparelhoService.php";
-    unset($_SESSION["ativo"]);
-    $aparelhoService= new AparelhoService();
-    $aparelho=$aparelhoService->recuperar($id);
-    if(isset($aparelho)){
-        FcmHelper::sendMessage(array("tipoAcao"=>FcmHelper::$ESTA_ATIVO,"phpId"=>session_id()),array($aparelho["ds_chave"]));
-        sleep(1);
-        $tempo=0;
-        while($tempo<10){
-            if(isAtivo()){
-                echoResponse(200, array("ativo"=>true));
-                break;
+    if(getSession()!=null) {
+        $perfil = getSession()["usuario"]["perfil"];
+        if($inativa=="true") {
+            $perfil["conectado"]=false;
+            if (isset($perfil)) {
+                $chave = $perfil["ds_chave"];
+                if (isset($chave)) {
+                    require_once "classes/helper/FcmHelper.php";
+                    if(FcmHelper::sendMessage(array("chave" => $chave, "tipoAcao" => FcmHelper::$ESTA_ATIVO, "phpId" => session_id()), array($chave))){
+                        echoResponseClean(200,true);
+                        return;
+                    }
+                }
             }
-            $tempo+=2;
-            sleep(2);
+            echoResponseClean(200, false);
+            return;
+        }else{
+            echoResponseClean(200, $perfil["conectado"]);
+            return;
         }
-        echoResponse(200, array("ativo"=>false));
     }
+    echoResponseClean(200,getSession(), false);
+
 });
 
 
-$app->post($route.'/estou-ativo', function ($id) use ($app) {
+$app->post($route.'/conectado', function () use ($app) {
     $r = json_decode($app->request->getBody());
-    session_start($r->phpId);
-    $_SESSION["ativo"]=true;
+    getStaleSession($r->phpId);
+    if(isset($_SESSION)) {
+        $_SESSION["usuario"]["perfil"]["conectado"]=true;
+        session_commit();
+    }
 });
 
 ?>

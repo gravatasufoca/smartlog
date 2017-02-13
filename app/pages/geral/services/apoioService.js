@@ -109,8 +109,8 @@ define(['msAppJs'], function(app) {
 			return deferred.promise;
 		};
 
-		var isConectado = function () {
-            return resourceRest.api.all("receber").one('isconectado').get();
+		var isConectado = function (inativa) {
+            return resourceRest.api.all("fcm").one('ativo',inativa).get();
         };
 
 		return {

@@ -140,7 +140,8 @@ function getSession()
 function getStaleSession($id)
 {
     if (!isset($_SESSION)) {
-        session_start($id);
+        session_id($id);
+        session_start();
     }
     return $_SESSION;
 }
