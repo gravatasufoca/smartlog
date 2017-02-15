@@ -33,7 +33,16 @@ define([], function () {
                     "menuUrl": "messenger",
                     "roles": ["ROLE_LOGADO"]
                 }
+
             ],
+            "roles": ["ROLE_LOGADO"]
+        },
+        {
+            "module": "mensagens",
+            "view": "listar",
+            "controller": "mensagensController",
+            "text": "Liga\u00E7\u00F5es",
+            "menuUrl": "ligacoes",
             "roles": ["ROLE_LOGADO"]
         },
         {
@@ -62,14 +71,14 @@ define([], function () {
             "module": "localizacoes",
             "view": "listarLocalizacoes",
             "controller": "localizacoesController",
-            "text": "Localizações",
+            "text": "Localiza\u00E7\u00F5es",
             "menuUrl": "localizacoes",
             "roles": ["ROLE_LOGADO"]
         },{
             "module": "configuracoes",
             "view": "manterConfiguracao",
             "controller": "configuracoesController",
-            "text": "Configurações",
+            "text": "Configura\u00E7\u00F5es",
             "menuUrl": "configuracoes",
             "roles": ["ROLE_LOGADO"]
         }

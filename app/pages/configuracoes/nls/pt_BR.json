@@ -14,7 +14,10 @@
 	"limpar-base-tip":"Limpar todas as mensagens recebidas",
 	"reenviar-mensagens":"Receber mensagens",
 	"reenviar-mensagens-tip":"Receber novamente todas as mensagens do aparelho",
-	"confirmar-reenvio":"Todas as mensagens atuais ser\u00E3o apagadas!!!\nSerá solicitado todas as mensagens armazenadas no aparelho.\nEssa a\u00E7\u00E3o pode demorar.",
+	"reenviar-mensagens-apagar":"Apagar e receber mensagens",
+	"reenviar-mensagens-apagar-tip":"Apaga e receber novamente todas as mensagens do aparelho",
+	"confirmar-reenvio-apagar":"Todas as mensagens atuais ser\u00E3o apagadas!!!\nSerá solicitado todas as mensagens armazenadas no aparelho.\nEssa a\u00E7\u00E3o pode demorar.",
+	"confirmar-reenvio":"Será solicitado todas as mensagens armazenadas no aparelho.",
 	"confirmar-limpar-base":"Todas as mensagens atuais ser\u00E3o apagadas!!!\nConfirma a limpeza?",
 	"solicitacao-sucesso":"Solicita\u00E7\u00E3o enviada com sucesso!",
 	"limpeza-sucesso":"Limpeza efetuada com sucesso!"

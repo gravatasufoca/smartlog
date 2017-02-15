@@ -22,9 +22,20 @@
                                pergunta="'confirmar-reenvio' | translate"
                                rotulo-botao="'confirma-modal' | translate"
                                exibir-confirmacao-quando="true"
-                               item="atividade"
+                               item="'false'"
                                title="{{'reenviar-mensagens-tip' | translate}}">
                                 {{'reenviar-mensagens' | translate}}
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a ex-modal-confirmacao="solicitarReenvio"
+                               titulo="'reenviar-mensagens-apagar' | translate"
+                               pergunta="'confirmar-reenvio-apagar' | translate"
+                               rotulo-botao="'confirma-modal' | translate"
+                               exibir-confirmacao-quando="true"
+                               item="'true'"
+                               title="{{'reenviar-mensagens-apagar-tip' | translate}}">
+                                {{'reenviar-mensagens-apagar' | translate}}
                             </a>
                         </li>
                         <li class="divider"></li>

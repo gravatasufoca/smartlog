@@ -29,9 +29,6 @@ define(['msAppJs',
 	                                            		 ){
 		$translatePartialLoader.addPart('mensagens');
 
-
-
-
 		/**
 		 * Controla o nivel de acesso do usuario logado para a funcionalidade em questão
 		 */
@@ -42,7 +39,7 @@ define(['msAppJs',
 			});
 		}, 100);*/
 
-
+        $scope.ligacoes=false;
 
 		$scope.topicos=[];
 		$scope.topico=null;
@@ -70,30 +67,12 @@ define(['msAppJs',
 		 * Recuperando o estado da tela de consulta
 		 */
         $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams, error) {
-           /* if ($stateParams.id) {
-                topicoService.recuperarTopicos($stateParams.id)
-                    .then(function (data) {
-                        $scope.agencia = data.resultado;
-
-                        contratoAgencia.recuperarContratoVigentePorAgencia($scope.agencia.id).then(function (d) {
-                            $scope.agencia.contrato = d.resultado;
-                        });
-
-                        //$scope.agenciaSecundaria = $scope.agencia.agenciaAditivo;
-                        if (window.geral.isEmpty($scope.agencia.telefoneAgencia)) {
-                            $scope.agencia.telefoneAgencia = new TelefoneAgencia();
-                        }
-
-                        console.log($scope)
-                    }, function (e) {
-                        $timeout(function () {
-                            $state.go("agencia");
-                            $scope.showMsg('E', e.data.mensagens[0].texto);
-                        }, 100);
-                    });
-            }*/
+            if(toState!=null && toState.name=="ligacoes"){
+                $scope.ligacoes=true;
+            }
             recuperarTopicos();
         });
+
 		/**
 			*Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
 		  */
@@ -274,9 +253,13 @@ define(['msAppJs',
         };
 
 		var getTab=function () {
-			return _.find($scope.tabs,function (tab) {
-				return tab.ativo;
-            })
+		    if(!$scope.ligacoes) {
+                return _.find($scope.tabs, function (tab) {
+                    return tab.ativo;
+                });
+            }else{
+		        return {texto:"LIGACAO"};
+            }
         };
 
 		$scope.scrollEnd=function (elemento) {

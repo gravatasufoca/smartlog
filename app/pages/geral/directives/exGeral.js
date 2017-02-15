@@ -336,8 +336,10 @@ define(['msAppJs'], function(app) {
 				scope.timer=$interval(timer, intervalo);
 				timer();
 
-				$.watch("conectado",function (a,b) {
-					$rootScope.usuarioAutenticado.perfil.conectado=scope.conectado;
+				scope.$watch("conectado",function (a,b) {
+					if($rootScope.usuarioAutenticado!=null && $rootScope.usuarioAutenticado.perfil!=null) {
+                        $rootScope.usuarioAutenticado.perfil.conectado = scope.conectado;
+                    }
                 });
 
             },

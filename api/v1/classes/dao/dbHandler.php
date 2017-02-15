@@ -81,6 +81,9 @@ class DbHandler
         $query= "INSERT INTO " . $table_name . "(" . $columns . ") VALUES (" .$columns_values. ")";
 
         $stmt= $this->conn->prepare($query);
+        if(!$stmt){
+            throw new Exception("erro ao criar statement");
+        }
         $valores=array();
         $tipos="";
         $cols="";
@@ -207,7 +210,7 @@ class DbHandler
         $this->conn->query("START TRANSACTION");
         $resp=false;
         if($this->conn->query("delete from tb_mensagem where id_topico in(select id from tb_topico where id_aparelho=$id) ")) {
-            if($this->conn->query("delete from tb_topico where id_aparelho=$id ")){
+            if($this->conn->query("delete from tb_topico where tp_mensagem not in(2,3) and id_aparelho=$id ")){
                 $resp=true;
             }
         }

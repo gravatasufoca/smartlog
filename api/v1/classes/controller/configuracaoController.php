@@ -47,9 +47,23 @@ $app->get($route."/reenviar" , function () use ($app) {
     try {
         require_once "classes/helper/FcmHelper.php";
 
+        echoResponseClean(200, array("sucesso"=>$configuracaoService->solicitarFcm(FcmHelper::$SOLICITAR_REENVIO)));
+    } catch (Exception $exception) {
+        echoResponse(500, $exception->getMessage());
+    }
+});
+
+
+$app->get($route."/apagar-reenviar" , function () use ($app) {
+
+    require_once "classes/service/configuracaoService.php";
+    $configuracaoService = new ConfiguracaoService();
+    try {
+        require_once "classes/helper/FcmHelper.php";
+
         $resp =$configuracaoService->limparMensagens();
         if($resp){
-            $resp =$configuracaoService->solicitarFcm(FcmHelper::$SOLICITAR_REENVIO);
+            $resp =$configuracaoService->solicitarFcm(FcmHelper::$LIMPAR_REENVIAR);
         }
         echoResponseClean(200, array("sucesso"=>$resp));
     } catch (Exception $exception) {

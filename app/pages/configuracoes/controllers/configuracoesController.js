@@ -184,9 +184,9 @@ define(['msAppJs'], function (app) {
             }
 
 
-            $scope.solicitarReenvio=function () {
+            $scope.solicitarReenvio=function (apagar) {
                 $msNotifyService.loading();
-                configuracoesService.solicitarReenvio().then(function (resp) {
+                configuracoesService.solicitarReenvio(apagar=="true").then(function (resp) {
                     if(resp.sucesso!=null && resp.sucesso) {
                         $scope.showMsg('S', 'solicitacao-sucesso');
                     }else{
