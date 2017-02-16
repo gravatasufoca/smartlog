@@ -1,6 +1,6 @@
 define(['msAppJs'
         ], function(app) {
-	app.factory('ligacoesService', ['resourceRest',"$http","$q","$timeout", function(resourceRest, $http, $q, $timeout){
+	app.factory('ligacoesService', ['resourceRest',"$http","$q","$timeout", function(resourceRest,$http,$q,$timeout){
 
 		var recuperarTopicos=function (idAparelho,tab,carregados) {
 			return resourceRest.topico.one("aparelho",idAparelho).one("tipo",tab.texto.toUpperCase()).one("c",carregados).getList();

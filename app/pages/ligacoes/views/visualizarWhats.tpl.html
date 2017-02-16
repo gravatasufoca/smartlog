@@ -1,0 +1,95 @@
+<div class='container' ui-view>
+	<div class='row'>
+		<div class="span12">
+			<strong class="title">{{'titulo-visualizar-campanha' | translate}}</strong>
+		</div>
+	</div>
+	
+	<div class='row'>
+		<div class="span12">
+			<div class="conteudo-box">
+			
+				<ex-visualizar-dados-campanha 
+					tamanho-span="'span12'" 
+					titulo-painel="'dados-campanha'" 
+					campanha="campanha"
+					exibir-sirefs="true"
+					exibir-descricao="true">
+				</ex-visualizar-dados-campanha>
+				
+				<ex-visualizar-dados-orcamento-campanha 
+					tamanho-span="'span12'" 
+					titulo-painel="'dados-orcamento-campanha'" 
+					exibir-agencias="true"
+					campanha="campanha">
+				</ex-visualizar-dados-orcamento-campanha>
+				
+				
+				<div class="span12">
+					<div class="filder panel panel-default">
+						<div class="panel-heading">
+							<b class="panel-title">{{'historico-alteracao' | translate}}</b>
+						</div>
+						
+						<div class="panel-body table-panel">
+							<table class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th>{{'data-acao' | translate}}</th>
+										<th>{{'usuario-resposavel' | translate}}</th>
+										<th>{{'acao-realizada' | translate}}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="h in historicoList">
+										<td class="centeredColumnXY">{{h.dataAcao | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+										<td class="centeredColumnXY">{{h.nomeUsuario}}</td>
+										<td class="centeredColumnXY">{{h.descricaoAcao}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>		
+
+				<div class="row">
+					<div class="span12">
+						<div class="pull-right">
+							<a class="btn btn-warning" ui-sref="campanha" title="{{'volta-tela-consulta' | translate}}"> 
+								<i class="font15px fa fa-arrow-left"></i> {{'voltar' | translate}}
+							</a>
+							
+							<!-- campanha.situacao.id == 1 = pendente -->
+							<a ng-show="permissaoAcesso.podeREPROVAR && campanha.situacao.id == 2" 
+								ex-modal-confirmacao="aprovarReprovarCampanha"
+								titulo="'titulo-reprovar-campanha' | translate"
+								pergunta="'confirma-reprovacao-campanha' | translate"
+								rotulo-botao="'confirmar' | translate"
+								item="false"
+								
+								class="btn btn-danger" 
+								title="{{'reprovar-campanha' | translate}}"> 
+								<i class="font15px fa fa-thumbs-down"></i> {{'reprovar' | translate}}
+							</a>
+							
+							<!-- campanha.situacao.id == 1 = pendente -->
+							<a ng-show="permissaoAcesso.podeAPROVAR && campanha.situacao.id == 2"
+								ex-modal-confirmacao="aprovarReprovarCampanha"
+								titulo="'titulo-aprovar-campanha' | translate"
+								pergunta="'confirma-aprovacao-campanha' | translate"
+								rotulo-botao="'confirmar' | translate"
+								item="true"
+							
+								ng-show="campanha.situacao.id == 1"
+								class="btn btn-success" 
+								title="{{'aprovar-campanha' | translate}}"> 
+								<i class="font15px fa fa-thumbs-up"></i> {{'aprovar' | translate}}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

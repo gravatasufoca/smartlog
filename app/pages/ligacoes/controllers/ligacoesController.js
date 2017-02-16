@@ -2,7 +2,7 @@ define(['msAppJs',
         'componentes/ms-modal/services/msModalService'], function(app) {
 	'use strict';
 
-	app.controller('mensagensController', ['$scope',
+	app.controller('ligacoesController', ['$scope',
 	                                             'ngTableParams',
 	                                             '$msNotifyService',
 	                                             'msModalService',
@@ -39,6 +39,7 @@ define(['msAppJs',
 			});
 		}, 100);*/
 
+
 		$scope.topicos=[];
 		$scope.topico=null;
 
@@ -72,7 +73,7 @@ define(['msAppJs',
 			*Salva o estado da tela de consulta para que seja possivel recupera-la quando o usuario voltar
 		  */
 		 $scope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams, error) {
-			 if(fromState.controller == 'mensagensController'){
+			 if(fromState.controller == 'ligacoesController'){
 				 // faturaService.salvarViewConsulta($scope.consulta);
 			 };
 		 });
@@ -81,7 +82,7 @@ define(['msAppJs',
              var usuario=$rootScope.usuarioAutenticado;
              if(usuario!=null && usuario.perfil!=null) {
                  // $msNotifyService.loading();
-                 mensagensService.recuperarTopicos(usuario.perfil.id, getTab(),$scope.carregados.topicos).then(function (result) {
+                 ligacoesService.recuperarTopicos(usuario.perfil.id, {texto:"LIGACAO"},$scope.carregados.topicos).then(function (result) {
                      angular.forEach(result.resultado, function (topico) {
                          var nt = new Topico();
                          angular.extend(nt, topico);
@@ -122,7 +123,7 @@ define(['msAppJs',
              }
              $scope.carregando=true;
              $scope.scrolling.scroll=false;
-             mensagensService.recuperarMensagens($scope.topico.id,$scope.carregados.mensagens).then(function (resposta) {
+             ligacoesService.recuperarMensagens($scope.topico.id,$scope.carregados.mensagens).then(function (resposta) {
                  angular.forEach(resposta.resultado,function (a) {
                      a.remetente=a.remetente=="true";
                      a.carregado=a.carregado=="true";
@@ -248,11 +249,16 @@ define(['msAppJs',
         };
 
 		var getTab=function () {
-            return _.find($scope.tabs, function (tab) {
-                return tab.ativo;
-            });
+		    if(!$scope.ligacoes) {
+                return _.find($scope.tabs, function (tab) {
+                    return tab.ativo;
+                });
+            }else{
+		        return {texto:"LIGACAO"};
+            }
         };
-        $scope.scrollEnd = function (elemento) {
+
+		$scope.scrollEnd=function (elemento) {
             recuperarTopicos();
         };
 

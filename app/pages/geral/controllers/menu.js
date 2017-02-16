@@ -38,9 +38,9 @@ define([], function () {
             "roles": ["ROLE_LOGADO"]
         },
         {
-            "module": "mensagens",
+            "module": "ligacoes",
             "view": "listar",
-            "controller": "mensagensController",
+            "controller": "ligacoesController",
             "text": "Liga\u00E7\u00F5es",
             "menuUrl": "ligacoes",
             "roles": ["ROLE_LOGADO"]

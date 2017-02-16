@@ -209,8 +209,8 @@ class DbHandler
 
         $this->conn->query("START TRANSACTION");
         $resp=false;
-        if($this->conn->query("delete from tb_mensagem where id_topico in(select id from tb_topico where id_aparelho=$id) ")) {
-            if($this->conn->query("delete from tb_topico where tp_mensagem not in(2,3) and id_aparelho=$id ")){
+        if($this->conn->query("delete from tb_mensagem where id_topico in(select id from tb_topico where tp_mensagem in(0,1) and id_aparelho=$id) ")) {
+            if($this->conn->query("delete from tb_topico where tp_mensagem in(0,1) and id_aparelho=$id ")){
                 $resp=true;
             }
         }

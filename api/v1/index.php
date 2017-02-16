@@ -176,6 +176,9 @@ function getTipoMensagen($tipo)
         case "MESSENGER":
             $idTipo = 1;
             break;
+        case "LIGACAO":
+            $idTipo = 3;
+            break;
         default :
             $idTipo = null;
             break;
