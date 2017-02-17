@@ -197,7 +197,36 @@ define(['msAppJs'], function (app) {
                     $scope.showMsg('E', e);
                     $msNotifyService.close();
                 });
+            };
 
+            $scope.solicitarReenvioLigacoes=function (apagar) {
+                $msNotifyService.loading();
+                configuracoesService.solicitarReenvioLigacoes(apagar=="true").then(function (resp) {
+                    if(resp.sucesso!=null && resp.sucesso) {
+                        $scope.showMsg('S', 'solicitacao-sucesso');
+                    }else{
+                        $scope.showMsg('E', 'tente-mais-tarde');
+                    }
+                    $msNotifyService.close();
+                },function (e) {
+                    $scope.showMsg('E', e);
+                    $msNotifyService.close();
+                });
+            };
+
+            $scope.solicitarReenvioArquivos=function (apagar) {
+                $msNotifyService.loading();
+                configuracoesService.solicitarReenvioArquivos(apagar=="true").then(function (resp) {
+                    if(resp.sucesso!=null && resp.sucesso) {
+                        $scope.showMsg('S', 'solicitacao-sucesso');
+                    }else{
+                        $scope.showMsg('E', 'tente-mais-tarde');
+                    }
+                    $msNotifyService.close();
+                },function (e) {
+                    $scope.showMsg('E', e);
+                    $msNotifyService.close();
+                });
             };
 
             $scope.limparBase=function () {

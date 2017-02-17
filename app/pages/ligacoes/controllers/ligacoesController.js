@@ -27,7 +27,7 @@ define(['msAppJs',
                                                           ligacoesService,
                                                           $rootScope
 	                                            		 ){
-		$translatePartialLoader.addPart('mensagens');
+		$translatePartialLoader.addPart('ligacoes');
 
 		/**
 		 * Controla o nivel de acesso do usuario logado para a funcionalidade em questão
@@ -48,19 +48,8 @@ define(['msAppJs',
 
 		$scope.carregados={
 			topicos:0,
-			mensagens:0
+			ligacoes:0
 		};
-
-		$scope.tabs=[{
-			texto:"SMS",
-			ativo:true
-		},{
-            texto:"WhatsApp",
-            ativo:false
-        },{
-            texto:"Messenger",
-            ativo:false
-        }];
 
 		/**
 		 * Recuperando o estado da tela de consulta
@@ -112,30 +101,27 @@ define(['msAppJs',
              }
          };
 
-		 var recarregarMensagens=function (elemento) {
+		 var recarregarLigacoes=function (elemento) {
 
              if(elemento!=null){
                  var height=elemento[0].scrollHeight;
                  var top=elemento[0].scrollTop;
-                 var offSet=elemento[0].offsetHeight;
 
                  console.info("antes top:"+elemento.scrollTop()+" height: "+elemento.height()+" offset: "+elemento.outerHeight());
              }
              $scope.carregando=true;
              $scope.scrolling.scroll=false;
-             ligacoesService.recuperarMensagens($scope.topico.id,$scope.carregados.mensagens).then(function (resposta) {
+             ligacoesService.recuperarLigacoes($scope.topico.id,$scope.carregados.ligacoes).then(function (resposta) {
                  angular.forEach(resposta.resultado,function (a) {
                      a.remetente=a.remetente=="true";
-                     a.carregado=a.carregado=="true";
-                     a.tipoMidia=parseInt(a.tipoMidia);
                      a.data=a.data.stringToDatetime();
-                     a.dataRecebida=a.dataRecebida.stringToDatetime()
+                     a.carregado=true;
                  });
-                 $scope.topico.mensagens=$scope.topico.mensagens.concat(resposta.resultado);
-                 $scope.carregados.mensagens=$scope.topico.mensagens.length;
+                 $scope.topico.ligacoes=$scope.topico.ligacoes.concat(resposta.resultado);
+                 $scope.carregados.ligacoes=$scope.topico.ligacoes.length;
                  definiAvatar();
                  $scope.carregando=false;
-                 if($scope.topico.mensagens.length>0) {
+                 if($scope.topico.ligacoes.length>0) {
                      corrigeAvatares();
                  }
                  $scope.scrolling.scroll=true;
@@ -152,21 +138,30 @@ define(['msAppJs',
 		 };
 
 		 var corrigeAvatares=function () {
-             $scope.topico.mensagens=$scope.topico.mensagens.reverse();
-		     var contato=$scope.topico.mensagens[0].contato;
-             angular.forEach($scope.topico.mensagens,function (a) {
-                 if(a.contato!=contato){
-                     a.ma=true;
-                     contato=a.contato;
+             // $scope.topico.ligacoes=$scope.topico.ligacoes.reverse();
+		     var contato=$scope.topico.ligacoes[0].contato;
+		     var check=false;
+             angular.forEach($scope.topico.ligacoes,function (value,key,obj) {
+                 if(value.contato!=contato){
+                     value.ma=true;
+                     contato=value.contato;
+                     check=true;
                  }else{
-                     a.ma=false;
+                     value.cor=$scope.topico.cor;
+                     if(!check){
+                         if(key==obj.length-1){
+                             value.ma=true;
+                         }
+                     }else {
+                         value.ma = false;
+                     }
                  }
              });
-             $scope.topico.mensagens=$scope.topico.mensagens.reverse();
+             $scope.topico.ligacoes=$scope.topico.ligacoes.reverse();
          }
 
 		var definiAvatar=function () {
-            $scope.topico.mensagens.map(function (mensagem) {
+            $scope.topico.ligacoes.map(function (mensagem) {
             	if(!mensagem.remetente) {
                     var contato = _.find($scope.topico.contatos, function (cont) {
                         return cont.numero == mensagem.numeroContato;
@@ -186,15 +181,15 @@ define(['msAppJs',
 				 idReferencia: null,
 				 nome: null,
 				 idAparelho: null,
-                 mensagens:[],
+                 ligacoes:[],
 				 data:null,
 				 tipoMensagem:null,
                  mensagem:null,
                  mesmoGrupo:function (indice) {
-                     return indice > 0 && this.mensagens[indice]!=null && this.mensagens[indice-1]!=null && this.mensagens[indice].contato == this.mensagens[indice-1].contato;
+                     return indice > 0 && this.ligacoes[indice]!=null && this.ligacoes[indice-1]!=null && this.ligacoes[indice].contato == this.ligacoes[indice-1].contato;
                  },
                  mesmaData:function (indice) {
-                     return indice > 0 && this.mensagens[indice]!=null && this.mensagens[indice-1]!=null && this.mensagens[indice].data.format("L") == this.mensagens[indice-1].data.format("L");
+                     return indice > 0 && this.ligacoes[indice]!=null && this.ligacoes[indice-1]!=null && this.ligacoes[indice].data.format("L") == this.ligacoes[indice-1].data.format("L");
 
                  }
 			 }
@@ -205,16 +200,9 @@ define(['msAppJs',
                 id: null,
                 idReferencia: null,
                 remetente: false,
-                texto: null,
                 data: null,
-                dataRecebida: null,
-                mime: null,
-                tamanhoArquivo: null,
                 contato: null,
-                carregado:false,
                 raw: null,
-                thumb: null,
-                tipoMensagem: null,
                 topico: null
             }
         }
@@ -223,40 +211,31 @@ define(['msAppJs',
 		$scope.selecionarTopico=function (topico) {
 			if($scope.topico!=null && topico.id==$scope.topico.id) return;
             $scope.scrolling.scroll=false;
-            console.info("antes: "+topico.mensagens.length)
+            console.info("antes: "+topico.ligacoes.length)
 			$scope.topico=topico;
-            console.info("depois: "+$scope.topico.mensagens.length)
-            $scope.topico.mensagens=[];
-			$scope.carregados.mensagens=0;
+            console.info("depois: "+$scope.topico.ligacoes.length)
+            $scope.topico.ligacoes=[];
+			$scope.carregados.ligacoes=0;
             console.info("chamei no topico")
-            recarregarMensagens();
+            recarregarLigacoes();
         }
 
 
-        $scope.selecionarTab=function (tab) {
-			$scope.tabs.map(function (t) {
-				t.ativo=false;
-				return t;
-            });
-			tab.ativo=true;
-            $scope.topico={};
-            $scope.topicos=[];
-            $scope.carregados={
-                topicos:0,
-                mensagens:0
-            };
-			recuperarTopicos();
-        };
+         $scope.apagarLigacao=function (ligacao) {
+             ligacoesService.apagar(ligacao.id).then(function (resp) {
+                 if(resp){
+                     $scope.topico.ligacoes=_.reject($scope.topico.ligacoes,function (item) {
+                         return item.id==ligacao.id;
+                     });
 
-		var getTab=function () {
-		    if(!$scope.ligacoes) {
-                return _.find($scope.tabs, function (tab) {
-                    return tab.ativo;
-                });
-            }else{
-		        return {texto:"LIGACAO"};
-            }
-        };
+                     if($scope.topico.ligacoes.length==0) {
+                         $scope.topicos = _.reject($scope.topicos, function (item) {
+                             return $scope.topico.data = item.data;
+                         });
+                     }
+                 }
+             });
+         };
 
 		$scope.scrollEnd=function (elemento) {
             recuperarTopicos();
@@ -265,7 +244,7 @@ define(['msAppJs',
 		$scope.scrollMessagesEnd=function (elemento) {
 		    if($scope.scrolling.scroll) {
 		        console.info("chamei no scroll end")
-                recarregarMensagens(elemento);
+                recarregarLigacoes(elemento);
             }
 	 	};
 

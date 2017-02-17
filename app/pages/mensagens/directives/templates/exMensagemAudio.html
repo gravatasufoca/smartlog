@@ -11,7 +11,7 @@
     </div>
 
     <audio ng-if="mensagem.carregado" media-player="player" controls>
-        <source ng-src="data:{{::mensagem.midiaMime}};base64,{{::mensagem.raw}}"
+        <source ng-src="data:{{mensagem.midiaMime || 'audio/ogg'}};base64,{{::mensagem.raw}}"
                 type="{{mensagem.midiaMime || 'audio/ogg'}}" volume="{{::volume}}"/>
     </audio>
 </div>

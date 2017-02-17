@@ -16,8 +16,15 @@ define(['msAppJs'],
         };
 
 		 var solicitarReenvio = function(apagar) {
-		 	console.info(apagar);
 			 return resourceRest.configuracoes.one(apagar?"apagar-reenviar":"reenviar").get();
+		 };
+
+		 var solicitarReenvioLigacoes = function(apagar) {
+			 return resourceRest.configuracoes.one(apagar?"apagar-ligacoes-reenviar":"reenviar-ligacoes").get();
+		 };
+
+		 var solicitarReenvioArquivos = function(apagar) {
+			 return resourceRest.configuracoes.one(apagar?"apagar-arquivos-reenviar":"reenviar-arquivos").get();
 		 };
 
 		 var limparBase = function() {
@@ -28,7 +35,9 @@ define(['msAppJs'],
             recuperarConfiguracao : recuperarConfiguracao,
 			salvar:salvar,
 			limparBase:limparBase,
-			solicitarReenvio:solicitarReenvio
+			solicitarReenvio:solicitarReenvio,
+			solicitarReenvioLigacoes:solicitarReenvioLigacoes,
+            solicitarReenvioArquivos:solicitarReenvioArquivos,
 		};
 
 	}]);

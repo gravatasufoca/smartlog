@@ -220,6 +220,43 @@ class DbHandler
         return $resp;
     }
 
+    public function limparLigacoes($id){
+
+        $this->conn->query("START TRANSACTION");
+        $resp=false;
+
+        $queryArquivo="delete
+FROM tb_arquivo 
+WHERE
+  id IN (SELECT ligacao.id_arquivo
+             FROM tb_ligacao ligacao
+             WHERE ligacao.id_topico IN (SELECT id
+                                         FROM tb_topico topico
+                                         WHERE topico.id_aparelho = $id))";
+
+        $queryLigacao="delete
+             FROM tb_ligacao 
+             WHERE id_topico IN (SELECT id
+                                         FROM tb_topico topico
+                                         WHERE topico.id_aparelho = $id)";
+
+
+        $queryTopico="DELETE from tb_topico where id_aparelho=$id and not exists(SELECT count(1) from tb_ligacao lig where lig.id_topico=id)";
+
+
+        if($this->conn->query($queryLigacao)) {
+            if ($this->conn->query($queryArquivo)) {
+                if ($this->conn->query($queryTopico)) {
+                    $resp=true;
+                }
+            }
+        }
+
+        $this->conn->query("COMMIT");
+
+        return $resp;
+    }
+
 }
 
 ?>

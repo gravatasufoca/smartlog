@@ -14,25 +14,36 @@ class LigacaoService
     private $carregados;
 
 
-    private $queryAll = "select  mensagem.id,
-            mensagem.id_referencia as idReferencia,
-            case mensagem.fl_remetente when 1 then 'true' else 'false' end as remetente,
-            case mensagem.fl_remetente when 1 then 'user_bgcolor_1' else '' end as cor,            
-            mensagem.ds_texto  as texto,
-            mensagem.dt_data as data,
-            mensagem.dt_recebida as dataRecebida,
-            mensagem.ds_midia_mime as midiaMime,
-            mensagem.vl_tamanho_arquivo as tamanhoArquivo,
-            contato.no_contato as contato,
-            contato.nu_contato as numeroContato,
-            contato.raw_data as foto,
-            mensagem.raw_data as raw,
-            case when mensagem.raw_data is not null then 'true' else 'false' end carregado,
-            case when mensagem.raw_data is null then mensagem.thumb_image else null end thumb,
-            mensagem.id_topico as idTopico,
-            mensagem.id_tipo_midia as tipoMidia
-        from tb_mensagem mensagem 
-        left join tb_contato contato on contato.id=mensagem.id_contato ";
+    private $queryAll = "select  ligacao.id,
+                          ligacao.id_referencia as idReferencia,
+                          case ligacao.fl_remetente when 1 then 'true' else 'false' end as remetente,
+                          ligacao.dt_data as data,
+                          ligacao.no_contato as contato,
+                          ligacao.no_contato as numeroContato,
+                          ligacao.id_topico as idTopico,
+                          arq.vl_duracao  as duracao,
+                          arq.raw_data as raw
+                        from tb_ligacao ligacao
+                          INNER JOIN tb_arquivo arq on ligacao.id_arquivo = arq.id ";
+
+    private $queryAllLigacao= "select
+                                  topico.id,
+                                  topico.id_referencia as idReferencia,
+                                  topico.ds_nome as nome,
+                                  case topico.fl_grupo WHEN 1 then 'true' else 'false' end as grupo,
+                                  topico.id_aparelho as idAparelho ,
+                                  mensagem.id as idMensagem,
+                                  mensagem.dt_data as 'data',
+                                  mensagem.no_contato as contato,
+                                  mensagem.nu_numero as numeroContato,
+                                  mensagem.fl_remetente as remetente
+                                from tb_topico topico
+                                  left JOIN tb_ligacao mensagem on mensagem.id=(
+                                    SELECT id
+                                    FROM tb_ligacao lig WHERE id_topico=topico.id
+                                    ORDER BY lig.dt_data DESC
+                                    limit 1
+                                  ) ";
 
 
     function __construct($carregados)
@@ -67,12 +78,30 @@ class LigacaoService
     {
         if (isset($idTopico)) {
             try {
-                return $this->db->getList($this->queryAll . " where id_topico=$idTopico" . " order by mensagem.dt_data desc " . $this->limite);
+                return $this->db->getList($this->queryAll . " where id_topico=$idTopico" . " order by ligacao.dt_data desc " . $this->limite);
             } catch (Exception $e) {
                 throw new Exception($e);
             }
         }
         return null;
+    }
+
+    public function apagar($id)
+    {
+        if (isset($id)) {
+            try {
+
+                $arq=$this->db->getOneRecord("SELECT arq.id FROM tb_arquivo arq INNER JOIN tb_ligacao ligacao ON arq.id = ligacao.id_arquivo where ligacao.id=$id");
+                if(isset($arq)) {
+                    if ($this->db->executeQuery("delete from tb_ligacao where id=$id")) {
+                        return $this->db->executeQuery("delete from tb_ligacao where id=".$arq["id"]);
+                    }
+                }
+            } catch (Exception $e) {
+                throw new Exception($e);
+            }
+        }
+        return false;
     }
 
 
@@ -156,6 +185,20 @@ class LigacaoService
         }
         return null;
 
+    }
+
+    public function limparLigacoes()
+    {
+        if(getSession()!=null) {
+            $perfil = getSession()["usuario"]["perfil"];
+            if (isset($perfil)) {
+                $id = $perfil["id"];
+                if (isset($id)) {
+                    return $this->db->limparLigacoes($id);
+                }
+            }
+        }
+        return false;
     }
 
 }

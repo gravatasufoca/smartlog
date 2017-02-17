@@ -41,7 +41,7 @@
                 <!-- QUANDO NAO TEM MENSAGENS ESCOLHIDAS-->
                 <div class="mensagenscontainer">
                     <div class="semmensagens" ng-if="topico==null">Selecione um chat para começar a conversar</div>
-                    <div class="listamensagem" ng-if="topico!=null" objeto="topico.mensagens" scrolly="scrolly"
+                    <div class="listamensagem" ng-if="topico!=null" objeto="topico.ligacoes" scrolly="scrolly"
                          loading="carregando" scrolling="scrolling"
                          on-end="scrollMessagesEnd" timeout="500" reverse="true">
 
@@ -56,7 +56,7 @@
 
 
                         <!-- MENSAGEM COMPLETA -->
-                        <div class="msgwrap" ng-repeat="msg in topico.mensagens | orderBy:'data':reverse">
+                        <div class="msgwrap" ng-repeat="msg in topico.ligacoes | orderBy:'data':reverse">
 
 
                             <div class="im_message_date_split im_service_message_wrap msgdata"
@@ -76,16 +76,21 @@
                                         <div class="chora">
                                             <div class="data">{{msg.data.format('hh:mm:ss')}}</div>
                                         </div>
+
+                                        <button
+                                                ex-modal-confirmacao="apagarLigacao"
+                                                item="msg"
+                                                pergunta="'confirma-exclusao-registro' | translate"
+                                                rotulo-botao="'confirma-exclusao' | translate"
+                                                type="button" class="btn btn-xs btn-danger apagargravacao"
+                                                title="{{'apagar-ligacao' | translate}}">
+                                            <i class="font15px fa fa-trash"></i>
+                                        </button>
+
                                         <div class="message_body">
                                             <a class="author {{topico.mesmoGrupo($index)? 'hidden':''}}">{{::msg.contato}}</a>
-                                            <div class="mensagem " ng-if="msg && msg.tipoMidia==0">
-                                                <div class="msgtxt">{{::msg.texto}}</div>
-                                            </div>
 
-                                            <ex-mensagem-audio ng-if="msg.tipoMidia==2" mensagem="msg"></ex-mensagem-audio>
-                                            <ex-mensagem-image ng-if="msg.tipoMidia==1 || msg.tipoMidia==13"
-                                                               mensagem="msg"></ex-mensagem-image>
-                                            <ex-mensagem-video ng-if="msg.tipoMidia==3" mensagem="msg"></ex-mensagem-video>
+                                            <ex-mensagem-audio mensagem="msg"></ex-mensagem-audio>
 
                                         </div>
                                     </div>

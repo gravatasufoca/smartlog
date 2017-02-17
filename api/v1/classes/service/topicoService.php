@@ -38,6 +38,28 @@ class TopicoService
       )
       left join tb_contato contato on contato.id=mensagem.id_contato ";
 
+    private $queryAllLigacao= "select
+                                  topico.id,
+                                  topico.id_referencia as idReferencia,
+                                  topico.ds_nome as nome,
+                                  case topico.fl_grupo WHEN 1 then 'true' else 'false' end as grupo,
+                                  topico.id_aparelho as idAparelho ,
+                                  mensagem.id as idMensagem,
+                                  mensagem.dt_data as 'data',
+                                  mensagem.no_contato as contato,
+                                  mensagem.nu_numero as numeroContato,
+                                  mensagem.fl_remetente as remetente,
+                                  arq.vl_duracao as texto
+                                from tb_topico topico
+                                  inner JOIN tb_ligacao mensagem on mensagem.id=(
+                                    SELECT id
+                                    FROM tb_ligacao lig WHERE id_topico=topico.id
+                                    ORDER BY lig.dt_data DESC
+                                    limit 1
+                                  )
+                                  LEFT JOIN tb_arquivo arq on mensagem.id_arquivo = arq.id
+                                   ";
+
     function __construct($carregados)
     {
         $this->db = new DbHandler();
@@ -80,10 +102,10 @@ class TopicoService
         if(isset($idAparelho) && isset($tipo)) {
             try {
                 $idTipo=getTipoMensagen($tipo);
-                $result= $this->db->getList($this->queryAll." where topico.id_aparelho=$idAparelho and topico.tp_mensagem=$idTipo ORDER BY mensagem.dt_data DESC".$this->limite);
+                $result= $this->db->getList(($idTipo!=3? $this->queryAll:$this->queryAllLigacao) ." where topico.id_aparelho=$idAparelho and topico.tp_mensagem=$idTipo ORDER BY mensagem.dt_data DESC".$this->limite);
                 $tmp=array();
                 foreach ($result as $topico){
-                    array_push($tmp,$this->fixTopico($topico));
+                    array_push($tmp, $this->fixTopico($topico));
                 }
                 return $tmp;//array_slice($tmp,82,1);
             }catch (Exception $e){
@@ -110,36 +132,61 @@ class TopicoService
         return null;
     }
 
-    private function fixTopico($topico){
+    private function fixTopico($topico)
+    {
         require_once "classes/service/mensagemService.php";
 
-        $mensagem=MensagemService::getMensagem($topico["idMensagem"],null,$topico["remetente"],
-                                $topico["texto"],$topico["data"],$topico["dataRecebida"],
-                                $topico["midiaMime"],null,$topico["contato"],$topico["numeroContato"],$topico["foto"],null,null,
-                                $topico["id"],$topico["tipoMidia"]);
+        $mensagem = MensagemService::getMensagem(isset($topico["idMensagem"]) ? $topico["idMensagem"] : null, null, isset($topico["remetente"]) ? $topico["remetente"] : null,
+            isset($topico["texto"]) ? $topico["texto"] : null, isset($topico["data"]) ? $topico["data"] : null, isset($topico["dataRecebida"]) ? $topico["dataRecebida"] : null,
+            isset($topico["midiaMime"]) ? $topico["midiaMime"] : null, null, isset($topico["contato"]) ? $topico["contato"] : null, isset($topico["numeroContato"]) ? $topico["numeroContato"] : null, isset($topico["foto"]) ? $topico["foto"] : null, null, null,
+            isset($topico["id"]) ? $topico["id"] : null, isset($topico["tipoMidia"]) ? $topico["tipoMidia"] : null);
 
-        $contatos=array();
+        $contatos = array();
 
         $topico["cor"] = "user_bgcolor_" . rand(2, 8);
-
-        $tmp= explode(",", $topico["contatos"]);
-//        if($topico["remetente"]!="1") {
+        if(isset($topico["contatos"])) {
+            $tmp = explode(",", $topico["contatos"]);
             foreach ($tmp as $contato) {
-                if($contato=="") continue;
+                if ($contato == "") continue;
                 $ctmp = explode("#", $contato);
 
                 $tc = array();
-                $tc["numero"] = count($ctmp)>1?$ctmp[1]:null;
+                $tc["numero"] = count($ctmp) > 1 ? $ctmp[1] : null;
                 $tc["nome"] = $ctmp[0];
                 $tc["cor"] = "user_bgcolor_" . rand(2, 8);
                 if ($mensagem["numeroContato"] == $tc["numero"]) {
                     $mensagem["cor"] = $topico["cor"];
-                    $tc["cor"]= $topico["cor"];
+                    $tc["cor"] = $topico["cor"];
                 }
 
                 array_push($contatos, $tc);
             }
-//        }
+        }
+
+        if ($topico["remetente"] == "1") {
+            $mensagem["cor"] = "user_bgcolor_1";
+        }
+        $topico["mensagem"] = $mensagem;
+        if (!isset($topico["nome"])) {
+            if (count($contatos) > 0) {
+                $topico["nome"] = $contatos[0]["nome"];
+            }
+        }
+        $topico["contatos"] = $contatos;
+        return $topico;
+
+    }
+
+    private function fixTopico2($topico){
+
+        $contatos=array();
+        $mensagem=array();
+
+        $topico["cor"] = "user_bgcolor_" . rand(2, 8);
+        $mensagem["cor"] = $topico["cor"];
+        $mensagem["texto"] = $topico["texto"];
+        $mensagem["data"] = $topico["data"];
+        $mensagem["dataRecebida"] = $topico["data"];
 
         if($topico["remetente"]=="1"){
             $mensagem["cor"] ="user_bgcolor_1";

@@ -41,35 +41,70 @@ $app->post($route , function () use ($app) {
 
 
 $app->get($route."/reenviar" , function () use ($app) {
-
-    require_once "classes/service/configuracaoService.php";
-    $configuracaoService = new ConfiguracaoService();
-    try {
-        require_once "classes/helper/FcmHelper.php";
-
-        echoResponseClean(200, array("sucesso"=>$configuracaoService->solicitarFcm(FcmHelper::$SOLICITAR_REENVIO)));
-    } catch (Exception $exception) {
-        echoResponse(500, $exception->getMessage());
-    }
+   reenviar("mensagem",false);
 });
 
 
 $app->get($route."/apagar-reenviar" , function () use ($app) {
+    reenviar("mensagem",true);
+});
 
+$app->get($route."/reenviar-ligacoes" , function () use ($app) {
+    reenviar("ligacao",false);
+});
+
+
+$app->get($route."/apagar-ligacoes-reenviar" , function () use ($app) {
+    reenviar("ligacao",true);
+});
+
+$app->get($route."/reenviar-arquivos" , function () use ($app) {
+    reenviar("arquivo",false);
+});
+
+function reenviar($tipo,$limpar){
     require_once "classes/service/configuracaoService.php";
+    require_once "classes/service/ligacaoService.php";
+
     $configuracaoService = new ConfiguracaoService();
+    $ligacaoService = new LigacaoService(null);
+
     try {
         require_once "classes/helper/FcmHelper.php";
+        $resp=true;
+        switch ($tipo){
+            case "mensagem":
+                if($limpar){
+                    $acao=FcmHelper::$LIMPAR_REENVIAR;
+                    $resp =$configuracaoService->limparMensagens();
+                }else{
+                    $acao=FcmHelper::$SOLICITAR_REENVIO;
+                }
+                break;
+            case "arquivo":
+                $acao = FcmHelper::$SOLICITAR_REENVIO_ARQUIVOS;
+                break;
+            case "ligacao":
+                if($limpar){
+                    $acao=FcmHelper::$LIMPAR_LIGACOES;
+                    $resp =$ligacaoService->limparLigacoes();
+                }else{
+                    $acao=FcmHelper::$SOLICITAR_REENVIO_LIGACOES;
+                }
+                break;
+            default:
+                return;
+        }
 
-        $resp =$configuracaoService->limparMensagens();
+
         if($resp){
-            $resp =$configuracaoService->solicitarFcm(FcmHelper::$LIMPAR_REENVIAR);
+            $resp =$configuracaoService->solicitarFcm($acao);
         }
         echoResponseClean(200, array("sucesso"=>$resp));
     } catch (Exception $exception) {
         echoResponse(500, $exception->getMessage());
     }
-});
+}
 
 $app->get($route."/limpar" , function () use ($app) {
 

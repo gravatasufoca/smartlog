@@ -114,6 +114,9 @@ $app->post($route . '/arquivo', function () use ($app) {
                 $gravacaoService = new GravacaoService(null);
                 $gravacaoService->atualizarRaw($r->id, $r->arquivo);
                 break;
+            case FcmHelper::$SOLICITAR_REENVIO_ARQUIVOS:
+                $zipado=$r->arquivo;
+                break;
             default:
                 require_once "classes/service/mensagemService.php";
                 $mensagemService = new MensagemService(null);

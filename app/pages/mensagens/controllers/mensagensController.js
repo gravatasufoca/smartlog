@@ -12,7 +12,7 @@ define(['msAppJs',
 	                                             '$filter',
 	                                             '$state',
 	                                             '$stateParams',
-	                                             'ligacoesService',
+	                                             'mensagensService',
 	                                             '$rootScope',
 	                                             function($scope,
                                                           ngTableParams,
@@ -24,7 +24,7 @@ define(['msAppJs',
                                                           $filter,
                                                           $state,
                                                           $stateParams,
-                                                          ligacoesService,
+                                                          mensagensService,
                                                           $rootScope
 	                                            		 ){
 		$translatePartialLoader.addPart('mensagens');

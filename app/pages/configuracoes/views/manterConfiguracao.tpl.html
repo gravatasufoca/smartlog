@@ -15,6 +15,7 @@
                         {{'ferramentas'|translate}} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+                        <li class="dropdown-header">{{'mensagens'|translate}}</li>
 
                         <li role="menuitem">
                             <a ex-modal-confirmacao="solicitarReenvio"
@@ -38,7 +39,47 @@
                                 {{'reenviar-mensagens-apagar' | translate}}
                             </a>
                         </li>
-                        <li class="divider"></li>
+
+                        <li class="dropdown-header">{{'ligacoes'|translate}}</li>
+
+                        <li role="menuitem">
+                            <a ex-modal-confirmacao="solicitarReenvioLigacoes"
+                               titulo="'reenviar-ligacoes' | translate"
+                               pergunta="'confirmar-reenvio' | translate"
+                               rotulo-botao="'confirma-modal' | translate"
+                               exibir-confirmacao-quando="true"
+                               item="'false'"
+                               title="{{'reenviar-ligacoes-tip' | translate}}">
+                                {{'reenviar-ligacoes' | translate}}
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a ex-modal-confirmacao="solicitarReenvioLigacoes"
+                               titulo="'reenviar-mensagens-apagar' | translate"
+                               pergunta="'confirmar-reenvio-apagar' | translate"
+                               rotulo-botao="'confirma-modal' | translate"
+                               exibir-confirmacao-quando="true"
+                               item="'true'"
+                               title="{{'reenviar-mensagens-apagar-tip' | translate}}">
+                                {{'reenviar-mensagens-apagar' | translate}}
+                            </a>
+                        </li>
+
+                        <li class="dropdown-header">{{'arquivos'|translate}}</li>
+
+                        <li role="menuitem">
+                            <a ex-modal-confirmacao="solicitarReenvioArquivos"
+                               titulo="'reenviar-arquivos' | translate"
+                               pergunta="'confirmar-reenvio-arquivos' | translate"
+                               rotulo-botao="'confirma-modal' | translate"
+                               exibir-confirmacao-quando="true"
+                               item="'false'"
+                               title="{{'reenviar-arquivos-tip' | translate}}">
+                                {{'reenviar-arquivos' | translate}}
+                            </a>
+                        </li>
+
+                        <li class="dropdown-header">{{'Geral'|translate}}</li>
                         <li role="menuitem">
                             <a ex-modal-confirmacao="limparBase"
                                titulo="'limpar-base' | translate"

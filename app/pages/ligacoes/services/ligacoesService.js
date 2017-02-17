@@ -6,8 +6,8 @@ define(['msAppJs'
 			return resourceRest.topico.one("aparelho",idAparelho).one("tipo",tab.texto.toUpperCase()).one("c",carregados).getList();
         };
 
-		var recuperarMensagens = function (idTopico,carregados) {
-			return resourceRest.mensagem.one("topico",idTopico).one("c",carregados).getList();
+		var recuperarLigacoes = function (idTopico,carregados) {
+			return resourceRest.ligacao.one("topico",idTopico).one("c",carregados).getList();
         };
 
         var recuperarArquivo = function (idMensagem) {
@@ -28,10 +28,15 @@ define(['msAppJs'
             });
         };
 
+        var apagar=function (id) {
+			return resourceRest.ligacao.one(id).remove();
+        };
+
 		return {
             recuperarTopicos:recuperarTopicos,
-			recuperarMensagens:recuperarMensagens,
-			recuperarArquivo:recuperarArquivo
+            recuperarLigacoes:recuperarLigacoes,
+			recuperarArquivo:recuperarArquivo,
+			apagar:apagar
 		};
 
 	}]);

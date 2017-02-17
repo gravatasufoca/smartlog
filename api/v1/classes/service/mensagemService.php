@@ -121,6 +121,28 @@ class MensagemService
         return null;
     }
 
+    public function recuperarMensagensComArquivo($idAparelho)
+    {
+        if (isset($idAparelho)) {
+            try {
+                $mensagens= $this->db->getList("SELECT mensagem.id_referencia
+FROM tb_mensagem mensagem
+  INNER JOIN tb_topico topico on mensagem.id_topico = topico.id
+where topico.id_aparelho=$idAparelho
+  and mensagem.raw_data is not null");
+
+                $tmp=array();
+                foreach ($mensagens as $id){
+                    array_push($tmp,$id["id_referencia"]);
+                }
+                return $tmp;
+            } catch (Exception $e) {
+                throw new Exception($e);
+            }
+        }
+        return null;
+    }
+
     public static function getMensagem($id, $idReferencia, $remetente, $texto, $data, $dataRecebida, $midiaMime, $tamanhoArquivo, $contato, $numeroContato, $foto, $raw, $thumb, $topico, $tipoMidia)
     {
         $mensagem = array();
