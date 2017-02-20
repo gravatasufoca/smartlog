@@ -27,6 +27,7 @@ define(['msAppJs',
 	                                  'msRouteService',
 	                                  '$http',
 	                                  '$translatePartialLoader',
+									  'fileSystemService',
 	                                  function($scope,
 	                                		  $timeout,
 	                                		  $filter,
@@ -36,7 +37,7 @@ define(['msAppJs',
 	                                		  $rootScope,
 	                                		  msRouteService,
 	                                		  $http,
-	                                		  $translatePartialLoader){
+	                                		  $translatePartialLoader,fileSystemService){
 
 		//Carrega as msgs globais para todas as telas
 		$translatePartialLoader.addPart('geral');
@@ -142,6 +143,12 @@ define(['msAppJs',
 				},100);
 			};
 		};
+
+
+		// fileSystemService.clearFS();
+      fileSystemService.requestIncrease();
+      fileSystemService.createFolder("arquivos");
+
 	}]);
 
 	return app;

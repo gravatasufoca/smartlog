@@ -1,7 +1,7 @@
 define(['msAppJs','angularMediaPlayer'], function(app) {
 	'use strict';
 
-    app.directive('exMensagemAudio', ['ligacoesService','$q','$timeout', function (ligacoesService, $q, $timeout) {
+    app.directive('exMensagemAudio', ['mensagensService','$q','$timeout', function (mensagensService, $q, $timeout) {
 
 		function link(scope, element, attrs) {
 		    scope.player={};

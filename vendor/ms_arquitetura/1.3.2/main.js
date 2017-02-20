@@ -17,6 +17,7 @@ requirejs.config({
 		'angularMediaPlayer': [appConfig.servidor + '/vendor/angular-media-player/angular-media-player'],
 		'angularResource': [appConfig.servidor + '/vendor/angularjs/'+angularVersion+'/angular-resource' + sufixo],
 		'angularUiBootstrap': [appConfig.servidor + '/vendor/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls-0.9.0' + sufixo],
+		'angularFilesystem': [appConfig.servidor + '/vendor/angular-filesystem/angular-filesystem'],
 		'angularTranslate': [appConfig.servidor + '/vendor/angular-translate/2.0.0/angular-translate' + sufixo],
 		'angularTranslatePartialLoader': [appConfig.servidor + '/vendor/angular-translate-loader-partial/0.1.6/angular-translate-loader-partial' + sufixo],
 		'angularValidator': [appConfig.servidor + '/vendor/angular-validator/0.1.4/angular-validator' + sufixo ],
@@ -111,6 +112,10 @@ requirejs.config({
         'angularMaps': {
             deps: ['angular'],
             exports: 'angularMaps'
+        },
+        'angularFilesystem': {
+            deps: ['angular'],
+            exports: 'angularFilesystem'
         },
 		'restangular': {
 			deps: ['angular'],

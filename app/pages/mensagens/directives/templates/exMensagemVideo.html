@@ -10,7 +10,7 @@
 
             <video controls media-player="player" type="{{::mensagem.midiaMime}}"
                    style="width: 260px;height: 200px"
-                   ng-src="data:{{::mensagem.midiaMime}};base64,{{::mensagem.raw}}"
+                   ng-src="{{mensagem.src}}"
                    ng-attr-poster="data:{{::mensagem.midiaMime}};base64,{{::mensagem.thumb}}"></video>
           </span>
     </div>

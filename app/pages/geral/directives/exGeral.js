@@ -306,7 +306,7 @@ define(['msAppJs'], function(app) {
 
 
     app.directive('exConectado',["$timeout","$interval","$rootScope","apoioService", function($timeout,$interval,$rootScope,apoioService) {
-        var intervalo=60000;
+        var intervalo=300000;
     	return {
             restrict: 'E',
             replace: true,
@@ -324,7 +324,7 @@ define(['msAppJs'], function(app) {
                                             scope.conectado=false;
                                         }
                                     });
-                                },10000);
+                                },60000);
                             };
                         }
                         timer2();

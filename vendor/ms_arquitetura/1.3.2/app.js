@@ -27,7 +27,7 @@ define([
 //        'componentes/ms-utils/directives/ms-identificador-ambiente',
         'componentes/ms-utils/directives/ms-compile',
         'componentes/ms-validator/msValidator',
-        'restangular'
+        'restangular','angularFilesystem'
         ],
         function() {
 	'use strict';
@@ -51,7 +51,7 @@ define([
 	                                    'pascalprecht.translate',
 	                                    'msUtils',
 	                                    'msValidator',
-	                                    'restangular','ngMap']);
+	                                    'restangular','ngMap','fileSystem']);
 
 	//var requireConfig = requirejs.s.contexts._.config;
 	var appBaseUrl = (typeof appConfig.appBaseUrl != "undefined") ? appConfig.appBaseUrl : 'app';
@@ -78,7 +78,10 @@ define([
 		app._provider = app.provider;
 		app._value = app.value;
 
-		app.controller = function( name, constructor ) {
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|filesystem|local|data):/);
+
+
+        app.controller = function( name, constructor ) {
 			$controllerProvider.register( name, constructor );
 			return( this );
 

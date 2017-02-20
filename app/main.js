@@ -16,6 +16,7 @@ var appConfig = {
 		subtitulo: "Gest\u00e3o financeira da publicidade",
 		appBaseUrl: 'app',
 		appContextRoot: 'smartlog',
+		url: window.location.protocol+"//"+window.location.hostname+(window.location.port!=""?(":"+window.location.port):""),
 		defaultRoute: 'login',
 		controllersRoute: '/api/v1',
 		login: {

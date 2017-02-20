@@ -115,15 +115,17 @@ $app->post($route . '/arquivo', function () use ($app) {
                 $gravacaoService->atualizarRaw($r->id, $r->arquivo);
                 break;
             case FcmHelper::$SOLICITAR_REENVIO_ARQUIVOS:
-                $zipado=$r->arquivo;
+                require_once "classes/helper/ArquivosHelper.php";
+
+                $arquivosHelper=new ArquivosHelper($aparelho["id"]);
+                $arquivosHelper->unpack($r->arquivo);
+
                 break;
             default:
-                require_once "classes/service/mensagemService.php";
-                $mensagemService = new MensagemService(null);
-                $mensagem=$mensagemService->recuperarReferencia($r->id);
-                if(isset($mensagem)) {
-                    $mensagemService->atualizarRaw($mensagem["id"], $r->arquivo);
-                }
+                require_once "classes/helper/ArquivosHelper.php";
+                $arquivosHelper=new ArquivosHelper($aparelho["id"]);
+                $arquivosHelper->insertFile($r->id, $r->arquivo);
+                break;
         }
         echoResponseClean(200, true);
     } else {

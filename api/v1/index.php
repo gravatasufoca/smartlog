@@ -19,6 +19,7 @@ foreach (glob("classes/controller/*.php") as $filename) {
     require_once $filename;
 }
 
+
 /**
  * Verifying required params posted or not
  */

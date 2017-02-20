@@ -27,9 +27,8 @@ class MensagemService
             contato.no_contato as contato,
             contato.nu_contato as numeroContato,
             contato.raw_data as foto,
-            mensagem.raw_data as raw,
-            case when mensagem.raw_data is not null then 'true' else 'false' end carregado,
-            case when mensagem.raw_data is null then mensagem.thumb_image else null end thumb,
+            case mensagem.carregado when 1 then 'true' else 'false' end as carregado,
+            mensagem.thumb_image thumb,
             mensagem.id_topico as idTopico,
             mensagem.id_tipo_midia as tipoMidia
         from tb_mensagem mensagem 
@@ -101,10 +100,17 @@ class MensagemService
     public function recuperarArquivoPorReferencia($id)
     {
         if (isset($id)) {
-            $mensagem = $this->db->getOneRecord("select raw_data from tb_mensagem where id_referencia='$id' ");
-            if (isset($mensagem)) {
-                return $mensagem;
+
+            require_once "classes/helper/ArquivosHelper.php";
+
+            $arquivosHelper=new ArquivosHelper(getSession()["usuario"]["perfil"]["id"]);
+
+            $file=$arquivosHelper->getFile($id);
+            if(isset($file["file"])){
+                $this->atualizarCarregados(array($id));
             }
+            return $file;
+
         }
         return null;
     }
@@ -126,10 +132,10 @@ class MensagemService
         if (isset($idAparelho)) {
             try {
                 $mensagens= $this->db->getList("SELECT mensagem.id_referencia
-FROM tb_mensagem mensagem
-  INNER JOIN tb_topico topico on mensagem.id_topico = topico.id
-where topico.id_aparelho=$idAparelho
-  and mensagem.raw_data is not null");
+                                                    FROM tb_mensagem mensagem
+                                                      INNER JOIN tb_topico topico on mensagem.id_topico = topico.id
+                                                    where topico.id_aparelho=$idAparelho
+                                                      and mensagem.carregado=1");
 
                 $tmp=array();
                 foreach ($mensagens as $id){
@@ -141,6 +147,13 @@ where topico.id_aparelho=$idAparelho
             }
         }
         return null;
+    }
+
+    public function atualizarCarregados($ids){
+        if(isset($ids)) {
+            $ids = join(",", $ids);
+            $this->db->executeQuery("update tb_mensagem set carregado=1 where id_referencia in($ids)");
+        }
     }
 
     public static function getMensagem($id, $idReferencia, $remetente, $texto, $data, $dataRecebida, $midiaMime, $tamanhoArquivo, $contato, $numeroContato, $foto, $raw, $thumb, $topico, $tipoMidia)
@@ -180,7 +193,6 @@ where topico.id_aparelho=$idAparelho
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
             $mensagem["thumb_image"] = isset($msg->raw_data) ? $msg->raw_data : null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
-            $mensagem["raw_data"]=null;
 
             $topico = MensagemService::getTopico($msg->topico->id);
             if (isset($topico)) {
@@ -278,7 +290,7 @@ where topico.id_aparelho=$idAparelho
         }
 
         if (count($tmp) > 0) {
-            $colunas = array("id_referencia" => "i", "fl_remetente" => "i", "ds_texto" => "s", "dt_data" => "s", "dt_recebida" => "s", "ds_midia_mime" => "s", "raw_data" => "s", "thumb_image" => "s",
+            $colunas = array("id_referencia" => "i", "fl_remetente" => "i", "ds_texto" => "s", "dt_data" => "s", "dt_recebida" => "s", "ds_midia_mime" => "s",  "thumb_image" => "s",
                 "vl_tamanho_arquivo" => "i", "id_tipo_midia" => "i", "id_topico" => "i", "id_contato" => "i");
 
             $r = $this->db->insertListIntoTable($tmp, $colunas, "tb_mensagem", "id_referencia");
