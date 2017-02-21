@@ -182,5 +182,23 @@ $app->post($route . '/configuracao', function () use ($app) {
     }
 });
 
+$app->post($route . '/send', function () use ($app) {
+    $aparelho = getAparelho($app);
+
+    if (isset($aparelho)) {
+        $r = json_decode($app->request->getBody());
+        require_once "classes/service/mensagemService.php";
+
+        $mensagemService = new MensagemService(null);
+        try {
+            echoResponseClean(200, $mensagemService->recuperarMensagensComArquivo($aparelho["id"]));
+        } catch (Exception $exception) {
+            echoResponse(500, $exception->getMessage());
+        }
+    } else {
+        echoResponse(401, 'Aparelho não encontrado');
+    }
+});
+
 
 ?>

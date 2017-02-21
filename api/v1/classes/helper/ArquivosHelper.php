@@ -37,8 +37,12 @@ class ArquivosHelper{
     }
 
     public function insertFile($name,$arquivo){
-        $decoded=base64_decode($arquivo);
-        file_put_contents($this->dirPath.$name,$decoded,FILE_BINARY);
+//        $decoded=base64_decode($arquivo);
+        $pdfData = "";
+        foreach ($arquivo as $byte) {
+            $pdfData .= $byte;
+        }
+//        file_put_contents($this->dirPath.$name,$pdfData,FILE_BINARY);
 
         require_once "classes/service/mensagemService.php";
         $mensagemService=new MensagemService(null);

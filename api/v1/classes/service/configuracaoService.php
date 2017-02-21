@@ -53,12 +53,12 @@ class ConfiguracaoService
                 if (isset($chave)) {
                     require_once "classes/helper/FcmHelper.php";
                     $arquivos=null;
-                    if($tipoAcao==FcmHelper::$SOLICITAR_REENVIO_ARQUIVOS){
+                  /*  if($tipoAcao==FcmHelper::$SOLICITAR_REENVIO_ARQUIVOS){
                         require_once "classes/service/mensagemService.php";
                         $mensagemSerivce=new MensagemService(null);
                         $arquivos=$mensagemSerivce->recuperarMensagensComArquivo($perfil["id"]);
-                    }
-                    if(FcmHelper::sendMessage(array("arquivos"=> join(",", $arquivos), "chave" => $chave, "tipoAcao" => $tipoAcao, "phpId" => session_id()), array($chave))) {
+                    }*/
+                    if(FcmHelper::sendMessage(array("chave" => $chave, "tipoAcao" => $tipoAcao, "phpId" => session_id()), array($chave))) {
                         return true;
                     }
                 }
