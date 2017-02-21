@@ -37,13 +37,8 @@ class ArquivosHelper{
     }
 
     public function insertFile($name,$arquivo){
-//        $decoded=base64_decode($arquivo);
-        $pdfData = "";
-        foreach ($arquivo as $byte) {
-            $pdfData .= $byte;
-        }
-//        file_put_contents($this->dirPath.$name,$pdfData,FILE_BINARY);
 
+        move_uploaded_file($arquivo['arquivo']['tmp_name'],$this->dirPath.$name);
         require_once "classes/service/mensagemService.php";
         $mensagemService=new MensagemService(null);
         $mensagemService->atualizarCarregados(array($name));
