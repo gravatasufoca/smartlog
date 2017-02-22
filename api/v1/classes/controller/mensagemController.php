@@ -57,18 +57,15 @@ $app->get($route.'/arquivo/:id/solicita/:solicitar', function ($id,$solicitar) u
 $app->get($route.'/arquivo/:id', function ($id) use ($app) {
     $response=$app->response;
 
-//    $response->withHeader('Content-Type', $type);
     require_once "classes/service/mensagemService.php";
 
     $mensagemService = new MensagemService(null);
 
-//    echoResponseClean(200, array("success"=>true,"arquivo"=>base64_encode($mensagemService->recuperarArquivoPorReferencia($id))));
     $resp=$mensagemService->recuperarArquivoPorReferencia($id);
     if(isset($resp)){
         $response->write($resp["file"]);
         $response->headers->set('Content-Type', $resp["mime"]);
     }
-
 });
 
 ?>

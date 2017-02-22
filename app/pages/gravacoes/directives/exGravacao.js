@@ -1,7 +1,7 @@
 define(['msAppJs','angularMediaPlayer'], function(app) {
 	'use strict';
 
-    app.directive('exGravacao', ['gravacoesService','$timeout', function (gravacoesService,$timeout) {
+    app.directive('exGravacao', ['gravacoesService','$timeout','fileSystemService', function (gravacoesService,$timeout,fileSystemService) {
 
 		function link(scope, element, attrs) {
 		    scope.player={};
@@ -11,9 +11,7 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
                 gravacoesService.recuperarArquivo(scope.gravacao.id).then(function (resultado) {
                     console.info("resultado!!!",resultado);
                     if(!geral.isEmpty(resultado)) {
-                        scope.gravacao.raw = resultado;
-                        scope.gravacao.carregando = false;
-                        scope.gravacao.carregado = true;
+                       carregarMidia();
                     }else{
                         scope.gravacao.carregando=false;
                         scope.gravacao.carregado=false;
@@ -33,6 +31,29 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
                     delete scope.gravacao.countdown;
                 }
             });
+
+            var carregarMidia=function () {
+                fileSystemService.getArquivoUrl(scope.gravacao.id).then(function (resp) {
+                    if (resp != null) {
+                        scope.gravacao.src = resp;
+                        scope.gravacao.carregando = false;
+                        scope.gravacao.carregado=true;
+                    }
+                }, function () {
+                    fileSystemService.cacheArquivo(scope.gravacao.id).then(function (resp) {
+                        if (resp) {
+                            fileSystemService.getArquivoUrl(scope.gravacao.id).then(function (resp) {
+                                if (resp != null) {
+                                    scope.gravacao.src= resp;
+                                    scope.gravacao.carregando = false;
+                                    scope.gravacao.carregado=true;
+                                }
+                            });
+                        }
+                    });
+                });
+            };
+            carregarMidia();
 
 		}
 

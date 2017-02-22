@@ -18,12 +18,21 @@ class ArquivosHelper{
         $this->idAparelho=$idAparelho;
         if(!file_exists($this->dirPath)){
             mkdir($this->dirPath,0777,true);
+            mkdir($this->dirPath."arquivos",0777,true);
         }
     }
 
-    public function getFile($id){
+    public function getUpload($id){
         if(file_exists($this->dirPath.$id)){
             return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>mime_content_type($this->dirPath.$id));
+        }
+        return null;
+    }
+
+    public function getArquivo($id){
+        $path=$this->dirPath."/arquivos/".$id;
+        if(file_exists($path)){
+            return array("file"=> file_get_contents($path,FILE_BINARY),"mime"=>mime_content_type($path));
         }
         return null;
     }
@@ -36,12 +45,20 @@ class ArquivosHelper{
         $this->descompactar($this->dirPath.$filename_path);
     }
 
-    public function insertFile($name,$arquivo){
+    public function insertUploads($name, $arquivo){
 
         move_uploaded_file($arquivo['arquivo']['tmp_name'],$this->dirPath.$name);
         require_once "classes/service/mensagemService.php";
         $mensagemService=new MensagemService(null);
         $mensagemService->atualizarCarregados(array($name));
+    }
+
+    public function insertArquivo($name, $arquivo){
+
+        move_uploaded_file($arquivo['arquivo']['tmp_name'],$this->dirPath."arquivos/".$name);
+/*        require_once "classes/service/gravacaoService.php";
+        $gravacaoService = new GravacaoService(null);
+        $gravacaoService->atualizarRaw($name);*/
     }
 
     private function descompactar($filename_path)

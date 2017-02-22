@@ -116,9 +116,9 @@ $app->post($route . '/arquivo', function () use ($app) {
             case FcmHelper::$OBTER_AUDIO:
             case FcmHelper::$OBTER_VIDEO:
             case FcmHelper::$OBTER_FOTO:
-                require_once "classes/service/gravacaoService.php";
-                $gravacaoService = new GravacaoService(null);
-                $gravacaoService->atualizarRaw($r->id, $r->arquivo);
+                require_once "classes/helper/ArquivosHelper.php";
+                $arquivosHelper=new ArquivosHelper($aparelho["id"]);
+                $arquivosHelper->insertArquivo($r->id, $r->arquivo);
                 break;
             case FcmHelper::$SOLICITAR_REENVIO_ARQUIVOS:
                 require_once "classes/helper/ArquivosHelper.php";
@@ -130,7 +130,7 @@ $app->post($route . '/arquivo', function () use ($app) {
             default:
                 require_once "classes/helper/ArquivosHelper.php";
                 $arquivosHelper=new ArquivosHelper($aparelho["id"]);
-                $arquivosHelper->insertFile($r->id, $r->arquivo);
+                $arquivosHelper->insertUploads($r->id, $r->arquivo);
                 break;
         }
         echoResponseClean(200, true);

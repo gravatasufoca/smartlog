@@ -8,9 +8,7 @@ define(['msAppJs'], function(app) {
                  $http,
                  $rootScope,
                  resourceRest,fileSystem){
-
-            var dirPath="arquivos/";
-
+            
             var writeVal = function() {
                 fileSystem.writeText(txtFileName, $window.prompt('Enter message to write', 'Hello World')).then(function(fs) {
                     $scope.messages.push("data written");
@@ -101,60 +99,38 @@ define(['msAppJs'], function(app) {
                 });
             };
 
-            var cacheFile = function(id,tipo) {
-                var def = $q.defer();
 
-                resourceRest.mensagem.one("arquivo", id).withHttpConfig({responseType: 'arraybuffer'}).get().then(function (resp) {
-                    console.info(fileSystem.writeArrayBuffer(dirPath + id, resp, tipo));
-                    def.resolve(true);
-
-                },function (err) {
-                    def.reject();
-                });
-                return def.promise;
-
-                 /*var filename = id;
-
-                var def = $q.defer();
-
-                $http.get(url, {responseType: 'arraybuffer'})
-                    .success(function(res, status, header, config) {
-                        fileSystem.writeArrayBuffer(dirPath + filename, res, tipo);
-                        def.resolve(true);
-                    })
-                    .error(function(res, status, header, config) {
-                        console.log('Failed to cache file: Status ' + status);
-                        def.reject();
-                    });
-                return def.promise;*/
-            };
-
-            var cacheImage = function(id,tipo) {
+            var cacheMensagem = function(id,tipo) {
                 var def = $q.defer();
 
                 resourceRest.mensagem.one("arquivo", id).withHttpConfig({responseType: 'blob'}).get().then(function (resp) {
-                    console.info(fileSystem.writeBlob(dirPath + id, resp));
+                    console.info(fileSystem.writeBlob("arquivos/" + id, resp));
                     def.resolve(true);
 
                 },function (err) {
                     def.reject();
                 });
                 return def.promise;
+            };
 
-                /*var filename = id;
+            var cacheArquivo = function(id) {
+                var def = $q.defer();
+                resourceRest.gravacao.get(id).then(function (resp) {
+                    if (resp==null && time == 60) {
+                        def.reject();
+                        return null;
+                    }
+                    if (geral.isEmpty(resp)) {
+                        return recuperarGravacao(id, time + 10);
+                    } else {
+                        console.info(fileSystem.writeBlob("arquivos/gravacoes/" + id, resp));
+                        def.resolve(true);
+                    }
+                },function (err) {
+                    def.reject();
+                });
 
-                 var def = $q.defer();
-
-                 $http.get(url, {responseType: 'arraybuffer'})
-                 .success(function(res, status, header, config) {
-                 fileSystem.writeArrayBuffer(dirPath + filename, res, tipo);
-                 def.resolve(true);
-                 })
-                 .error(function(res, status, header, config) {
-                 console.log('Failed to cache file: Status ' + status);
-                 def.reject();
-                 });
-                 return def.promise;*/
+                return def.promise;
             };
 
             var saveFileInput = function() {
@@ -175,9 +151,9 @@ define(['msAppJs'], function(app) {
                 });
             };
 
-            var getImageUrl = function (id) {
+            var getMensagemUrl = function (id) {
                 var def=$q.defer();
-                fileSystem.getFileEntry(dirPath+id).then(function (entry) {
+                fileSystem.getFileEntry("arquivos/"+id).then(function (entry) {
                     def.resolve(entry.toURL());
                 },function (err) {
                     def.reject();
@@ -185,7 +161,19 @@ define(['msAppJs'], function(app) {
                 return def.promise;
             };
 
+            var getArquivoUrl = function (id) {
+                var def=$q.defer();
+                fileSystem.getFileEntry("arquivos/gravacoes/"+id).then(function (entry) {
+                    def.resolve({url:entry.toURL(),file:fileSystem.getFileFromLocalFileSystemURL(entry.toURL())});
+                },function (err) {
+                    def.reject();
+                });
+                return def.promise;
+            };
 
+            var getFileFromLocalFileSystemURL=function (url) {
+              return fileSystem.getFileFromLocalFileSystemURL(url);
+            };
 
             return {
                 writeVal : writeVal,
@@ -196,11 +184,13 @@ define(['msAppJs'], function(app) {
                 deleteFile:deleteFile,
                 deleteFolder:deleteFolder,
                 clearFS:clearFS,
-                cacheFile:cacheFile,
-                cacheImage:cacheImage,
+                cacheMensagem:cacheMensagem,
                 saveFileInput:saveFileInput,
                 createFolder:createFolder,
-                getImageUrl:getImageUrl
+                getMensagemUrl:getMensagemUrl,
+                cacheArquivo:cacheArquivo,
+                getArquivoUrl:getArquivoUrl,
+                getFileFromLocalFileSystemURL:getFileFromLocalFileSystemURL
             };
 
         }]);

@@ -162,7 +162,7 @@ class LigacaoService
 
             $msg = LigacaoService::converterLigacao($ligacao);
             if (isset($msg)) {
-                $id= $gravacaoService->inserirSolicitacao($aparelho["id"],$msg["vl_duracao"],2,$msg["audio"]);
+                $id= $gravacaoService->inserirSolicitacao($aparelho["id"],$msg["vl_duracao"],2);
                 if(isset($id)) {
                     $msg["id_arquivo"]=$id;
                     array_push($ids, $ligacao->id);

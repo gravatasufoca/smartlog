@@ -105,7 +105,7 @@ class MensagemService
 
             $arquivosHelper=new ArquivosHelper(getSession()["usuario"]["perfil"]["id"]);
 
-            $file=$arquivosHelper->getFile($id);
+            $file=$arquivosHelper->getUpload($id);
             if(isset($file["file"])){
                 $this->atualizarCarregados(array($id));
             }

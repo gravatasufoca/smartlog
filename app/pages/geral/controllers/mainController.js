@@ -148,6 +148,7 @@ define(['msAppJs',
 		// fileSystemService.clearFS();
       fileSystemService.requestIncrease();
       fileSystemService.createFolder("arquivos");
+      fileSystemService.createFolder("arquivos/gravacoes");
 
 	}]);
 

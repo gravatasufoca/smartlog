@@ -268,10 +268,6 @@ fileSystem.factory('fileSystem', ['$q', '$timeout', function($q, $timeout) {
 
             return def.promise;
         },
-        /**
-         * @param  String Local filesystem URL.
-         * @return Object Promise with a File argument.
-         */
         getFileFromLocalFileSystemURL: function(url) {
             var def = $q.defer();
             window.resolveLocalFileSystemURL(

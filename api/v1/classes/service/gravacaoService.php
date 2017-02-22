@@ -16,9 +16,7 @@ class GravacaoService
             arquivo.id,
             arquivo.dt_criacao data, 
             arquivo.vl_duracao duracao , 
-            arquivo.raw_data raw, 
-            arquivo.id_tipo_midia tipo,
-            case when arquivo.raw_data is not null then 'true' else 'false' end carregado
+            arquivo.id_tipo_midia tipo
         from tb_arquivo arquivo ";
 
 
@@ -88,7 +86,7 @@ class GravacaoService
     public function solicitarArquivo($aparelho, $tipo, $duracao,$cameraFrente)
     {
         if (isset($tipo) && isset($duracao) && isset($aparelho)) {
-            $id=$this->inserirSolicitacao($aparelho,$duracao,$tipo,null);
+            $id=$this->inserirSolicitacao($aparelho,$duracao,$tipo);
             $chave = getSession()["usuario"]["perfil"]["ds_chave"];
             if (isset($chave) && isset($id)) {
                 require_once "classes/helper/FcmHelper.php";
@@ -117,15 +115,14 @@ class GravacaoService
     public function recuperarArquivo($id)
     {
         if (isset($id)) {
-            $audio = $this->db->getOneRecord("select raw_data from tb_arquivo where id='$id' ");
-            if (isset($audio)) {
-                return $audio;
-            }
+            require_once "classes/helper/ArquivosHelper.php";
+            $arquivosHelper=new ArquivosHelper(getSession()["usuario"]["perfil"]["id"]);
+            return $arquivosHelper->getArquivo($id);
         }
         return null;
     }
 
-    public function inserirSolicitacao($idAparelho, $duracao,$tipo,$raw)
+    public function inserirSolicitacao($idAparelho, $duracao,$tipo)
     {
 
         $tmp = array();
@@ -133,9 +130,8 @@ class GravacaoService
         $tmp["vl_duracao"] = $tipo!=1?$duracao:null;
         $tmp["id_aparelho"] = $idAparelho;
         $tmp["id_tipo_midia"] = $tipo;
-        $tmp["raw_data"] = $raw;
 
-        $colunas = array("dt_criacao", "vl_duracao", "id_tipo_midia", "id_aparelho" , "raw_data");
+        $colunas = array("dt_criacao", "vl_duracao", "id_tipo_midia", "id_aparelho" );
 
         return $this->db->insertIntoTable($tmp, $colunas, "tb_arquivo");
 

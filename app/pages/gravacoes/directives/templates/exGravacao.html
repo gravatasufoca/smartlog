@@ -11,9 +11,9 @@
         <span ng-show="gravacao.countdown==null && !gravacao.carregado">{{'tente-mais-tarde'|translate}}</span>
     </div>
     <div ng-switch="gravacao.tipo">
-        <audio ng-switch-when="2" ng-if="gravacao.raw" media-player="player" controls>
-            <source ng-src="data:audio/ogg;base64,{{::gravacao.raw}}"
-                    type="" volume="{{::volume}}"/>
+        <audio ng-switch-when="2" ng-if="gravacao.src" media-player="player" controls>
+            <source ng-src="{{gravacao.src}}"
+                    type="audio/mp4" volume="{{::volume}}"/>
         </audio>
 
         <video ng-switch-when="3"  ng-if="gravacao.raw" controls media-player="player" type="video/mp4"

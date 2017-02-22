@@ -48,13 +48,15 @@ $app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao/cameraFrente/:
 
 
 $app->get($route.'/:id', function ($id) use ($app) {
+    $response=$app->response;
+
     require_once "classes/service/gravacaoService.php";
 
     $gravacaoService = new GravacaoService(null);
-    try {
-        echoResponse(200, $gravacaoService->recuperar($id));
-    }catch (Exception $exception){
-        echoResponseClean(500, $exception->getMessage());
+    $resp=$gravacaoService->recuperarArquivo($id);
+    if(isset($resp)){
+        $response->write($resp["file"]);
+        $response->headers->set('Content-Type', $resp["mime"]);
     }
 });
 

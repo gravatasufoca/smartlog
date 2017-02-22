@@ -56,15 +56,15 @@ define(['msAppJs'
 
 			if (mensagem.carregado) {
 				mensagem.carregando=true;
-				fileSystemService.getImageUrl(mensagem.idReferencia).then(function (resp) {
+				fileSystemService.getMensagemUrl(mensagem.idReferencia).then(function (resp) {
 					if (resp != null) {
 						mensagem.src = resp;
 						mensagem.carregando = false;
 					}
 				}, function () {
-					fileSystemService.cacheImage(mensagem.idReferencia, mensagem.midiaMime).then(function (resp) {
+					fileSystemService.cacheMensagem(mensagem.idReferencia, mensagem.midiaMime).then(function (resp) {
 						if (resp) {
-							fileSystemService.getImageUrl(mensagem.idReferencia).then(function (resp) {
+							fileSystemService.getMensagemUrl(mensagem.idReferencia).then(function (resp) {
 								if (resp != null) {
 									mensagem.src = resp;
 									mensagem.carregando = false;

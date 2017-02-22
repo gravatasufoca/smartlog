@@ -1,6 +1,6 @@
 define(['msAppJs'
         ], function(app) {
-	app.factory('gravacoesService', ['resourceRest', function(resourceRest){
+	app.factory('gravacoesService', ['resourceRest','fileSystemService', function(resourceRest,fileSystemService){
 
 
 		var recuperar = function (id) {
@@ -26,19 +26,7 @@ define(['msAppJs'
         var recuperarGravacao = function (id) {
         	var time=arguments.length>1? arguments[1]:0;
             window.geral.sleep(time*1000);
-            console.info(time);
-            return resourceRest.gravacao.get(id).then(function (resultado) {
-            	console.info(resultado.resultado);
-            	if(resultado.resultado!=null){
-            		if(time==60) return null;
-
-            		if(geral.isEmpty(resultado.resultado.raw)){
-						return recuperarGravacao(id,time+10);
-					}else{
-            			return resultado.resultado.raw;
-					}
-				}
-            });
+            return fileSystemService.cacheArquivo(id);
         };
 
 		return {
