@@ -104,6 +104,7 @@ $app->post($route . '/arquivo', function () use ($app) {
 
     if (isset($aparelho)) {
         require_once "classes/helper/FcmHelper.php";
+        $tipoAcao=$app->request->headers->get("tipoAcao");
 
         $body=$app->request->getBody();
         if(isset($body) && $body!="") {
@@ -112,7 +113,7 @@ $app->post($route . '/arquivo', function () use ($app) {
             $r = json_decode($app->request()->post()["envioArquivoVo"]);
             $r->arquivo=$_FILES;
         }
-        switch ($r->tipoAcao){
+        switch ($tipoAcao){
             case FcmHelper::$OBTER_AUDIO:
             case FcmHelper::$OBTER_VIDEO:
             case FcmHelper::$OBTER_FOTO:

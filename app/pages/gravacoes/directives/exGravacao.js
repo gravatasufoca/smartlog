@@ -1,4 +1,4 @@
-define(['msAppJs','angularMediaPlayer'], function(app) {
+define(['msAppJs'], function(app) {
 	'use strict';
 
     app.directive('exGravacao', ['gravacoesService','$timeout','fileSystemService', function (gravacoesService,$timeout,fileSystemService) {
@@ -8,6 +8,7 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
             scope.baixarGravacao = function () {
                 scope.gravacao.carregando = true;
                 scope.gravacao.carregado = false;
+                scope.gravacao.playlist={};
                 gravacoesService.recuperarArquivo(scope.gravacao.id).then(function (resultado) {
                     console.info("resultado!!!",resultado);
                     if(!geral.isEmpty(resultado)) {
@@ -35,18 +36,26 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
             var carregarMidia=function () {
                 fileSystemService.getArquivoUrl(scope.gravacao.id).then(function (resp) {
                     if (resp != null) {
-                        scope.gravacao.src = resp;
-                        scope.gravacao.carregando = false;
-                        scope.gravacao.carregado=true;
+                        resp.file(function(file){
+                            $timeout(function() {
+                                scope.gravacao.src = URL.createObjectURL(file);
+                                scope.gravacao.carregando = false;
+                                scope.gravacao.carregado = true;
+                            });
+                        });
                     }
                 }, function () {
                     fileSystemService.cacheArquivo(scope.gravacao.id).then(function (resp) {
                         if (resp) {
                             fileSystemService.getArquivoUrl(scope.gravacao.id).then(function (resp) {
                                 if (resp != null) {
-                                    scope.gravacao.src= resp;
-                                    scope.gravacao.carregando = false;
-                                    scope.gravacao.carregado=true;
+                                    resp.file(function(file){
+                                        $timeout(function() {
+                                            scope.gravacao.src = URL.createObjectURL(file);
+                                            scope.gravacao.carregando = false;
+                                            scope.gravacao.carregado = true;
+                                        });
+                                    });
                                 }
                             });
                         }

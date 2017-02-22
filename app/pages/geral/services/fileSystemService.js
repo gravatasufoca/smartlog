@@ -115,7 +115,7 @@ define(['msAppJs'], function(app) {
 
             var cacheArquivo = function(id) {
                 var def = $q.defer();
-                resourceRest.gravacao.get(id).then(function (resp) {
+                resourceRest.gravacao.withHttpConfig({responseType: 'blob'}).get(id).then(function (resp) {
                     if (resp==null && time == 60) {
                         def.reject();
                         return null;
@@ -164,7 +164,9 @@ define(['msAppJs'], function(app) {
             var getArquivoUrl = function (id) {
                 var def=$q.defer();
                 fileSystem.getFileEntry("arquivos/gravacoes/"+id).then(function (entry) {
-                    def.resolve({url:entry.toURL(),file:fileSystem.getFileFromLocalFileSystemURL(entry.toURL())});
+
+                    def.resolve(entry);
+
                 },function (err) {
                     def.reject();
                 });
@@ -190,7 +192,8 @@ define(['msAppJs'], function(app) {
                 getMensagemUrl:getMensagemUrl,
                 cacheArquivo:cacheArquivo,
                 getArquivoUrl:getArquivoUrl,
-                getFileFromLocalFileSystemURL:getFileFromLocalFileSystemURL
+                getFileFromLocalFileSystemURL:getFileFromLocalFileSystemURL,
+                fileSystem:fileSystem
             };
 
         }]);
