@@ -4,7 +4,6 @@ define(['msAppJs','angularMediaPlayer'], function (app) {
     app.directive('exMensagemVideo', ['mensagensService', function (mensagensService) {
 
         function link(scope, element, attrs) {
-            scope.player={};
 
             scope.carregarVideo = function () {
                 mensagensService.carregarArquivo(scope.mensagem);

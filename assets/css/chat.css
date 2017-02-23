@@ -752,7 +752,7 @@
     background-size: auto;
     box-sizing: border-box;
     color: rgb(58, 109, 153);
-    display: inline-block;
+    display: block;
     font-family: Tahoma, sans-serif, Arial, Helvetica;
     font-size: 12px !important;
     font-stretch: normal;

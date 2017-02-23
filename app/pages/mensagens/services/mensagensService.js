@@ -58,16 +58,20 @@ define(['msAppJs'
 				mensagem.carregando=true;
 				fileSystemService.getMensagemUrl(mensagem.idReferencia).then(function (resp) {
 					if (resp != null) {
-						mensagem.src = resp;
-						mensagem.carregando = false;
+                        $timeout(function () {
+                            mensagem.src = resp;
+                            mensagem.carregando = false;
+                        });
 					}
 				}, function () {
 					fileSystemService.cacheMensagem(mensagem.idReferencia, mensagem.midiaMime).then(function (resp) {
 						if (resp) {
 							fileSystemService.getMensagemUrl(mensagem.idReferencia).then(function (resp) {
 								if (resp != null) {
-									mensagem.src = resp;
-									mensagem.carregando = false;
+									$timeout(function () {
+                                        mensagem.src = resp;
+                                        mensagem.carregando = false;
+                                    });
 								}
 							});
 						}

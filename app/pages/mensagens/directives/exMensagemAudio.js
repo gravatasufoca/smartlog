@@ -4,28 +4,12 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
     app.directive('exMensagemAudio', ['mensagensService','$q','$timeout', function (mensagensService, $q, $timeout) {
 
 		function link(scope, element, attrs) {
-		    scope.player={};
+
             scope.baixarAudio = function () {
-                scope.mensagem.carregando = true;
-                scope.mensagem.carregado = false;
-                mensagensService.recuperarArquivo(scope.mensagem.idReferencia).then(function (resultado) {
-                    console.info("resultado!!!",resultado);
-                    if(resultado!=null && resultado.raw_data!=null) {
-                        scope.mensagem.raw = resultado.raw_data;
-                        scope.mensagem.carregando = false;
-                        scope.mensagem.carregado = true;
-                    }else{
-                        scope.mensagem.carregando=false;
-                        scope.mensagem.carregado=false;
-                    }
-                }, function (e) {
-                    $timeout(function () {
-                        console.error(e);
-                        scope.mensagem.carregando=false;
-                        scope.mensagem.carregado=false;
-                    }, 100);
-                });
+                mensagensService.carregarArquivo(scope.mensagem);
             };
+
+            mensagensService.carregarMidia(scope.mensagem);
 
 		}
 
