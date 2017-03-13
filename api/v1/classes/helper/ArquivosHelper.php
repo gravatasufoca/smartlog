@@ -16,8 +16,8 @@ class ArquivosHelper{
     function __construct($idAparelho){
         $this->dirPath=ArquivosHelper::$UPLOAD_PATH.$idAparelho."/";
         $this->idAparelho=$idAparelho;
+
         if(!file_exists($this->dirPath)){
-            mkdir($this->dirPath,0777,true);
             mkdir($this->dirPath."arquivos",0777,true);
         }
     }

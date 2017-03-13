@@ -44,7 +44,7 @@ $app->get($route.'/arquivo/:id/solicita/:solicitar', function ($id,$solicitar) u
         }
 
         if(isset($raw)) {
-            echoResponseClean(200, array("success"=>true,"arquivo"=>isset($raw["file"])?true:null ));
+            echoResponseClean(200, array("success"=>true,"arquivo"=>isset($raw["file"])?true:null ,"tetse"=> $_SERVER['DOCUMENT_ROOT'] ));
         }else{
             echoResponseClean(204, array("success"=>false));
         }
