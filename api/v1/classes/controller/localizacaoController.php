@@ -29,7 +29,7 @@ $app->get($route.'/topico/aparelho/:id', function ($id) use ($app) {
 });
 
 
-$app->get($route.'/aparelho/:aparelho/wait/:wait', function ($aparelho,$wait) use ($app) {
+$app->get($route.'/receber/:aparelho/wait/:wait', function ($aparelho,$wait) use ($app) {
     require_once "classes/service/localizacaoService.php";
     require_once "classes/helper/FcmHelper.php";
 
