@@ -206,7 +206,7 @@ class TopicoService
         if(isset($topico)) {
             $top=array();
             $top["id_referencia"] = $topico->id;
-            $top["ds_nome"] = isset($topico->nome)?mb_convert_encoding($topico->nome, 'UTF-8', 'UTF-8'):null;
+            $top["ds_nome"] = isset($topico->nome)?converterString($topico->nome):null;
             $top["fl_grupo"] = !$topico->grupo?0:1;
             $top["id_aparelho"] = $topico->idAparelho;
             $top["tp_mensagem"] = $topico->tipoMensagem;
@@ -219,10 +219,13 @@ class TopicoService
     public function inserirTopicos($aparelho,$topicos){
         $tmp=array();
         foreach ($topicos as $topico){
-            $topico->idAparelho=(int)$aparelho["id"];
-            $top=TopicoService::getTopico($topico);
-            if(isset($top)){
-                array_push($tmp,$top);
+            try {
+                $topico->idAparelho = (int)$aparelho["id"];
+                $top = TopicoService::getTopico($topico);
+                if (isset($top)) {
+                    array_push($tmp, $top);
+                }
+            }finally{
             }
         }
         if(count($tmp)>0) {

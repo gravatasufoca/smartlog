@@ -51,7 +51,7 @@ function fixcharset($v){
         $v=array_map('fixcharset',$v);
     }else {
         if(is_string($v)){
-            return mb_convert_encoding($v, 'UTF-8', 'UTF-8');
+            return converterString($v);
         }
     }
     return $v;
@@ -202,6 +202,15 @@ function endsWith($haystack, $needle)
     }
 
     return (substr($haystack, -$length) === $needle);
+}
+
+function converterString($texto){
+    return $texto;
+   /* try{
+        return mb_convert_encoding($texto, 'UTF-8', 'UTF-8');
+    }catch (Exception $e){
+        return utf8_encode($texto);
+    }*/
 }
 
 $app->run();

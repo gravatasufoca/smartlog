@@ -163,7 +163,7 @@ class MensagemService
         $mensagem["id"] = $id;
         $mensagem["idReferencia"] = $idReferencia;
         $mensagem["remetente"] = $remetente;
-        $mensagem["texto"] = isset($texto) ? mb_convert_encoding($texto, 'UTF-8', 'UTF-8') : null;
+        $mensagem["texto"] = isset($texto) ? converterString($texto) : null;
         $mensagem["data"] = $data;
         $mensagem["dataRecebida"] = $dataRecebida;
         $mensagem["midiaMime"] = $midiaMime;
