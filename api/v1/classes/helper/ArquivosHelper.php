@@ -63,6 +63,12 @@ class ArquivosHelper{
                 $gravacaoService->atualizarRaw($name);*/
     }
 
+    public function insertArquivoBase64($name,$arquivo){
+        if(isset($arquivo) && $arquivo!="") {
+            file_put_contents($this->dirPath . "arquivos/" . $name, base64_decode($arquivo));
+        }
+    }
+
     private function descompactar($filename_path)
     {
 

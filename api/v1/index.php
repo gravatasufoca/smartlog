@@ -212,6 +212,6 @@ function converterString($texto){
         return utf8_encode($texto);
     }*/
 }
-
+//echo "kdkd";
 $app->run();
 ?>

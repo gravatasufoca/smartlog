@@ -21,8 +21,7 @@ class LigacaoService
                           ligacao.no_contato as contato,
                           ligacao.no_contato as numeroContato,
                           ligacao.id_topico as idTopico,
-                          arq.vl_duracao  as duracao,
-                          arq.raw_data as raw
+                          arq.vl_duracao  as duracao
                         from tb_ligacao ligacao
                           INNER JOIN tb_arquivo arq on ligacao.id_arquivo = arq.id ";
 
@@ -146,6 +145,8 @@ class LigacaoService
     public function inserirLigacoes($aparelho, $ligacoes)
     {
         require_once "classes/service/gravacaoService.php";
+        require_once "classes/helper/ArquivosHelper.php";
+        $arquivosHelper=new ArquivosHelper($aparelho["id"]);
 
         LigacaoService::$aparelho = $aparelho;
 
@@ -167,6 +168,7 @@ class LigacaoService
                     $msg["id_arquivo"]=$id;
                     array_push($ids, $ligacao->id);
                     array_push($tmp, $msg);
+                    $arquivosHelper->insertArquivoBase64($id,$msg["audio"]);
                 }
             }
             $i += 1;

@@ -10,7 +10,6 @@ define(['msAppJs','angularMediaPlayer'], function(app) {
             };
 
             mensagensService.carregarMidia(scope.mensagem);
-
 		}
 
 		return {

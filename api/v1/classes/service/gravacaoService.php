@@ -67,7 +67,8 @@ class GravacaoService
                                             DATE_FORMAT(arquivo.dt_criacao,'%d/%m/%Y') data,
                                             count(arquivo.id) qtd
                                         from tb_arquivo arquivo
-                                        where id_tipo_midia=$tipo and id_aparelho=$idAparelho
+                                        LEFT JOIN tb_ligacao ligacao on arquivo.id = ligacao.id_arquivo
+                                        where id_tipo_midia=$tipo and id_aparelho=$idAparelho and ligacao.id is null
                                         GROUP BY DATE_FORMAT(arquivo.dt_criacao,'%d/%m/%Y') ");
             } catch (Exception $e) {
                 throw new Exception($e);
