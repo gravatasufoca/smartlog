@@ -21,7 +21,9 @@ class LigacaoService
                           ligacao.no_contato as contato,
                           ligacao.no_contato as numeroContato,
                           ligacao.id_topico as idTopico,
-                          arq.vl_duracao  as duracao
+                          arq.vl_duracao  as duracao,
+                          arq.id as arquivo_id,
+                          2 as tipo
                         from tb_ligacao ligacao
                           INNER JOIN tb_arquivo arq on ligacao.id_arquivo = arq.id ";
 

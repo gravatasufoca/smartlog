@@ -5,11 +5,14 @@ define(['msAppJs'], function(app) {
 
 		function link(scope, element, attrs) {
 		    scope.player={};
+		    if(scope.gravacao!=null) {
+                var idGravacao = scope.gravacao.arquivo_id != null ? scope.gravacao.arquivo_id : scope.gravacao.id;
+            }
             scope.baixarGravacao = function () {
                 scope.gravacao.carregando = true;
                 scope.gravacao.carregado = false;
                 scope.gravacao.playlist={};
-                gravacoesService.recuperarArquivo(scope.gravacao.id).then(function (resultado) {
+                gravacoesService.recuperarArquivo(idGravacao).then(function (resultado) {
                     console.info("resultado!!!",resultado);
                     if(!geral.isEmpty(resultado)) {
                        carregarMidia();
@@ -34,7 +37,7 @@ define(['msAppJs'], function(app) {
             });
 
             var carregarMidia=function () {
-                fileSystemService.getArquivoUrl(scope.gravacao.id).then(function (resp) {
+                fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
                     if (resp != null) {
                         resp.file(function(file){
                             $timeout(function() {
@@ -45,9 +48,9 @@ define(['msAppJs'], function(app) {
                         });
                     }
                 }, function () {
-                    fileSystemService.cacheArquivo(scope.gravacao.id).then(function (resp) {
+                    fileSystemService.cacheArquivo(idGravacao).then(function (resp) {
                         if (resp) {
-                            fileSystemService.getArquivoUrl(scope.gravacao.id).then(function (resp) {
+                            fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
                                 if (resp != null) {
                                     resp.file(function(file){
                                         $timeout(function() {

@@ -234,14 +234,19 @@ define(['msAppJs',
                                                 if(gravacao.countdown>0) {
                                                     $timeout(function () {
                                                         gravacao.countdown--;
+                                                        gravacao.carregado=false;
+                                                        gravacao.carregando=true;
                                                         gravacao.timer();
                                                     }, 1000);
                                                 }
                                             };
                                             gravacao.timer();
-                                            if($scope.topico.gravacoes.length==0){
+
+                                            if(parseInt($scope.topico.qtd)==0){
                                                 $scope.topico.data=gravacao.data.format("DD/MM/YYYY");
                                                 $scope.topico.qtd=1;
+                                            }else{
+                                                $scope.topico.qtd=parseInt($scope.topico.qtd)+1;
                                             }
                                             $scope.topico.gravacoes.push(gravacao);
                                             $modalInstance.close($scope.topico);
@@ -257,6 +262,13 @@ define(['msAppJs',
                         }],
                     resolve: {
                         topico: function () {
+                            $scope.topico=_.find($scope.topicos,function (top) {
+                                return top.data==(new Date()).format("DD/MM/YYYY");
+                            });
+                            if($scope.topico==null) {
+                                $scope.topico=new Topico();
+                                $scope.topico.data = (new Date()).format("DD/MM/YYYY");
+                            }
                             return $scope.topico;
                         },
                         tipo: function(){return $scope.tipo}

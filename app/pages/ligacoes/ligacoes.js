@@ -1,8 +1,8 @@
 define([
         'pages/ligacoes/controllers/ligacoesController',
-        'pages/mensagens/directives/exMensagemAudio',
+        'pages/gravacoes/directives/exGravacao',
         'pages/ligacoes/services/ligacoesService',
-        'pages/mensagens/services/mensagensService'
+        'pages/gravacoes/services/gravacoesService'
         ], function(app){
 	'use strict';
 	return app;
