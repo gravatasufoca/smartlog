@@ -36,29 +36,33 @@ define(['msAppJs'], function(app) {
                 }
             });
 
+            var getArquivo=function (resp) {
+                if(scope.gravacao.tipo!=1) {
+                    resp.file(function (file) {
+                        $timeout(function () {
+                            scope.gravacao.src = URL.createObjectURL(file);
+                            scope.gravacao.carregando = false;
+                            scope.gravacao.carregado = true;
+                        });
+                    });
+                }else{
+                    scope.gravacao.src = resp.toURL();
+                    scope.gravacao.carregando = false;
+                    scope.gravacao.carregado = true;
+                }
+            };
+
             var carregarMidia=function () {
                 fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
                     if (resp != null) {
-                        resp.file(function(file){
-                            $timeout(function() {
-                                scope.gravacao.src = URL.createObjectURL(file);
-                                scope.gravacao.carregando = false;
-                                scope.gravacao.carregado = true;
-                            });
-                        });
+                       getArquivo(resp);
                     }
                 }, function () {
                     fileSystemService.cacheArquivo(idGravacao).then(function (resp) {
                         if (resp) {
                             fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
                                 if (resp != null) {
-                                    resp.file(function(file){
-                                        $timeout(function() {
-                                            scope.gravacao.src = URL.createObjectURL(file);
-                                            scope.gravacao.carregando = false;
-                                            scope.gravacao.carregado = true;
-                                        });
-                                    });
+                                    getArquivo(resp);
                                 }
                             });
                         }
@@ -66,6 +70,8 @@ define(['msAppJs'], function(app) {
                 });
             };
             carregarMidia();
+
+
 
 		}
 

@@ -19,8 +19,7 @@
                ng-src="{{gravacao.src}}"></video>
 
         <span ng-switch-when="1" class="im_message_photo_thumb">
-            <img class="im_message_photo_thumb" style="width: 260px" ng-if="gravacao.raw"
-                  ng-src="data:image/jpeg;base64,{{::gravacao.raw}}">
+            <img class="im_message_photo_thumb" style="width: 260px" ng-if="gravacao.carregado" ng-src="{{gravacao.src}}" >
          </span>
     </div>
 </div>
