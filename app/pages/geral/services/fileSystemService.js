@@ -152,21 +152,18 @@ define(['msAppJs'], function(app) {
             };
 
             var getMensagemUrl = function (id) {
-                var def=$q.defer();
-                fileSystem.getFileEntry("arquivos/"+id).then(function (entry) {
-                    def.resolve(entry.toURL());
-                },function (err) {
-                    def.reject();
-                });
-                return def.promise;
+                return getArquivoUrl(id,true);
             };
 
             var getArquivoUrl = function (id) {
+                if(arguments[1]==null){
+                    var path="/gravacoes";
+                }else{
+                    var path="";
+                }
                 var def=$q.defer();
-                fileSystem.getFileEntry("arquivos/gravacoes/"+id).then(function (entry) {
-
+                fileSystem.getFileEntry("arquivos"+path+ "/"+id).then(function (entry) {
                     def.resolve(entry);
-
                 },function (err) {
                     def.reject();
                 });

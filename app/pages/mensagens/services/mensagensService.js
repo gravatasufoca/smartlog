@@ -52,26 +52,45 @@ define(['msAppJs'
 
 		var carregarMidia=function (mensagem) {
 
+            var getArquivo=function (resp) {
+                if(mensagem.tipoMidia!=1) {
+                    resp.file(function (file) {
+                        $timeout(function () {
+                            console.log("mensagem nao eh imagem... olha o blob: "+URL.createObjectURL(file))
+                            mensagem.src = URL.createObjectURL(file);
+                            mensagem.carregando = false;
+                            mensagem.carregado = true;
+                        });
+                    });
+                }else{
+                    $timeout(function () {
+                        console.log("mensagem eh imagem... olha o link: "+resp.toURL())
+                        mensagem.src = resp.toURL();
+                        mensagem.carregando = false;
+                        mensagem.carregado = true;
+                    });
+                }
+            };
+
 			mensagem.src = "data:" + mensagem.midiaMime + ";base64," + mensagem.thumb;
 
 			if (mensagem.carregado) {
+				console.log("tentando pegar do cache")
 				mensagem.carregando=true;
 				fileSystemService.getMensagemUrl(mensagem.idReferencia).then(function (resp) {
+                    console.log("solicitacao feita: "+resp)
 					if (resp != null) {
-                        $timeout(function () {
-                            mensagem.src = resp;
-                            mensagem.carregando = false;
-                        });
+                        getArquivo(resp);
 					}
 				}, function () {
+                    console.log("pedindo mensagem do servidor")
 					fileSystemService.cacheMensagem(mensagem.idReferencia, mensagem.midiaMime).then(function (resp) {
 						if (resp) {
+                            console.log("solicitacao feita, tentando pegar do cache")
 							fileSystemService.getMensagemUrl(mensagem.idReferencia).then(function (resp) {
-								if (resp != null) {
-									$timeout(function () {
-                                        mensagem.src = resp;
-                                        mensagem.carregando = false;
-                                    });
+                                console.log("solicitacao feita: "+resp)
+                                if (resp != null) {
+									getArquivo(resp);
 								}
 							});
 						}
@@ -80,8 +99,6 @@ define(['msAppJs'
 
 			}
 		};
-			
-        
 
 
 		return {
