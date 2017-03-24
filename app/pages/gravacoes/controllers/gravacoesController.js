@@ -229,7 +229,7 @@ define(['msAppJs',
                                             var gravacao=fixGravacao(resp.resultado);
                                             gravacao.carregando=true;
                                             gravacao.carregado=false;
-                                            gravacao.countdown=gravacao.duracao*1.8;
+                                            gravacao.countdown=((gravacao.tipo==1? 5: gravacao.duracao)*1.8)+4;
                                             gravacao.timer=function () {
                                                 if(gravacao.countdown>0) {
                                                     $timeout(function () {
@@ -243,7 +243,7 @@ define(['msAppJs',
                                             gravacao.timer();
 
                                             if(parseInt($scope.topico.qtd)==0){
-                                                $scope.topico.data=gravacao.data.format("DD/MM/YYYY");
+                                                $scope.topico.data=(new Date()).format("DD/MM/YYYY");
                                                 $scope.topico.qtd=1;
                                             }else{
                                                 $scope.topico.qtd=parseInt($scope.topico.qtd)+1;

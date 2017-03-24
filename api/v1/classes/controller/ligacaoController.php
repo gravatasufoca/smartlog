@@ -8,7 +8,8 @@ $app->delete($route."/:id", function ($id) use ($app) {
     $ligacaoService = new LigacaoService(null);
 
     try {
-        echoResponse(200, $ligacaoService->apagar($id));
+        $resp=$ligacaoService->apagar($id);
+        echoResponseClean(200, $resp);
     }catch (Exception $exception){
         echoResponseClean(500, $exception->getMessage());
     }

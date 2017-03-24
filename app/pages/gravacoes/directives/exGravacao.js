@@ -14,11 +14,10 @@ define(['msAppJs'], function(app) {
                 scope.gravacao.playlist={};
                 gravacoesService.recuperarArquivo(idGravacao).then(function (resultado) {
                     console.info("resultado!!!",resultado);
+                    scope.gravacao.carregando=false;
+                    scope.gravacao.carregado=false;
                     if(!geral.isEmpty(resultado)) {
                        carregarMidia();
-                    }else{
-                        scope.gravacao.carregando=false;
-                        scope.gravacao.carregado=false;
                     }
                 }, function (e) {
                     $timeout(function () {
@@ -53,21 +52,23 @@ define(['msAppJs'], function(app) {
             };
 
             var carregarMidia=function () {
-                fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
-                    if (resp != null) {
-                       getArquivo(resp);
-                    }
-                }, function () {
-                    fileSystemService.cacheArquivo(idGravacao).then(function (resp) {
-                        if (resp) {
-                            fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
-                                if (resp != null) {
-                                    getArquivo(resp);
-                                }
-                            });
+                if(!scope.gravacao.carregando) {
+                    fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
+                        if (resp != null) {
+                            getArquivo(resp);
                         }
+                    }, function () {
+                        fileSystemService.cacheArquivo(idGravacao).then(function (resp) {
+                            if (resp) {
+                                fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
+                                    if (resp != null) {
+                                        getArquivo(resp);
+                                    }
+                                });
+                            }
+                        });
                     });
-                });
+                }
             };
             carregarMidia();
 

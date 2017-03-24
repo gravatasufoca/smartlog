@@ -36,7 +36,7 @@ class GravacaoService
     public function recuperar($id)
     {
         if (isset($id)) {
-            return $this->db->getOneRecord($this->queryAll . " and id='$id' ");
+            return $this->db->getOneRecord($this->queryAll . " and arquivo.id='$id' ");
         }
         return null;
     }

@@ -230,7 +230,7 @@ define(['msAppJs',
 
                      if($scope.topico.ligacoes.length==0) {
                          $scope.topicos = _.reject($scope.topicos, function (item) {
-                             return $scope.topico.data = item.data;
+                             return $scope.topico.id = item.id;
                          });
                      }
                  }
