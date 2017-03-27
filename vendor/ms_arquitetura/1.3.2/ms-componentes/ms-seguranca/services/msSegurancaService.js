@@ -101,7 +101,7 @@ define([
 			$cookieStore.remove('XDEBUG_SESSION');
 			$cookieStore.remove('PHPSESSID');
 			$http.defaults.headers.common['Authorization'] = "";
-			_usuarioAutenticado = undefined;
+			_usuarioAutenticado = null;
 		};
 
 

@@ -6,8 +6,8 @@ define([
 
 	'use strict';
 
-	msSeguranca.factory('msAutenticacaoService', ['$rootScope', '$cookieStore', '$q', 'msSegurancaService', '$http', '$timeout', 
-	                                              function($rootScope, $cookieStore, $q, msSegurancaService, $http, $timeout) {
+	msSeguranca.factory('msAutenticacaoService', ['$rootScope', '$cookieStore', '$q', 'msSegurancaService', '$http', '$timeout','$interval',
+	                                              function($rootScope, $cookieStore, $q, msSegurancaService, $http, $timeout,$interval) {
 
 		/*
 		 * Private method
@@ -91,6 +91,7 @@ define([
 					params : param
 				}).success(function(data, status, headers, config) {
 					msSegurancaService.setUsuarioAutenticado(false);
+					$interval.cancel($rootScope.timer);
 					deferred.resolve(msSegurancaService);
 				});
 

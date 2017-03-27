@@ -324,7 +324,7 @@ define(['msAppJs'], function(app) {
                                             scope.conectado=false;
                                         }
                                     });
-                                },60000);
+                                },30000);
                             };
                         }
                         timer2();
@@ -334,6 +334,7 @@ define(['msAppJs'], function(app) {
                     $interval.cancel(scope.timer);
 				}
 				scope.timer=$interval(timer, intervalo);
+            	$rootScope.timer=scope.timer;
 				timer();
 
 				scope.$watch("conectado",function (a,b) {
@@ -347,6 +348,24 @@ define(['msAppJs'], function(app) {
                 var template =
                     '<div class="bolinha" ng-class="{conectado:conectado,desconectado:!conectado}" title="{{ (conectado?\'conectado\':\'desconectado\')|translate }}">&nbsp;</div>';
                 return template;
+            }
+        };
+    }]);
+
+    app.directive('conectado',["$timeout","$interval","$rootScope","apoioService", function($timeout,$interval,$rootScope,apoioService) {
+        var intervalo=300000;
+        return {
+            restrict: 'A',
+            replace: true,
+            link : function(scope, e, a) {
+
+				var events=e.click;
+				for (var i in events){
+					console.log(i);
+				}
+
+
+
             }
         };
     }]);

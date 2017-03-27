@@ -86,7 +86,7 @@
                                         </p>
                                         <p class="usuarioLogado usarioLogadoInfo">
                                             <span><strong>{{usuarioAutenticado.perfil.nome}}</strong></span>
-                                            <ex-conectado ng-show="usuarioAutenticado!=null && usuarioAutenticado.perfil!=null"></ex-conectado>
+                                            <ex-conectado ng-if="usuarioAutenticado!=null && usuarioAutenticado.perfil!=null"></ex-conectado>
                                         </p>
                                     </div>
                                     <p class="usarioLogadoInfo">
