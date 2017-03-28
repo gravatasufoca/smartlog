@@ -41,8 +41,9 @@ class ArquivosHelper{
 
     public function unpack($arquivo){
         $filename_path = md5(time().uniqid()).".zip";
-        $decoded=base64_decode($arquivo);
-        file_put_contents($this->dirPath.$filename_path,$decoded,FILE_BINARY);
+//        $decoded=base64_decode($arquivo);
+//        file_put_contents($this->dirPath.$filename_path,$decoded,FILE_BINARY);
+        move_uploaded_file($arquivo['arquivo']['tmp_name'],$this->dirPath.$filename_path);
 
         $this->descompactar($this->dirPath.$filename_path);
     }
