@@ -18,10 +18,10 @@ $app->get($route.'/ativo/:inativa', function ($inativa) use ($app) {
                     }
                 }
             }
-            echoResponseClean(200, false);
+            echoResponse(200, array("ativo"=>false,"wifi"=>false));
             return;
         }else{
-            echoResponseClean(200, $perfil["conectado"]);
+            echoResponse(200, array("ativo"=>$perfil["conectado"],"wifi"=>$perfil["wifi"]));
             return;
         }
     }
@@ -35,6 +35,7 @@ $app->post($route.'/conectado', function () use ($app) {
     getStaleSession($r->phpId);
     if(isset($_SESSION)) {
         $_SESSION["usuario"]["perfil"]["conectado"]=true;
+        $_SESSION["usuario"]["perfil"]["wifi"]=$r->wifi;
         session_commit();
     }
 });

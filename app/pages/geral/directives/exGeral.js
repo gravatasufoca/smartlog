@@ -317,14 +317,16 @@ define(['msAppJs'], function(app) {
                             var timer2=function () {
                                 $timeout(function () {
                                     apoioService.isConectado(false).then(function (conectado) {
-                                        if(conectado){
+                                        if(conectado!=null && conectado.resultado!=null && conectado.resultado.ativo){
                                             scope.conectado=true;
+                                            scope.wifi=conectado.resultado.wifi;
                                         }else{
                                             timer2();
                                             scope.conectado=false;
+                                            scope.wifi=false;
                                         }
                                     });
-                                },30000);
+                                },10000);
                             };
                         }
                         timer2();
@@ -340,6 +342,7 @@ define(['msAppJs'], function(app) {
 				scope.$watch("conectado",function (a,b) {
 					if($rootScope.usuarioAutenticado!=null && $rootScope.usuarioAutenticado.perfil!=null) {
                         $rootScope.usuarioAutenticado.perfil.conectado = scope.conectado;
+                        $rootScope.usuarioAutenticado.perfil.wifi = scope.wifi;
                     }
                 });
 
