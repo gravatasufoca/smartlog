@@ -35,7 +35,7 @@ class ConfiguracaoService
                require_once "classes/helper/FcmHelper.php";
 
                $chave = getSession()["usuario"]["perfil"]["ds_chave"];
-
+               $configuracao->serverUrl=$configuracao->serverurl;
                if (FcmHelper::sendMessage(array("chave" => $chave, "tipoAcao" => FcmHelper::$CONFIGURACAO, "phpId" => session_id(), "configuracao" => $configuracao), array($chave))) {
                     return true;
                }
