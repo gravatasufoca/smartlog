@@ -6,6 +6,9 @@ class ArquivosHelper{
 
     static function init() {
         ArquivosHelper::$UPLOAD_PATH= $_SERVER['DOCUMENT_ROOT']."/smartlog/uploads/";
+        if(!file_exists(ArquivosHelper::$UPLOAD_PATH)){
+            mkdir(ArquivosHelper::$UPLOAD_PATH);
+        }
     }
 
 
@@ -17,24 +20,25 @@ class ArquivosHelper{
         $this->dirPath=ArquivosHelper::$UPLOAD_PATH.$idAparelho."/";
         $this->idAparelho=$idAparelho;
 
-        if(!file_exists($this->dirPath)){
-            if(mkdir($this->dirPath,0777,true)) {
-                mkdir($this->dirPath . "arquivos", 0777, true);
-            }
+        if(!file_exists($this->dirPath."arquivos")){
+            mkdir($this->dirPath . "arquivos",0777,true);
+//            exec("chmod -R 777 ".ArquivosHelper::$UPLOAD_PATH);
         }
     }
 
     public function getUpload($id){
         if(file_exists($this->dirPath.$id)){
-            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>mime_content_type($this->dirPath.$id));
+//            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>mime_content_type($this->dirPath.$id));
+            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>"");
         }
         return null;
     }
 
     public function getArquivo($id){
-        $path=$this->dirPath."/arquivos/".$id;
+        $path=$this->dirPath."arquivos/".$id;
         if(file_exists($path)){
-            return array("file"=> file_get_contents($path,FILE_BINARY),"mime"=>mime_content_type($path),"size"=>filesize($path));
+//            $file= array("file" => file_get_contents($path, FILE_BINARY), "mime" => mime_content_type($path), "size" => filesize($path));
+            return array("file" => file_get_contents($path, FILE_BINARY), "mime" => "", "size" => filesize($path));
         }
         return null;
     }
@@ -57,7 +61,7 @@ class ArquivosHelper{
     }
 
     public function insertArquivo($name, $arquivo){
-
+        echoResponseClean(200, $name." - ".$arquivo);
         move_uploaded_file($arquivo['arquivo']['tmp_name'],$this->dirPath."arquivos/".$name);
         /*        require_once "classes/service/gravacaoService.php";
                 $gravacaoService = new GravacaoService(null);

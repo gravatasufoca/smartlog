@@ -212,6 +212,12 @@ function converterString($texto){
         return utf8_encode($texto);
     }*/
 }
+
+function debug($texto){
+    $file=$_SERVER['DOCUMENT_ROOT']."/smartlog/error.log";
+    file_put_contents($file,"\n". print_r($texto,true),FILE_APPEND);
+
+}
 //echo "kdkd";
 $app->run();
 ?>

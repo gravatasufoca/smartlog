@@ -49,7 +49,6 @@ $app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao/cameraFrente/:
 
 $app->get($route.'/:id', function ($id) use ($app) {
     $response=$app->response;
-
     require_once "classes/service/gravacaoService.php";
 
     $gravacaoService = new GravacaoService(null);
