@@ -66,7 +66,8 @@ define(['msAppJs'], function (app) {
                     smsBlacklist:null,
                     chamadasBlacklist:null,
                     wifi:null,
-                    intervalo:null
+                    intervalo:null,
+                    serverUrl:null
 				}
             };
 
@@ -103,9 +104,8 @@ define(['msAppJs'], function (app) {
                         .then(function (data) {
                             $scope.configuracao.smsBlacklist=converteBlacklist($scope.configuracao.smsBlacklist);
                             $scope.configuracao.chamadasBlacklist=converteBlacklist($scope.configuracao.chamadasBlacklist);
-
                             $msNotifyService.close();
-                            $scope.showMsg('S', data.mensagens[0].texto);
+                            $scope.showMsg('S', 'solicitacao-sucesso');
                             $state.go("configuracoes");
                         }, function (e) {
                             $msNotifyService.close();

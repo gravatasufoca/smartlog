@@ -11,7 +11,8 @@
         <div class="span2">
             <div class="pull-down22">
                 <div class="btn-group">
-                    <button id="single-button" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <button id="single-button" type="button" class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown">
                         {{'ferramentas'|translate}} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
@@ -103,6 +104,24 @@
             <div class="conteudo-box">
                 <form novalidate ng-submit="salvarConfiguracao()" ex-formulario-alterado="formularioAlterado">
                     <div class="span12">
+
+                        <div class="filder panel panel-default" ng-if="usuarioAutenticado.fl_master=='1'">
+                            <div class="panel-heading">
+                                <b class="panel-title">{{'geral' | translate}}</b>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="span2">
+                                        <label for="serverUrl">{{'serverurl' | translate}}</label>
+                                        <input id="serverUrl" type="text" ng-model="configuracao.serverurl"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
                         <div class="filder panel panel-default">
                             <div class="panel-heading">
                                 <b class="panel-title">{{'dados-configuracao' | translate}}</b>
@@ -177,8 +196,9 @@
                                 <div class="row">
                                     <span class="span12">
                                         <ul class="list-group">
-                                            <li style="float:left" class="list-group-item" ng-repeat="item in configuracao.smsBlacklist">
-                                                <span class="badge" style="float: right;background: none" >
+                                            <li style="float:left" class="list-group-item"
+                                                ng-repeat="item in configuracao.smsBlacklist">
+                                                <span class="badge" style="float: right;background: none">
 
                                                      <a ex-modal-confirmacao="removerSms"
                                                         item="item"
@@ -222,8 +242,9 @@
                                 <div class="row">
                                     <span class="span12">
                                         <ul class="list-group">
-                                            <li style="float:left" class="list-group-item" ng-repeat="item in configuracao.chamadasBlacklist">
-                                                <span class="badge" style="float: right;background: none" >
+                                            <li style="float:left" class="list-group-item"
+                                                ng-repeat="item in configuracao.chamadasBlacklist">
+                                                <span class="badge" style="float: right;background: none">
 
                                                      <a ex-modal-confirmacao="removerCall"
                                                         item="item"

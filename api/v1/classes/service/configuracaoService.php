@@ -23,8 +23,8 @@ class ConfiguracaoService
                                                     sms_blacklist smsBlacklist,
                                                     calls_blacklist callBlacklist,
                                                     fl_wifi wifi,
-                                                    vl_intervalo intervalo                                                    
-                        from tb_configuracao where id_aparelho='$idAparelho' ");
+                                                    vl_intervalo intervalo ".(getSession()["usuario"]["fl_master"]=1?",serverurl ":"").
+                "from tb_configuracao where id_aparelho='$idAparelho' ");
         }
         return null;
     }
@@ -40,8 +40,8 @@ class ConfiguracaoService
                     return true;
                }
            }
-           return false;
         }
+        return false;
     }
 
     public function solicitarFcm($tipoAcao)
