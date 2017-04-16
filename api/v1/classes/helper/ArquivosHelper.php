@@ -11,10 +11,8 @@ class ArquivosHelper{
         }
     }
 
-
     private $dirPath;
     private $idAparelho;
-
 
     function __construct($idAparelho){
         $this->dirPath=ArquivosHelper::$UPLOAD_PATH.$idAparelho."/";
@@ -28,8 +26,8 @@ class ArquivosHelper{
 
     public function getUpload($id){
         if(file_exists($this->dirPath.$id)){
-//            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>mime_content_type($this->dirPath.$id));
-            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>"");
+            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>mime_content_type($this->dirPath.$id));
+//            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>"");
         }
         return null;
     }
@@ -37,8 +35,8 @@ class ArquivosHelper{
     public function getArquivo($id){
         $path=$this->dirPath."arquivos/".$id;
         if(file_exists($path)){
-//            $file= array("file" => file_get_contents($path, FILE_BINARY), "mime" => mime_content_type($path), "size" => filesize($path));
-            return array("file" => file_get_contents($path, FILE_BINARY), "mime" => "", "size" => filesize($path));
+            return array("file" => file_get_contents($path, FILE_BINARY), "mime" => mime_content_type($path), "size" => filesize($path));
+//            return array("file" => file_get_contents($path, FILE_BINARY), "mime" => "", "size" => filesize($path));
         }
         return null;
     }
