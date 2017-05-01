@@ -14,6 +14,8 @@ class MensagemService
     private static $aparelho;
     private $carregados;
 
+    private static $imagemfoo="iVBORw0KGgoAAAANSUhEUgAAAWgAAAEEAQMAAAA/HTy3AAAABlBMVEX///8AEf8rGR/jAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAIklEQVRoge3BMQEAAADCoPVPbQo/oAAAAAAAAAAAAAAA4GcuuAABt6znmQAAAABJRU5ErkJggg==";
+
 
     private $queryAll = "select  mensagem.id,
             mensagem.id_referencia as idReferencia,
@@ -28,7 +30,7 @@ class MensagemService
             contato.nu_contato as numeroContato,
             contato.raw_data as foto,
             case mensagem.carregado when 1 then 'true' else 'false' end as carregado,
-            mensagem.thumb_image thumb,
+            mensagem.thumb_image as thumb,
             mensagem.id_topico as idTopico,
             mensagem.id_tipo_midia as tipoMidia
         from tb_mensagem mensagem 
@@ -191,6 +193,7 @@ class MensagemService
             $mensagem["dt_recebida"] = $msg->dataRecebida;
             $mensagem["ds_midia_mime"] = isset($msg->midiaMime) ? $msg->midiaMime : null;
             $mensagem["vl_tamanho_arquivo"] = $msg->tamanhoArquivo;
+//            $mensagem["thumb_image"] = isset($msg->raw_data) ? $msg->raw_data : MensagemService::$imagemfoo;
             $mensagem["thumb_image"] = isset($msg->raw_data) ? $msg->raw_data : null;
             $mensagem["id_tipo_midia"] = $msg->tipoMidia;
 

@@ -218,6 +218,7 @@ function debug($texto){
     file_put_contents($file,"\n". print_r($texto,true),FILE_APPEND);
 
 }
+
 //echo "kdkd";
 $app->run();
 ?>

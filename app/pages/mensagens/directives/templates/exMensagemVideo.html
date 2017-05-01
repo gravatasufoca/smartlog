@@ -16,8 +16,11 @@
     </div>
     <div ng-show="!mensagem.carregado">
         <span class="im_message_photo_thumb">
-            <img class="im_message_photo_thumb" style="width: 260px"
+            <img ng-show="mensagem.thumb!=null" class="im_message_photo_thumb" style="width: 260px"
                  ng-src="data:image/jpeg;base64,{{::mensagem.thumb}}">
+
+            <div ng-show="mensagem.thumb==null" class="im_message_photo_thumb" style="width: 260px">addf</div>
+
         </span>
     </div>
 </div>
