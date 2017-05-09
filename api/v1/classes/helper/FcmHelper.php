@@ -24,6 +24,7 @@ class FcmHelper
     public static $SOLICITAR_REENVIO_LIGACOES=10;
     public static $SOLICITAR_REENVIO_ARQUIVOS=11;
     public static $LIMPAR_LIGACOES=12;
+    public static $OBSERVER=13;
 
     /*
     Parameter Example
