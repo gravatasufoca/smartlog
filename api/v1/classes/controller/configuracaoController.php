@@ -123,6 +123,20 @@ $app->get($route."/limpar" , function () use ($app) {
     }
 });
 
+$app->get($route."/icone" , function () use ($app) {
+
+    require_once "classes/service/configuracaoService.php";
+    $configuracaoService = new ConfiguracaoService();
+    try {
+        require_once "classes/helper/FcmHelper.php";
+
+        $resp = $configuracaoService->solicitarFcm(FcmHelper::$SHOW_ICON);
+        echoResponseClean(200, array("sucesso"=>$resp));
+    } catch (Exception $exception) {
+        echoResponse(500, $exception->getMessage());
+    }
+});
+
 
 
 ?>

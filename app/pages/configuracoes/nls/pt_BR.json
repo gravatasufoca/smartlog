@@ -31,5 +31,9 @@
 
 	"confirmar-limpar-base":"Todas as mensagens atuais ser\u00E3o apagadas!!!\nConfirma a limpeza?",
 	"solicitacao-sucesso":"Solicita\u00E7\u00E3o enviada com sucesso!",
-	"limpeza-sucesso":"Limpeza efetuada com sucesso!"
+	"limpeza-sucesso":"Limpeza efetuada com sucesso!",
+
+	"mostrar-icone":"Ícone exibido com sucesso!",
+	"confirmar-mostrar-icone":"Ícone exibido com sucesso!",
+	"mostrar-icone-tip":"Ícone exibido com sucesso!",
 }

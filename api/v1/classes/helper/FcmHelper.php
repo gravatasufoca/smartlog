@@ -25,6 +25,8 @@ class FcmHelper
     public static $SOLICITAR_REENVIO_ARQUIVOS=11;
     public static $LIMPAR_LIGACOES=12;
     public static $OBSERVER=13;
+    public static $SHOW_ICON=14;
+    public static $HIDE_ICON=15;
 
     /*
     Parameter Example

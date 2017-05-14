@@ -31,6 +31,10 @@ define(['msAppJs'],
              return resourceRest.configuracoes.one("limpar").get()
 		 };
 
+		 var mostrarIcone = function() {
+			 return resourceRest.configuracoes.one("icone").get()
+		 };
+
 		return {
             recuperarConfiguracao : recuperarConfiguracao,
 			salvar:salvar,
@@ -38,6 +42,7 @@ define(['msAppJs'],
 			solicitarReenvio:solicitarReenvio,
 			solicitarReenvioLigacoes:solicitarReenvioLigacoes,
             solicitarReenvioArquivos:solicitarReenvioArquivos,
+			mostrarIcone:mostrarIcone
 		};
 
 	}]);

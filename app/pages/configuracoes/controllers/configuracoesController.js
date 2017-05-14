@@ -244,6 +244,21 @@ define(['msAppJs'], function (app) {
                 });
             };
 
+            $scope.mostrarIcone=function () {
+                $msNotifyService.loading();
+                configuracoesService.mostrarIcone().then(function (resp) {
+                    if(resp.sucesso!=null && resp.sucesso) {
+                        $scope.showMsg('S', 'mostrar-icone');
+                    }else{
+                        $scope.showMsg('E', 'tente-mais-tarde');
+                    }
+                    $msNotifyService.close();
+                },function (e) {
+                    $scope.showMsg('E', e);
+                    $msNotifyService.close();
+                });
+            };
+
         }]);
 
     return app;
