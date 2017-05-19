@@ -142,6 +142,12 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="span2">
+                                        <label for="nomeAparelho">{{'nome-aparelho' | translate}}</label>
+                                        <input id="nomeAparelho" type="text" ng-model="configuracao.nomeAparelho"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="span2">
                                         <label for="whats">{{'whatsapp' | translate}}</label>
                                         <input id="whats" type="checkbox" class="right"
                                                ng-model="configuracao.whatsapp"/>

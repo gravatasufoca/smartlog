@@ -100,6 +100,11 @@ class ConfiguracaoService
         return null;
     }
 
+    public function atualizarNomeAparelho($idPerfil,$nome)
+    {
+        $this->db->executeQuery("update tb_aparelho set no_aparelho='$nome' where id=$idPerfil");
+    }
+
 }
 
 ?>

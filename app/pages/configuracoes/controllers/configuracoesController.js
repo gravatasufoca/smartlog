@@ -67,7 +67,8 @@ define(['msAppJs'], function (app) {
                     chamadasBlacklist:null,
                     wifi:null,
                     intervalo:null,
-                    serverUrl:null
+                    serverUrl:null,
+                    nomeAparelho:null
 				}
             };
 

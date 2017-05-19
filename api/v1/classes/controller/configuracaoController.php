@@ -138,5 +138,20 @@ $app->get($route."/icone" , function () use ($app) {
 });
 
 
+$app->post($route."/perfil/:idPerfil/nome/:nome" , function ($idPerfil,$nome) use ($app) {
+    $perfil = getSession()["usuario"]["perfil"]["id"];
+    if (isset($perfil) and isset($idPerfil) and isset($nome)) {
+        require_once "classes/service/configuracaoService.php";
+        $configuracaoService = new ConfiguracaoService();
+        try {
+            echoResponseClean(200, array("sucesso" => $configuracaoService->atualizarNomeAparelho($idPerfil,$nome)));
+        } catch (Exception $exception) {
+            echoResponseClean(200, array("sucesso" => "false"));
+        }
+    } else {
+        echoResponse(401, 'Configuração não encontrada');
+    }
+});
+
 
 ?>

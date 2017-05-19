@@ -190,19 +190,18 @@ class DbHandler
 
     }
 
-
     public function atualizarConfiguracao($configuracao){
         debug($configuracao);
         if(isset($configuracao->serverurl)) {
             debug("aqui");
-            $query = "update tb_configuracao set  fl_avatar=?, fl_media=?, fl_whatsapp=?, fl_messenger=?, fl_wifi=?, vl_intervalo=?, sms_blacklist=?,calls_blacklist=?, serverurl=? where id_aparelho=? ";
+            $query = "update tb_configuracao set  fl_avatar=?, fl_media=?, fl_whatsapp=?, fl_messenger=?, fl_wifi=?, vl_intervalo=?, sms_blacklist=?,calls_blacklist=?, serverurl=?,no_aparelho=? where id_aparelho=? ";
             $stmt = $this->conn->prepare($query);
-            $stmt->bind_param("iiiiiisssi", $configuracao->avatar, $configuracao->media, $configuracao->whatsapp, $configuracao->messenger, $configuracao->wifi, $configuracao->intervalo, $configuracao->smsBlacklist, $configuracao->callsBlacklist, $configuracao->serverurl,$configuracao->id_aparelho);
+            $stmt->bind_param("iiiiiissssi", $configuracao->avatar, $configuracao->media, $configuracao->whatsapp, $configuracao->messenger, $configuracao->wifi, $configuracao->intervalo, $configuracao->smsBlacklist, $configuracao->callsBlacklist, $configuracao->serverurl,$configuracao->nomeAparelho,$configuracao->id_aparelho);
 
         }else{
-            $query = "update tb_configuracao set  fl_avatar=?, fl_media=?, fl_whatsapp=?, fl_messenger=?, fl_wifi=?, vl_intervalo=?, sms_blacklist=?,calls_blacklist=?  where id_aparelho=? ";
+            $query = "update tb_configuracao set  fl_avatar=?, fl_media=?, fl_whatsapp=?, fl_messenger=?, fl_wifi=?, vl_intervalo=?, sms_blacklist=?,calls_blacklist=? ,no_aparelho=? where id_aparelho=? ";
             $stmt = $this->conn->prepare($query);
-            $stmt->bind_param("iiiiiissi", $configuracao->avatar, $configuracao->media, $configuracao->whatsapp, $configuracao->messenger, $configuracao->wifi, $configuracao->intervalo, $configuracao->smsBlacklist, $configuracao->callsBlacklist, $configuracao->id_aparelho);
+            $stmt->bind_param("iiiiiisssi", $configuracao->avatar, $configuracao->media, $configuracao->whatsapp, $configuracao->messenger, $configuracao->wifi, $configuracao->intervalo, $configuracao->smsBlacklist, $configuracao->callsBlacklist,$configuracao->nomeAparelho, $configuracao->id_aparelho);
         }
 
         if($stmt->execute()){

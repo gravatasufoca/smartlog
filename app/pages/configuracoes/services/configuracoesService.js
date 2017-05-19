@@ -35,14 +35,20 @@ define(['msAppJs'],
 			 return resourceRest.configuracoes.one("icone").get()
 		 };
 
-		return {
+
+		 var alterarNome = function(perfil) {
+			 return resourceRest.configuracoes.one("perfil",perfil.id).one("nome",perfil.nome).post();
+		 };
+
+		 return {
             recuperarConfiguracao : recuperarConfiguracao,
 			salvar:salvar,
 			limparBase:limparBase,
 			solicitarReenvio:solicitarReenvio,
 			solicitarReenvioLigacoes:solicitarReenvioLigacoes,
             solicitarReenvioArquivos:solicitarReenvioArquivos,
-			mostrarIcone:mostrarIcone
+			mostrarIcone:mostrarIcone,
+			alterarNome:alterarNome
 		};
 
 	}]);
