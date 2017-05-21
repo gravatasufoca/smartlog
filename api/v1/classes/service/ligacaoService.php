@@ -95,7 +95,14 @@ class LigacaoService
                 $arq=$this->db->getOneRecord("SELECT arq.id FROM tb_arquivo arq INNER JOIN tb_ligacao ligacao ON arq.id = ligacao.id_arquivo where ligacao.id=$id");
                 if(isset($arq)) {
                     if ($this->db->executeQuery("delete from tb_ligacao where id=$id")) {
-                        return $this->db->executeQuery("delete from tb_ligacao where id=".$arq["id"]);
+                        if($this->db->executeQuery("delete from tb_arquivo where id=".$arq["id"])){
+                            require_once "classes/helper/ArquivosHelper.php";
+                            $aparelho = getSession()["usuario"]["perfil"];
+                            $arquivosHelper=new ArquivosHelper($aparelho["id"]);
+
+                            $arquivosHelper->deletarArquivo($arq["id"]);
+                            return true;
+                        }
                     }
                 }
             } catch (Exception $e) {

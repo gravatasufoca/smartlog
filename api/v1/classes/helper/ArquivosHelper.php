@@ -98,5 +98,13 @@ class ArquivosHelper{
         }
 
     }
+
+    public function deletarArquivo($id)
+    {
+        $path=$this->dirPath."arquivos/".$id;
+        if(file_exists($path)){
+            unlink($path);
+        }
+    }
 }
 ArquivosHelper::init();
