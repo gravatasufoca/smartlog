@@ -311,6 +311,7 @@ define(['msAppJs'], function(app) {
             restrict: 'E',
             replace: true,
             link : function(scope, e, a) {
+                scope.conectado=false;
             	var timer=function () {
                     apoioService.isConectado(true).then(function (resp) {
                         if(resp){

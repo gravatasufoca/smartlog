@@ -100,12 +100,13 @@ $app->post($route . '/ligacoes', function () use ($app) {
 
 
 $app->post($route . '/arquivo', function () use ($app) {
+    debug("0000000000----------");
     $aparelho = getAparelho($app);
-
     if (isset($aparelho)) {
         require_once "classes/helper/FcmHelper.php";
 
         $r = json_decode($app->request()->post()["envioArquivoVo"]);
+
         $r->arquivo = $_FILES;
         switch ($r->tipoAcao){
             case FcmHelper::$OBTER_AUDIO:
