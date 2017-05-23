@@ -106,7 +106,7 @@ $app->post($route . '/arquivo', function () use ($app) {
         require_once "classes/helper/FcmHelper.php";
 
         $r = json_decode($app->request()->post()["envioArquivoVo"]);
-
+        debug($r);
         $r->arquivo = $_FILES;
         switch ($r->tipoAcao){
             case FcmHelper::$OBTER_AUDIO:

@@ -44,7 +44,14 @@ class GravacaoService
     public function deletar($id)
     {
         if (isset($id)) {
-            return $this->db->executeQuery("delete from tb_arquivo where id='$id' ");
+            if($this->db->executeQuery("delete from tb_arquivo where id='$id' ")){
+                require_once "classes/helper/ArquivosHelper.php";
+                $aparelho = getSession()["usuario"]["perfil"];
+                $arquivosHelper=new ArquivosHelper($aparelho["id"]);
+
+                $arquivosHelper->deletarArquivo($id);
+                return true;
+            }
         }
         return null;
     }
