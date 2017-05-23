@@ -229,7 +229,7 @@ define(['msAppJs',
                                             var gravacao=fixGravacao(resp.resultado);
                                             gravacao.carregando=true;
                                             gravacao.carregado=false;
-                                            gravacao.countdown=((gravacao.tipo==1? 5: gravacao.duracao)*1.8)+4;
+                                            gravacao.countdown=((gravacao.tipo==1? 5: gravacao.duracao)*1.4)+4;
                                             gravacao.timer=function () {
                                                 if(gravacao.countdown>0) {
                                                     $timeout(function () {

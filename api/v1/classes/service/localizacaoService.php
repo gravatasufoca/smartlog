@@ -74,6 +74,18 @@ class LocalizacaoService
         return null;
     }
 
+    public function recuperarLocalizacoesPorAparelho($idAparelho)
+    {
+        if (isset($idAparelho)) {
+            try {
+                return $this->db->getList($this->queryAll . " where id_aparelho=$idAparelho");
+            } catch (Exception $e) {
+                throw new Exception($e);
+            }
+        }
+        return null;
+    }
+
     public function atualizarLocalizacao($id, $longitude,$latitude,$precisao)
     {
         if (isset($id) && isset($longitude) && isset($latitude)) {

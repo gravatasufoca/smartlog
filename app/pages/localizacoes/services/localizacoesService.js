@@ -21,7 +21,11 @@ define(['msAppJs'
 
 		var solicitarLocalizacao=function (idAparelho,wait) {
             return resourceRest.localizacao.one("receber",idAparelho).one("wait",wait?15:5).getList();
-        }
+        };
+
+        var recuperarTodasLocalizacoes = function (idAparelho) {
+            return resourceRest.localizacao.one("aparelho",idAparelho).getList();
+        };
 
         var recuperarLocalizacao = function (id) {
         	var time=arguments.length>1? arguments[1]:0;
@@ -47,7 +51,8 @@ define(['msAppJs'
             recuperarLocalizacaos:recuperarLocalizacaos,
             recuperarLocalizacao:recuperarLocalizacao,
 			apagar:apagar,
-            recuperarTopicos:recuperarTopicos
+            recuperarTopicos:recuperarTopicos,
+            recuperarTodasLocalizacoes:recuperarTodasLocalizacoes
 		};
 
 	}]);

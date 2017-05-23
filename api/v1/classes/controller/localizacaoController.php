@@ -28,6 +28,19 @@ $app->get($route.'/topico/aparelho/:id', function ($id) use ($app) {
 
 });
 
+$app->get($route.'/aparelho/:id', function ($id) use ($app) {
+    require_once "classes/service/localizacaoService.php";
+
+    $localizacaoService = new LocalizacaoService(null);
+
+    try {
+        echoResponse(200, $localizacaoService->recuperarLocalizacoesPorAparelho($id));
+    }catch (Exception $exception){
+        echoResponseClean(500, $exception->getMessage());
+    }
+
+});
+
 
 $app->get($route.'/receber/:aparelho/wait/:wait', function ($aparelho,$wait) use ($app) {
     require_once "classes/service/localizacaoService.php";

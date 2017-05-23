@@ -6,7 +6,7 @@
     <ms-alert></ms-alert>
     <div class="modal-body" style="padding: 0;">
         <div map-lazy-load="https://maps.google.com/maps/api/js?key={{googlekey}}">
-            <ng-map zoom="10">
+            <ng-map zoom="10" id="mapUnico">
                 <marker centered="true" position="{{localizacao.latitude}},{{localizacao.longitude}}" title=""></marker>
             </ng-map>
         </div>

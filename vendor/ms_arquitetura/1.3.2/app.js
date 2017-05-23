@@ -19,7 +19,6 @@ define([
         'angularResource',
         'angularTranslate',
         'angularTranslatePartialLoader',
-		'angularMaps',
         'componentes/ms-utils/filters/msRemoverAcentuacao',
         'componentes/ms-utils/filters/msHifenizar',
         'componentes/ms-utils/services/msUtilsUnderscoreService',
@@ -28,6 +27,7 @@ define([
         'componentes/ms-utils/directives/ms-compile',
         'componentes/ms-validator/msValidator',
         'restangular','angularFilesystem','angularMediaPlayer'
+        ,'angularMaps'
         ],
         function() {
 	'use strict';
@@ -51,7 +51,9 @@ define([
 	                                    'pascalprecht.translate',
 	                                    'msUtils',
 	                                    'msValidator',
-	                                    'restangular','ngMap','fileSystem','mediaPlayer']);
+	                                    'restangular','fileSystem','mediaPlayer'
+        ,'ngMap'
+	]);
 
 	//var requireConfig = requirejs.s.contexts._.config;
 	var appBaseUrl = (typeof appConfig.appBaseUrl != "undefined") ? appConfig.appBaseUrl : 'app';

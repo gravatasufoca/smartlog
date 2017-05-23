@@ -1,7 +1,7 @@
 define(['msAppJs','angularMaps'], function(app) {
 	'use strict';
 
-    app.directive('exLocalizacao', ['localizacoesService','$timeout','msModalService', function (localizacoesService,$timeout,msModalService) {
+    app.directive('exLocalizacao', ['localizacoesService','$timeout','msModalService' ,'NgMap', function (localizacoesService,$timeout,msModalService, NgMap) {
 
 		function link(scope, element, attrs) {
 		    scope.player={};
@@ -45,12 +45,11 @@ define(['msAppJs','angularMaps'], function(app) {
             }
 
             scope.abrirLocalicacao=function () {
-                msModalService.setConfig({
+               msModalService.setConfig({
                     backdrop: true,
                     keyboard: false,
                     modalFade: true,
                     template : null,
-                    size:'md',
                     templateUrl: './app/pages/localizacoes/directives/templates/modalLocalizacao.html',
                     controller : ['$scope',
                         '$rootScope',
@@ -71,9 +70,6 @@ define(['msAppJs','angularMaps'], function(app) {
                     }
                 }).open();
 
-                msModalService.modalInstance.result.then(function (resultado) {
-
-                });
             };
 
 		}

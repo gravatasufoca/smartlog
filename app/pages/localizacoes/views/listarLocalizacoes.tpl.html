@@ -1,9 +1,18 @@
 <div class="container">
-<!--    <style>
+    <style>
         .modal {
-            width: 900px;
+            width: 90%;
+            /*height: 669px;*/
+            margin-left: -45%;
+            /*margin-top: -335px; /* 669/2 */
+            padding: 0;
+            border: 0;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            z-index: 2500;
         }
-    </style>-->
+    </style>
 
     <link type="text/css" rel="stylesheet" href="assets/css/chat.css" media="screen"/>
 
@@ -22,6 +31,13 @@
                         title="{{'nova-localizacao'|translate}}">
                     <i class="font15px fa fa-plus"></i> {{'nova-localizacao'|translate}}
                 </button>
+
+                <button ng-click="abreDeslocamento()" style="margin-left: 10px;"
+                        type="button" class="btn btn-primary "
+                        title="{{'visualizar-deslocamento'|translate}}">
+                    <i class="font15px fa fa-map"></i> {{'visualizar-deslocamento'|translate}}
+                </button>
+
                 <!--COLUNA DOS TOPICOS -->
                 <div class="colunatopico">
                     <div class="ctopico">
