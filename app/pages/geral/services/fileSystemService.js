@@ -170,6 +170,21 @@ define(['msAppJs'], function(app) {
                 return def.promise;
             };
 
+            var apagarArquivo = function (id) {
+                if(arguments[1]==null){
+                    var path="/gravacoes";
+                }else{
+                    var path="";
+                }
+                var def=$q.defer();
+                fileSystem.deleteFile("arquivos"+path+ "/"+id).then(function (entry) {
+                    def.resolve(entry);
+                },function (err) {
+                    def.reject();
+                });
+                return def.promise;
+            };
+
             var getFileFromLocalFileSystemURL=function (url) {
               return fileSystem.getFileFromLocalFileSystemURL(url);
             };
@@ -190,7 +205,8 @@ define(['msAppJs'], function(app) {
                 cacheArquivo:cacheArquivo,
                 getArquivoUrl:getArquivoUrl,
                 getFileFromLocalFileSystemURL:getFileFromLocalFileSystemURL,
-                fileSystem:fileSystem
+                fileSystem:fileSystem,
+                apagarArquivo:apagarArquivo
             };
 
         }]);

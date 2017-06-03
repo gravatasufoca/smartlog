@@ -32,7 +32,8 @@ $app->get($route.'/topico/aparelho/:id/tipo/:tipo', function ($id,$tipo) use ($a
 $app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao/cameraFrente/:cameraFrente', function ($aparelho,$tipo,$duracao,$cameraFrente) use ($app) {
     require_once "classes/service/gravacaoService.php";
     require_once "classes/helper/FcmHelper.php";
-
+    debug("nova solicitacao");
+    debug(getSession());
     $gravacaoService = new GravacaoService(null);
     try {
         $id = $gravacaoService->solicitarArquivo($aparelho,$tipo,$duracao,$cameraFrente);

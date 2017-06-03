@@ -35,8 +35,8 @@ define(['msAppJs'], function(app) {
 				password: null
 		};
 
-		$scope.formLogin.email = "bruno.canto@ctis.com.br";
-		$scope.formLogin.password = "bbb";
+		$scope.formLogin.email = "bruno@teste.com.br";
+		$scope.formLogin.password = "teste";
 
 
 		/**
