@@ -189,6 +189,10 @@ define(['msAppJs'], function(app) {
               return fileSystem.getFileFromLocalFileSystemURL(url);
             };
 
+            var limparCache=function () {
+                clearFS();
+            };
+
             return {
                 writeVal : writeVal,
                 readVal : readVal,
@@ -206,7 +210,8 @@ define(['msAppJs'], function(app) {
                 getArquivoUrl:getArquivoUrl,
                 getFileFromLocalFileSystemURL:getFileFromLocalFileSystemURL,
                 fileSystem:fileSystem,
-                apagarArquivo:apagarArquivo
+                apagarArquivo:apagarArquivo,
+                limparCache:limparCache
             };
 
         }]);

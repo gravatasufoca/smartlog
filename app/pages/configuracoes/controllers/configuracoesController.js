@@ -7,14 +7,14 @@ define(['msAppJs'], function (app) {
         '$translatePartialLoader',
         'configuracoesService',
         '$state',
-        '$stateParams',
+        '$stateParams','fileSystemService',
         function ($scope,$rootScope,
                   $msNotifyService,
                   $timeout,
                   $translatePartialLoader,
                   configuracoesService,
                   $state,
-                  $stateParams) {
+                  $stateParams,fileSystemService) {
             $translatePartialLoader.addPart('configuracoes');
 
             /**
@@ -258,6 +258,14 @@ define(['msAppJs'], function (app) {
                     $scope.showMsg('E', e);
                     $msNotifyService.close();
                 });
+            };
+
+
+            $scope.limparCache=function () {
+                $msNotifyService.loading();
+                fileSystemService.limparCache();
+                $scope.showMsg('S', 'limpar-base-local');
+                $msNotifyService.close();
             };
 
         }]);

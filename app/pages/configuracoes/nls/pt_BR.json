@@ -36,4 +36,8 @@
 	"mostrar-icone":"Ícone exibido com sucesso!",
 	"confirmar-mostrar-icone":"Ícone exibido com sucesso!",
 	"mostrar-icone-tip":"Ícone exibido com sucesso!",
+
+	"limpar-base-local":"Cache limpo com sucesso!",
+	"confirmar-limpar-base-local":"Todo o cache local ser\u00E1 apagado!\nConfirma a limpeza?",
+	"limpar-base-local-tip":"Cache limpo com sucesso!"
 }
