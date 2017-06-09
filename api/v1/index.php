@@ -1,7 +1,9 @@
 <?php
 
 require '../libs/Slim/Slim.php';
+require  '../libs/ratchet/autoload.php';
 
+require_once "classes/websocket/socket.php";
 
 \Slim\Slim::registerAutoloader();
 
@@ -220,4 +222,21 @@ function debug($texto){
 }
 debug("index.php: ".date_format(new DateTime(),"d/m/Y H:i:s") );
 $app->run();
+
+
+use Ratchet\Server\IoServer;
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
+use Smartlog\Socket;
+
+$server = IoServer::factory(
+    new HttpServer(
+        new WsServer(
+            new Socket()
+        )
+    ),
+    4040
+);
+//$server->run();
+
 ?>
