@@ -53,27 +53,55 @@ define(['msAppJs'], function(app) {
 
             var carregarMidia=function () {
                 if(!scope.gravacao.carregando) {
-                    fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
-                        if (resp != null) {
-                            getArquivo(resp);
-                        }
-                    }, function () {
-                        fileSystemService.cacheArquivo(idGravacao).then(function (resp) {
-                            if (resp) {
-                                fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
-                                    if (resp != null) {
-                                        getArquivo(resp);
-                                    }
-                                });
+
+                    if(fileSystemService.requestIncrease()) {
+                        fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
+                            if (resp != null) {
+                                getArquivo(resp);
                             }
+                        }, function () {
+                            fileSystemService.cacheArquivo(idGravacao).then(function (resp) {
+                                if (resp) {
+                                    fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
+                                        if (resp != null) {
+                                            getArquivo(resp);
+                                        }
+                                    });
+                                }
+                            });
                         });
-                    });
+                    }else{
+
+                        gravacoesService.recuperar(idGravacao).then(function (resp) {
+                            var blob=new Blob([resp], {type : scope.gravacao==3?'video/mp4':'audio/ogg'});
+                            scope.gravacao.src = URL.createObjectURL(blob);
+                            scope.gravacao.carregando = false;
+                            scope.gravacao.carregado = true;
+                        });
+
+                       /* var def = $q.defer();
+                        resourceRest.gravacao.withHttpConfig({responseType: 'blob'}).get(id).then(function (resp) {
+                            console.info("requisicao feita1");
+                            if (resp==null && time == 60) {
+                                def.reject();
+                                return null;
+                            }
+                            if (geral.isEmpty(resp)) {
+                                console.info("resp vazia");
+                                return recuperarGravacao(id, time + 10);
+                            } else {
+                                console.info("escrevendo blob");
+                                console.info(fileSystem.writeBlob("arquivos/gravacoes/" + id, resp));
+                                def.resolve(true);
+                            }
+                        },function (err) {
+                            console.error(err);
+                            def.reject();
+                        });*/
+                    }
                 }
             };
             carregarMidia();
-
-
-
 		}
 
 		return {

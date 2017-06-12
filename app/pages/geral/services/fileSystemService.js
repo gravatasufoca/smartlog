@@ -37,6 +37,7 @@ define(['msAppJs'], function(app) {
             };
 
             var requestIncrease = function() {
+                console.info("solicitando cota")
                 fileSystem.requestQuota(150).then(function(newQuota) {
                     console.info("New quota: " + (newQuota/1024/1024) + "mb");
                 }, function(err) {
@@ -116,17 +117,21 @@ define(['msAppJs'], function(app) {
             var cacheArquivo = function(id) {
                 var def = $q.defer();
                 resourceRest.gravacao.withHttpConfig({responseType: 'blob'}).get(id).then(function (resp) {
+                    console.info("requisicao feita1");
                     if (resp==null && time == 60) {
                         def.reject();
                         return null;
                     }
                     if (geral.isEmpty(resp)) {
+                        console.info("resp vazia");
                         return recuperarGravacao(id, time + 10);
                     } else {
+                        console.info("escrevendo blob");
                         console.info(fileSystem.writeBlob("arquivos/gravacoes/" + id, resp));
                         def.resolve(true);
                     }
                 },function (err) {
+                    console.error(err);
                     def.reject();
                 });
 
@@ -166,6 +171,7 @@ define(['msAppJs'], function(app) {
                     def.resolve(entry);
                 },function (err) {
                     def.reject();
+                    console.error(err);
                 });
                 return def.promise;
             };

@@ -4,7 +4,7 @@ define(['msAppJs'
 
 
 		var recuperar = function (id) {
-			return resourceRest.gravacao.get(id);
+			return resourceRest.gravacao.withHttpConfig({responseType: 'blob'}).get(id);
         };
 
         var apagar = function (id) {
