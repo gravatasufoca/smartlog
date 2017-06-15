@@ -127,7 +127,10 @@ class GravacaoService
         if (isset($id)) {
             require_once "classes/helper/ArquivosHelper.php";
             $arquivosHelper=new ArquivosHelper(getSession()["usuario"]["perfil"]["id"]);
-            return $arquivosHelper->getArquivo($id);
+            $resp= $arquivosHelper->getArquivo($id);
+            $arquivo=$this->recuperar($id);
+            $resp["mime"]=$this->getMime($arquivo["tipo"]);
+            return $resp;
         }
         return null;
     }
@@ -145,6 +148,20 @@ class GravacaoService
 
         return $this->db->insertIntoTable($tmp, $colunas, "tb_arquivo");
 
+    }
+
+    private function getMime($tipo){
+        switch ($tipo){
+            case 1:
+            case 13:
+                return "image/jpg";
+            case 2:
+                return "audio/ogg";
+            case 3:
+                return "video/mp4";
+            default:
+                return "image/jpeg";
+        }
     }
 }
 ?>

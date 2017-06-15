@@ -35,7 +35,8 @@ class ArquivosHelper{
     public function getArquivo($id){
         $path=$this->dirPath."arquivos/".$id;
         if(file_exists($path)){
-            return array("file" => file_get_contents($path, FILE_BINARY), "mime" => mime_content_type($path), "size" => filesize($path));
+//            return array("file" => file_get_contents($path, FILE_BINARY), "mime" => mime_content_type($path), "size" => filesize($path));
+            return array("file" => file_get_contents($path, FILE_BINARY), "size" => filesize($path));
 //            return array("file" => file_get_contents($path, FILE_BINARY), "mime" => "", "size" => filesize($path));
         }
         return null;

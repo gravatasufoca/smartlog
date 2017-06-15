@@ -100,7 +100,6 @@ $app->post($route . '/ligacoes', function () use ($app) {
 
 
 $app->post($route . '/arquivo', function () use ($app) {
-    debug("0000000000----------");
     $aparelho = getAparelho($app);
     if (isset($aparelho)) {
         require_once "classes/helper/FcmHelper.php";

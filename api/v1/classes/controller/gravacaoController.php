@@ -49,9 +49,9 @@ $app->get($route.'/aparelho/:aparelho/tipo/:tipo/duracao/:duracao/cameraFrente/:
 
 
 $app->get($route.'/:id', function ($id) use ($app) {
+    debug("pedindo arquivo:");
     $response=$app->response;
     require_once "classes/service/gravacaoService.php";
-
     $gravacaoService = new GravacaoService(null);
     $resp=$gravacaoService->recuperarArquivo($id);
     if(isset($resp)){
