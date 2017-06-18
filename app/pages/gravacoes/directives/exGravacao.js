@@ -1,9 +1,10 @@
 define(['msAppJs'], function(app) {
 	'use strict';
 
-    app.directive('exGravacao', ['gravacoesService','$timeout','fileSystemService', function (gravacoesService,$timeout,fileSystemService) {
+    app.directive('exGravacao', ['gravacoesService','$timeout','$rootScope','indexDBService', function (gravacoesService,$timeout,$rootScope,indexDBService) {
 
 		function link(scope, element, attrs) {
+
 		    scope.player={};
 		    if(scope.gravacao!=null) {
                 var idGravacao = scope.gravacao.arquivo_id != null ? scope.gravacao.arquivo_id : scope.gravacao.id;
@@ -35,69 +36,56 @@ define(['msAppJs'], function(app) {
                 }
             });
 
-            var getArquivo=function (resp) {
-                if(scope.gravacao.tipo!=1) {
-                    resp.file(function (file) {
-                        $timeout(function () {
-                            scope.gravacao.src = URL.createObjectURL(file);
-                            scope.gravacao.carregando = false;
-                            scope.gravacao.carregado = true;
-                        });
-                    });
-                }else{
-                    scope.gravacao.src = resp.toURL();
-                    scope.gravacao.carregando = false;
-                    scope.gravacao.carregado = true;
+            var getBlob=function (resp) {
+                var mime;
+                switch (scope.gravacao){
+                    case 1:
+                        mime='image/jpge';
+                        break;
+                    case 2:
+                        mime='audio/ogg';
+                        break;
+                    case 3:
+                        mime='video/mp4';
+                        break;
+                    default:
+                        mime='image/jpge';
+
                 }
+
+                return new Blob([resp], {type: mime});
             };
 
-            var carregarMidia=function () {
-                if(!scope.gravacao.carregando) {
+            var getArquivo=function (resp) {
+                if(resp) {
+                    $timeout(function () {
 
-                    if(fileSystemService.requestIncrease()) {
-                        fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
-                            if (resp != null) {
-                                getArquivo(resp);
-                            }
-                        }, function () {
-                            fileSystemService.cacheArquivo(idGravacao).then(function (resp) {
-                                if (resp) {
-                                    fileSystemService.getArquivoUrl(idGravacao).then(function (resp) {
-                                        if (resp != null) {
-                                            getArquivo(resp);
-                                        }
-                                    });
+                        scope.gravacao.src = URL.createObjectURL(getBlob(resp));
+                        scope.gravacao.carregando = false;
+                        scope.gravacao.carregado = true;
+                    });
+                }
+            };
+            var carregarMidia = function () {
+                var usuario = $rootScope.usuarioAutenticado;
+                if (usuario != null && usuario.perfil != null) {
+                    if (!scope.gravacao.carregando) {
+
+                        // if (indexDBService.fileSystem.isSupported()) {
+                            indexDBService.getArquivoUrl(usuario.perfil.id,idGravacao).then(function (resp) {
+                                if (resp != null) {
+                                    getArquivo(resp);
                                 }
                             });
-                        });
-                    }else{
+                        /*} else {
 
-                        gravacoesService.recuperar(idGravacao).then(function (resp) {
-                            var blob=new Blob([resp], {type : scope.gravacao==3?'video/mp4':'audio/ogg'});
-                            scope.gravacao.src = URL.createObjectURL(blob);
-                            scope.gravacao.carregando = false;
-                            scope.gravacao.carregado = true;
-                        });
+                            gravacoesService.recuperar(idGravacao).then(function (resp) {
+                                scope.gravacao.src = URL.createObjectURL(getBlob(resp));
+                                scope.gravacao.carregando = false;
+                                scope.gravacao.carregado = true;
+                            });
 
-                       /* var def = $q.defer();
-                        resourceRest.gravacao.withHttpConfig({responseType: 'blob'}).get(id).then(function (resp) {
-                            console.info("requisicao feita1");
-                            if (resp==null && time == 60) {
-                                def.reject();
-                                return null;
-                            }
-                            if (geral.isEmpty(resp)) {
-                                console.info("resp vazia");
-                                return recuperarGravacao(id, time + 10);
-                            } else {
-                                console.info("escrevendo blob");
-                                console.info(fileSystem.writeBlob("arquivos/gravacoes/" + id, resp));
-                                def.resolve(true);
-                            }
-                        },function (err) {
-                            console.error(err);
-                            def.reject();
-                        });*/
+                        }*/
                     }
                 }
             };

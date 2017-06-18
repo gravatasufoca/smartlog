@@ -27,7 +27,7 @@ define(['msAppJs',
 	                                  'msRouteService',
 	                                  '$http',
 	                                  '$translatePartialLoader',
-									  'fileSystemService',
+									  'indexDBService',
 	                                  function($scope,
 	                                		  $timeout,
 	                                		  $filter,
@@ -37,7 +37,7 @@ define(['msAppJs',
 	                                		  $rootScope,
 	                                		  msRouteService,
 	                                		  $http,
-	                                		  $translatePartialLoader,fileSystemService){
+	                                		  $translatePartialLoader,indexDBService){
 
 		//Carrega as msgs globais para todas as telas
 		$translatePartialLoader.addPart('geral');
@@ -145,10 +145,13 @@ define(['msAppJs',
 		};
 
 
+		/*fileSystemService.fileSystem.getCurrentUsage().then(function (resp) {
+			console.info(resp);
+        });*/
 		// fileSystemService.clearFS();
-      fileSystemService.requestIncrease();
-      fileSystemService.createFolder("arquivos");
-      fileSystemService.createFolder("arquivos/gravacoes");
+      // fileSystemService.requestIncrease();
+      // fileSystemService.createFolder("arquivos");
+      // fileSystemService.createFolder("arquivos/gravacoes");
 
 	}]);
 

@@ -26,8 +26,8 @@ class ArquivosHelper{
 
     public function getUpload($id){
         if(file_exists($this->dirPath.$id)){
-            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>mime_content_type($this->dirPath.$id));
-//            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>"");
+//            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>mime_content_type($this->dirPath.$id));
+            return array("file"=> file_get_contents($this->dirPath.$id,FILE_BINARY),"mime"=>"");
         }
         return null;
     }

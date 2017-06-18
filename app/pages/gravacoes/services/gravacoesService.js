@@ -1,6 +1,6 @@
 define(['msAppJs'
         ], function(app) {
-	app.factory('gravacoesService', ['resourceRest','fileSystemService', function(resourceRest,fileSystemService){
+	app.factory('gravacoesService', ['resourceRest','$rootScope','indexDBService', function(resourceRest,$rootScope,indexDBService){
 
 
 		var recuperar = function (id) {
@@ -26,7 +26,7 @@ define(['msAppJs'
         var recuperarGravacao = function (id) {
         	var time=arguments.length>1? arguments[1]:0;
             window.geral.sleep(time*1000);
-            return fileSystemService.cacheArquivo(id);
+            return indexDBService.cacheArquivo($rootScope.usuarioAutenticado.perfil.id,id);
         };
 
 		return {

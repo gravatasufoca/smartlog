@@ -56,6 +56,7 @@ $app->get($route.'/:id', function ($id) use ($app) {
     $resp=$gravacaoService->recuperarArquivo($id);
     if(isset($resp)){
         $response->write($resp["file"]);
+        $response->headers->set('Access-Control-Expose-Headers', 'true');
         $response->headers->set('Content-Transfer-Encoding', 'binary');
         $response->headers->set('Content-Type', $resp["mime"]);
         $response->headers->set('Content-Length', $resp["size"]);

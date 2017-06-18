@@ -26,7 +26,7 @@ define([
 //        'componentes/ms-utils/directives/ms-identificador-ambiente',
         'componentes/ms-utils/directives/ms-compile',
         'componentes/ms-validator/msValidator',
-        'restangular','angularFilesystem','angularMediaPlayer'
+        'restangular','angularDB','angularMediaPlayer'
         ,'angularMaps'
         ],
         function() {
@@ -51,7 +51,7 @@ define([
 	                                    'pascalprecht.translate',
 	                                    'msUtils',
 	                                    'msValidator',
-	                                    'restangular','fileSystem','mediaPlayer'
+	                                    'restangular','indexedDB','mediaPlayer'
         ,'ngMap'
 	]);
 
@@ -69,8 +69,8 @@ define([
 	/*
 	 * Configurando LazyLoading e translate
 	 */
-	app.config(['$controllerProvider', '$provide', '$compileProvider', '$translateProvider', '$filterProvider',
-	            function($controllerProvider, $provide, $compileProvider, $translateProvider, $filterProvider){
+	app.config(['$controllerProvider', '$provide', '$compileProvider', '$translateProvider', '$filterProvider','$indexedDBProvider',
+	            function($controllerProvider, $provide, $compileProvider, $translateProvider, $filterProvider,$indexedDBProvider){
 
 		app._controller = app.controller;
 		app._service = app.service;
@@ -80,7 +80,7 @@ define([
 		app._provider = app.provider;
 		app._value = app.value;
 
-        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|filesystem|local|data):/);
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|filesystem|local|data|blob):/);
 
 
         app.controller = function( name, constructor ) {
@@ -128,6 +128,16 @@ define([
 		});
 
 		$translateProvider.preferredLanguage('pt_BR');
+
+		$indexedDBProvider
+			.connection('smartlogDB')
+			.upgradeDatabase(1, function(event, db, tx){
+				var gravacaoStore = db.createObjectStore('gravacao', {keyPath: 'idGravacao'});
+				gravacaoStore.createIndex('idGravacao_idx', 'idGravacao', {unique: true});
+
+                var arquivoStore = db.createObjectStore('arquivo', {keyPath: 'idArquivo'});
+                arquivoStore.createIndex('idArquivo_idx', 'idArquivo', {unique: true});
+			});
 	}]);
 
 

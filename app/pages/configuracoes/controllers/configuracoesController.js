@@ -7,14 +7,14 @@ define(['msAppJs'], function (app) {
         '$translatePartialLoader',
         'configuracoesService',
         '$state',
-        '$stateParams','fileSystemService',
+        '$stateParams','indexDBService',
         function ($scope,$rootScope,
                   $msNotifyService,
                   $timeout,
                   $translatePartialLoader,
                   configuracoesService,
                   $state,
-                  $stateParams,fileSystemService) {
+                  $stateParams,indexDBService) {
             $translatePartialLoader.addPart('configuracoes');
 
             /**
@@ -263,7 +263,7 @@ define(['msAppJs'], function (app) {
 
             $scope.limparCache=function () {
                 $msNotifyService.loading();
-                fileSystemService.limparCache();
+                indexDBService.limparCache();
                 $scope.showMsg('S', 'limpar-base-local');
                 $msNotifyService.close();
             };

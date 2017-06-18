@@ -12,7 +12,7 @@ define(['msAppJs',
         '$stateParams',
         'gravacoesService',
         '$rootScope',
-        'fileSystemService',
+        'indexDBService',
         function($scope,
                  $msNotifyService,
                  msModalService,
@@ -23,7 +23,7 @@ define(['msAppJs',
                  $stateParams,
                  gravacoesService,
                  $rootScope,
-                 fileSystemService
+                 indexDBService
         ){
             $translatePartialLoader.addPart('gravacoes');
 
@@ -165,7 +165,7 @@ define(['msAppJs',
             $scope.apagarGravacao=function (audio) {
                 gravacoesService.apagar(audio.id).then(function (resp) {
                     if(resp){
-                        fileSystemService.apagarArquivo(audio.id);
+                        indexDBService.apagarArquivo(audio.id);
                         $scope.topico.gravacoes=_.reject($scope.topico.gravacoes,function (item) {
                             return item.id==audio.id;
                         });

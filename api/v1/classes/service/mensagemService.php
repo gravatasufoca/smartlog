@@ -51,7 +51,7 @@ class MensagemService
     public function recuperar($id)
     {
         if (isset($id)) {
-            return $this->db->getOneRecord($this->queryAll . " where id='$id' ");
+            return $this->db->getOneRecord($this->queryAll . " where mensagem.id='$id' ");
         }
         return null;
     }
@@ -109,6 +109,8 @@ class MensagemService
 
             $file=$arquivosHelper->getUpload($id);
             if(isset($file["file"])){
+                $mensagem=$this->recuperar($id);
+                $file["mime"]=$mensagem["midiaMime"];
                 $this->atualizarCarregados(array($id));
             }
             return $file;
