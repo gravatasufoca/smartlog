@@ -18,8 +18,8 @@ class GravacaoService
             arquivo.vl_duracao duracao , 
             arquivo.id_tipo_midia tipo
         from tb_arquivo arquivo
-         LEFT JOIN tb_ligacao ligacao  ON arquivo.id = ligacao.id_arquivo
-         where ligacao.id is null ";
+         LEFT JOIN tb_ligacao ligacao  ON arquivo.id = ligacao.id_arquivo and ligacao.id is not null
+         where 1=1 ";
 
 
     function __construct($carregados)
