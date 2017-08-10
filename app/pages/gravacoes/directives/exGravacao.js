@@ -25,7 +25,7 @@ define(['msAppJs'], function(app) {
                         console.error(e);
                         scope.gravacao.carregando=false;
                         scope.gravacao.carregado=false;
-                    }, 100);
+                    }, 500);
                 });
             };
 
@@ -59,33 +59,23 @@ define(['msAppJs'], function(app) {
             var getArquivo=function (resp) {
                 if(resp) {
                     $timeout(function () {
-
-                        scope.gravacao.src = URL.createObjectURL(getBlob(resp));
-                        scope.gravacao.carregando = false;
-                        scope.gravacao.carregado = true;
-                    });
+                        $timeout(function () {
+                            scope.gravacao.src = URL.createObjectURL(getBlob(resp));
+                            scope.gravacao.carregando = false;
+                            scope.gravacao.carregado = true;
+                        });
+                    },500);
                 }
             };
             var carregarMidia = function () {
                 var usuario = $rootScope.usuarioAutenticado;
                 if (usuario != null && usuario.perfil != null) {
                     if (!scope.gravacao.carregando) {
-
-                        // if (indexDBService.fileSystem.isSupported()) {
-                            indexDBService.getArquivoUrl(usuario.perfil.id,idGravacao).then(function (resp) {
-                                if (resp != null) {
-                                    getArquivo(resp);
-                                }
-                            });
-                        /*} else {
-
-                            gravacoesService.recuperar(idGravacao).then(function (resp) {
-                                scope.gravacao.src = URL.createObjectURL(getBlob(resp));
-                                scope.gravacao.carregando = false;
-                                scope.gravacao.carregado = true;
-                            });
-
-                        }*/
+                        indexDBService.getArquivoUrl(usuario.perfil.id,idGravacao).then(function (resp) {
+                            if (resp != null) {
+                                getArquivo(resp);
+                            }
+                        });
                     }
                 }
             };

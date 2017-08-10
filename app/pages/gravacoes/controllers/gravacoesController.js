@@ -41,7 +41,7 @@ define(['msAppJs',
             var Gravacao = function () {
                 return {
                     id: null,
-                    duracao: 120,
+                    duracao: 30,
                     data: null,
                     carregado:false,
                     raw: null,

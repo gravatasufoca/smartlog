@@ -132,15 +132,15 @@ define(['msAppJs'], function(app) {
 
             var apagarArquivo = function (id) {
                 if(arguments[1]==null){
-                    var path="/gravacoes";
+                    var path=GRAVACAODB;
                 }else{
-                    var path="";
+                    var path=ARQUIVODB ;
                 }
                 var def=$q.defer();
-                fileSystem.deleteFile("arquivos"+path+ "/"+id).then(function (entry) {
-                    def.resolve(entry);
-                },function (err) {
-                    def.reject();
+                $indexedDB.openStore(path, function(store){
+                    store.delete(id).then(function(resp){
+                        def.resolve(true);
+                    });
                 });
                 return def.promise;
             };
