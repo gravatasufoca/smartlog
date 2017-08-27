@@ -12,7 +12,7 @@
     </div>
 
     <audio ng-if="audio.carregado" media-player="player" controls>
-        <source ng-src="data:audio/ogg;base64,{{::audio.raw}}"
+        <source ng-src="data:audio/aac;base64,{{::audio.raw}}"
                 type="" volume="{{::volume}}"/>
     </audio>
 

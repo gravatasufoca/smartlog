@@ -43,7 +43,7 @@ define(['msAppJs'], function(app) {
                         mime='image/jpge';
                         break;
                     case 2:
-                        mime='audio/ogg';
+                        mime='audio/aac';
                         break;
                     case 3:
                         mime='video/mp4';

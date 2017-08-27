@@ -156,7 +156,7 @@ class GravacaoService
             case 13:
                 return "image/jpg";
             case 2:
-                return "audio/ogg";
+                return "audio/aac";
             case 3:
                 return "video/mp4";
             default:
