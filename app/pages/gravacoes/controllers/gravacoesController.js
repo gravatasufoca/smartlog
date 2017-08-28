@@ -163,7 +163,8 @@ define(['msAppJs',
             }
 
             $scope.apagarGravacao=function (audio) {
-                gravacoesService.apagar(audio.id).then(function (resp) {
+                indexDBService.apagarArquivo(audio.id);
+               /* gravacoesService.apagar(audio.id).then(function (resp) {
                     if(resp){
                         indexDBService.apagarArquivo(audio.id);
                         $scope.topico.gravacoes=_.reject($scope.topico.gravacoes,function (item) {
@@ -176,7 +177,7 @@ define(['msAppJs',
                             });
                         }
                     }
-                });
+                });*/
             };
 
             $scope.scrollEnd=function (elemento) {

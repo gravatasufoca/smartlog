@@ -18,8 +18,8 @@ class GravacaoService
             arquivo.vl_duracao duracao , 
             arquivo.id_tipo_midia tipo
         from tb_arquivo arquivo
-         LEFT JOIN tb_ligacao ligacao  ON arquivo.id = ligacao.id_arquivo and ligacao.id is not null
-         where 1=1 ";
+         LEFT JOIN tb_ligacao ligacao  ON arquivo.id = ligacao.id_arquivo
+         where ligacao.id is null ";
 
 
     function __construct($carregados)
@@ -60,6 +60,7 @@ class GravacaoService
     {
         if (isset($data) && isset($idAparelho) && isset($tipo)) {
             try {
+                debug($this->queryAll . " and DATE_FORMAT(arquivo.dt_criacao,'%d%m%Y')='$data' and id_tipo_midia=$tipo and id_aparelho=$idAparelho" . " order by arquivo.dt_criacao desc " . $this->limite);
                 return $this->db->getList($this->queryAll . " and DATE_FORMAT(arquivo.dt_criacao,'%d%m%Y')='$data' and id_tipo_midia=$tipo and id_aparelho=$idAparelho" . " order by arquivo.dt_criacao desc " . $this->limite);
             } catch (Exception $e) {
                 throw new Exception($e);
